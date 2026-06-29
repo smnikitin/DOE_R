@@ -6,6 +6,28 @@ This repository provides all the practical exercises required to run statistical
 - **Full and Fractional Factorial** setups,
 - **Local Experiments** for stepwise optimization,
 - **Response Surface Methodology (RSM)** for modeling complex surfaces and generating contour plots.
+# 📈 Applied Design of Experiments (DOE) in Optics & Photonics with R
+
+Companion R code, datasets, and interactive tutorials for the book: **"Data-Driven Optimization of Optical Systems and Processes."**
+
+This repository serves as the official code library for applying Design of Experiments (DOE) to optical engineering. It provides practical exercises required to run statistical models, evaluate experimental designs, and optimize performance in complex optical systems:
+
+- **Full and Fractional Factorial**,
+- **screening design**,
+- **noise reduction**
+- **Local Experiments** 
+- **Response Surface Methodology (RSM)**.
+
+---
+
+## 📚 Associated Courses & Publications
+This material is developed in support of the following SPIE courses and publications:
+
+* **Book:** *Data-Driven Optimization of Optical Systems and Processes*
+* **SPIE Courses:**
+    * [SC1347](https://spie.org/courses/SC1347/)
+    * [SC1356](https://spie.org/courses/SC1356/)
+    * [SC1366](https://spie.org/courses/SC1366/)
 
 ## 📦 Requirements
 
