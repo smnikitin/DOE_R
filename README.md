@@ -1,16 +1,8 @@
-# 📈 Applied Design of Experiments (DOE) with R
+# 📈 Applied Design of Experiments in Optics with R
 
-Companion R code, datasets, and interactive tutorials for a comprehensive guide on **Design of Experiments (DOE)**. 
+Companion R code for SPIE courses and book
 
-This repository provides all the practical exercises required to run statistical models, evaluate experimental designs, and optimize systems through:
-- **Full and Fractional Factorial** setups,
-- **Local Experiments** for stepwise optimization,
-- **Response Surface Methodology (RSM)** for modeling complex surfaces and generating contour plots.
-# 📈 Applied Design of Experiments (DOE) in Optics & Photonics with R
-
-Companion R code, datasets, and interactive tutorials for the book: **"Data-Driven Optimization of Optical Systems and Processes."**
-
-This repository serves as the official code library for applying Design of Experiments (DOE) to optical engineering. It provides practical exercises required to run statistical models, evaluate experimental designs, and optimize performance in complex optical systems:
+This repository serves as the code library for applying Design of Experiments (DOE) to optical engineering. It provides practical exercises required to run statistical models, evaluate experimental designs, and optimize performance in complex optical systems and processes:
 
 - **Full and Fractional Factorial**,
 - **screening design**,
