@@ -23,50 +23,18 @@ This material is developed in support of the following SPIE courses and publicat
 
 ## 📦 Requirements
 
-- [Google Colab](https://colab.research.google.com/)  (free, cloud-based Jupyter notebook for running Python directly in your browser)
+- [Google Colab](https://colab.research.google.com/)  (free, cloud-based Jupyter notebook for running R code directly in your browser)
 - R and RStudio (optional, but highly recommended)
 - Required R Packages: https://github.com/smnikitin/DOE_R/blob/main/examples/installation
 
 ## ✨ Features
 
-- **Reproducible R Scripts:** Standalone code to analyze your own 2^k factorial experiments.
-- **Interactive Tutorials:** R Markdown files that explain the statistical theory right next to the executable code.
-- Automatically **calculate regression coefficients** for interaction models:
+- **Reproducible R Scripts:** Standalone code to plan and analyze experiments.
 
-$$Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_{12} X_1 X_2$$
+## 🛠️ Installation and How to Run
 
-- Visualize:
-  - **Main effects** and **Interaction effects** plots,
-  - **Pareto charts** of absolute effects,
-  - **Contour and 3D surface plots** for RSM.
-
-
-## 🛠️ Installation
-
-Make sure you have R installed on your system.
-
-To run the examples in this repository, open R or RStudio and install the required statistical packages by running:
-
-```R
-install.packages(c("DoE.base", "FrF2", "rsm", "ggplot2"))
-
-```
-
-
-
-## 🚀 How to Run
-
-Clone the repository to your local machine:
-
-```bash
-git clone [https://github.com/your-username/doe-book.git](https://github.com/your-username/doe-book.git)
-
-```
-
-1. Open the downloaded folder in RStudio by clicking the `.Rproj` file (if included).
-2. Navigate to the `/tutorials` folder.
-3. Open any `.Rmd` file and click **"Run All"** to execute the chunks and view the DOE outputs.
-
+Make sure you are logged into your Google account to run Google Colab.
+To run the examples in this repository, copy and paste the code into a Google Colab cell
 
 ## 📊 Workflow: AI Microscope Case Study (2^3 Factorial)
 
