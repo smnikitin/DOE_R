@@ -2,6 +2,8 @@
 
 Companion R code for SPIE DOE courses and book
 
+![demo1](https://github.com/smnikitin/DOE_R/blob/main/images/DOE2_git.PNG)  <!-- Replace with your own demo image or GIF -->
+
 This repository serves as the code library for applying Design of Experiments (DOE) to optical engineering. It provides practical exercises required to run statistical models, evaluate experimental designs, and optimize performance of complex optical systems and processes:
 
 - **Full and Fractional Factorial**
