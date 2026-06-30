@@ -68,20 +68,99 @@ git clone [https://github.com/your-username/doe-book.git](https://github.com/you
 3. Open any `.Rmd` file and click **"Run All"** to execute the chunks and view the DOE outputs.
 
 
+## 📊 Workflow: AI Microscope Case Study (2^3 Factorial)
 
-## 📊 Example: 2x2 Factorial Design
+The following sequence captures the full computational workflow for the AI Microscope case study, guiding you from experimental design to a refined predictive model.
 
-Given standard coded inputs:
+### 1. Design Generation
+We define our three critical parameters—Light Intensity (A), Lens Magnification (B), and AI Threshold (C)—at two levels (-1, 1). Using `expand.grid`, we create a balanced design matrix that ensures all factor combinations are tested.
+```R
+# Generate a standard coded 2^3 full factorial design matrix
+# Factors: A = Light Intensity, B = Lens Magnification, C = AI Threshold
+design_matrix <- expand.grid(
+  B = c(-1, 1),
+  A = c(-1, 1),
+  C = c(-1, 1)
+)
 
-| X1 | X2 | Y (Yield) |
-| --- | --- | --- |
-| -1 | -1 | 14.3 |
-| 1 | -1 | 22.1 |
-| -1 | 1 | 16.5 |
-| 1 | 1 | 35.8 |
+print(design_matrix)
 
-The provided R scripts will calculate the ANOVA table, determine significant factors, extract the fitted regression model, and generate the interaction plots.
+```
 
+### 2. Data Collection
+
+After physically executing the experiments on the AI Microscope according to our randomized design, we compile the results. We combine our original design matrix with the observed Accuracy response (Y) to create the final analytical dataset.
+
+```R
+# Physical feature detection accuracy results from laboratory runs
+Accuracy <- c(87.49, 99.01, 94.64, 91.97, 83.12, 83.12, 81.16, 97.32)
+
+# Combine the design matrix and response into the final analysis dataset
+optics_data <- cbind(design_matrix, Accuracy)
+
+print(optics_data)
+
+```
+
+### 3. Model Fitting & Visualization
+
+We fit a linear model to the data to evaluate the influence of main factors and their interactions. We then generate visual diagnostics to intuitively understand which variables dominate system performance.
+
+```R
+# Fit the full interaction model using numeric indicators for Pareto sorting
+doe_model <- lm(Accuracy ~ A * B * C, data = optics_data)
+
+# Generate the Pareto plot to rank the magnitude of effects
+paretoPlot(doe_model,
+           main = "Step 4: Pareto Plot of absolute Effects",
+           xlab = "Factor / Interaction Term",
+           ylab = "Magnitude of Coefficient")
+
+# Generate the Main Effects plot to see the direction of influence
+MEPlot(doe_model,
+       pch = 15,
+       lwd = 2,
+       las = 1,
+       main = "Step 5: Main Effects Plot (Fitted Means)")
+
+# Generate the multi-paneled cross-interaction matrix to visualize factor coupling
+IAPlot(doe_model,
+       col = c("black", "gray50"),
+       lty = c(1, 2),
+       lwd = 2,
+       main = "Step 6: Interaction Plot Matrix")
+
+```
+
+### 4. Statistical Tables
+
+We extract the regression details and ANOVA table to quantify the statistical significance of our factors. This confirms whether our observations are true effects or just random noise within the system.
+
+```R
+# Display the standard regression table details
+print(summary(doe_model))
+
+# Display the ANOVA table showing partitioned sum of squares
+doe_model_factor <- lm(Accuracy ~ factor(A) * factor(B) * factor(C), data = optics_data)
+print(anova(doe_model_factor))
+
+```
+
+### 5. Model Optimization
+
+To maximize predictive accuracy, we perform model reduction by dropping non-significant interaction terms (A:B and B:C). This "pruning" removes mathematical dead weight, resulting in a cleaner, more reliable model.
+
+```R
+# Drop the non-significant interaction terms to claim error degrees of freedom
+model_reduced <- lm(Accuracy ~ A + B + C + A:C + A:B:C, data = optics_data)
+
+# Print the final cleaned model coefficients, R-squared values, and p-values
+print(summary(model_reduced))
+
+# Print the functional ANOVA table containing populated F-values and p-values
+print(anova(model_reduced))
+
+```
 
 
 ## 📂 Project Structure
