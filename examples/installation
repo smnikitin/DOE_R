@@ -1,15 +1,11 @@
-install.packages("pid")
+# Linux system dependencies (Required for Colab environments)
 system("apt-get update && apt-get install -y r-cran-pid")
-install.packages("pid", repos="https://cloud.r-project.org")
-install.packages("rsm")
-install.packages("equatiomatic")
-system("apt-get update && apt-get install -y r-cran-pid")
-install.packages("DoE.base")
-system("apt-get update && apt-get install -y r-cran-pid")
-install.packages("DoE.base")
-if(!require(pid)) install.packages("pid")
-install.packages("FrF2")
-if(!require(BsMD)) install.packages("BsMD")
-if(!require(parameters)) install.packages("parameters")
-if(!require(see)) install.packages("see")
-if (!require(daewr)) install.packages("daewr")
+
+# R package installations
+install.packages("DoE.base")   # Creates your experimental design matrix
+install.packages("FrF2")       # Manages randomized 2^k factorial runs
+install.packages("rsm")        # Builds quadratic models for peak optimization
+install.packages("pid")        # Required for the paretoPlot() function
+install.packages("daewr")      # Provides standard industry DOE datasets
+install.packages("BsMD")       # Box-Meyer methods for fractional analysis
+install.packages("ggplot2")    # Professional visualization for your book
