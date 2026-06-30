@@ -75,6 +75,14 @@ The following sequence captures the full computational workflow for the AI Micro
 ### 1. Design Generation
 We define our three critical parameters—Light Intensity (A), Lens Magnification (B), and AI Threshold (C)—at two levels (-1, 1). Using `expand.grid`, we create a balanced design matrix that ensures all factor combinations are tested.
 ```R
+
+# Load these libraries before running your plotting functions
+library(DoE.base)
+library(FrF2) 
+library(rsm)
+library(pid)  
+library(ggplot2)
+
 # Generate a standard coded 2^3 full factorial design matrix
 # Factors: A = Light Intensity, B = Lens Magnification, C = AI Threshold
 design_matrix <- expand.grid(
