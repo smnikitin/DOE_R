@@ -33,8 +33,8 @@ This material is developed in support of the following SPIE courses and publicat
 
 ## 🛠️ Installation and How to Run
 
-Make sure you are logged into your Google account to run Google Colab.
-To run the examples in this repository, copy and paste the code into a Google Colab cell
+- Make sure you are logged into your Google account to run Google Colab.
+- To run the examples in this repository, copy and paste the code into a Google Colab cell
 
 ## 📊 Workflow: AI Microscope Case Study (2^3 Factorial)
 
