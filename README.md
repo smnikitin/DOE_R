@@ -1,21 +1,21 @@
 # 📈 Applied Design of Experiments in Optics with R
 
-Companion R code for SPIE courses and book
+Companion R code for SPIE DOE courses and book
 
-This repository serves as the code library for applying Design of Experiments (DOE) to optical engineering. It provides practical exercises required to run statistical models, evaluate experimental designs, and optimize performance in complex optical systems and processes:
+This repository serves as the code library for applying Design of Experiments (DOE) to optical engineering. It provides practical exercises required to run statistical models, evaluate experimental designs, and optimize performance of complex optical systems and processes:
 
-- **Full and Fractional Factorial**,
-- **screening design**,
-- **noise reduction**
+- **Full and Fractional Factorial**
+- **Screening design**
+- **Noise reduction**
 - **Local Experiments** 
-- **Response Surface Methodology (RSM)**.
+- **Response Surface Methodology**
 
 ---
 
 ## 📚 Associated Courses & Publications
 This material is developed in support of the following SPIE courses and publications:
 
-* **Book:** *Data-Driven Optimization of Optical Systems and Processes*
+* **Book:** *Data-Driven Optimization of Optical Systems and Processes [WIP]*
 * **SPIE Courses:**
     * [SC1347](https://spie.org/courses/SC1347/)
     * [SC1356](https://spie.org/courses/SC1356/)
@@ -23,9 +23,9 @@ This material is developed in support of the following SPIE courses and publicat
 
 ## 📦 Requirements
 
-- R (version 4.0 or higher recommended)
-- RStudio (optional, but highly recommended for `.Rmd` tutorials)
-- Required R Packages: `DoE.base`, `FrF2`, `rsm`, `ggplot2`
+- [Google Colab](https://colab.research.google.com/)  (free, cloud-based Jupyter notebook for running Python directly in your browser)
+- R and RStudio (optional, but highly recommended)
+- Required R Packages: https://github.com/smnikitin/DOE_R/blob/main/examples/installation
 
 ## ✨ Features
 
