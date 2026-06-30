@@ -1,0 +1,57 @@
+# Generate a standard coded 2^3 full factorial design matrix
+# Factors: A = Light Intensity, B = Lens Magnification, C = AI Threshold
+design_matrix <- expand.grid(
+  B = c(-1, 1),
+  A = c(-1, 1),
+  C = c(-1, 1)
+)
+
+print(design_matrix)
+
+# Physical feature detection accuracy results from laboratory runs
+Accuracy <- c(87.49, 99.01, 94.64, 91.97, 83.12, 83.12, 81.16, 97.32)
+
+# Combine the design matrix and response into the final analysis dataset
+optics_data <- cbind(design_matrix, Accuracy)
+
+print(optics_data)
+
+# Fit the full interaction model using numeric indicators for Pareto sorting
+doe_model <- lm(Accuracy ~ A * B * C, data = optics_data)
+
+# Generate the Pareto plot to rank the magnitude of effects
+paretoPlot(doe_model,
+           main = "Step 4: Pareto Plot of absolute Effects",
+           xlab = "Factor / Interaction Term",
+           ylab = "Magnitude of Coefficient")
+
+# Generate the Main Effects plot to see the direction of influence
+MEPlot(doe_model,
+       pch = 15,
+       lwd = 2,
+       las = 1,
+       main = "Step 5: Main Effects Plot (Fitted Means)")
+
+# Generate the multi-paneled cross-interaction matrix to visualize factor coupling
+IAPlot(doe_model,
+       col = c("black", "gray50"),
+       lty = c(1, 2),
+       lwd = 2,
+       main = "Step 6: Interaction Plot Matrix")
+
+# Display the standard regression table details
+print(summary(doe_model))
+
+# Display the ANOVA table showing partitioned sum of squares
+doe_model_factor <- lm(Accuracy ~ factor(A) * factor(B) * factor(C), data = optics_data)
+print(anova(doe_model_factor))
+
+# Drop the non-significant interaction terms to claim error degrees of freedom
+model_reduced <- lm(Accuracy ~ A + B + C + A:C + A:B:C, data = optics_data)
+
+# Print the final cleaned model coefficients, R-squared values, and p-values
+print(summary(model_reduced))
+
+# Print the functional ANOVA table containing populated F-values and p-values
+print(anova(model_reduced))
+
