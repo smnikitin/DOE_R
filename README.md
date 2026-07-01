@@ -38,6 +38,9 @@ This material is developed in support of the following SPIE courses and publicat
 - Make sure you are logged into your Google account to run Google Colab.
 - To run the examples in this repository, copy and paste the code into a Google Colab cell
 
+![demo2](https://github.com/smnikitin/DOE_R/blob/main/images/DOE1_git.PNG)  <!-- Replace with your own demo image or GIF -->
+
+
 ## 📊 Workflow: AI Microscope Case Study (2^3 Factorial)
 
 The following sequence captures the full computational workflow for the AI Microscope case study, guiding you from experimental design to a refined predictive model.
