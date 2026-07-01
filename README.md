@@ -1,6 +1,6 @@
 # 📈 Applied Design of Experiments in Optics with R
 
-Companion R code for SPIE DOE courses and book form [Dr. Sergey M. Nikitin](https://spie.org/profile/Sergey.Nikitin-125233)
+Companion R code for [SPIE](https://spie.org/) DOE courses and book form [Dr. Sergey M. Nikitin](https://spie.org/profile/Sergey.Nikitin-125233)
 
 ![demo1](https://github.com/smnikitin/DOE_R/blob/main/images/DOE2_git.PNG)  <!-- Replace with your own demo image or GIF -->
 
