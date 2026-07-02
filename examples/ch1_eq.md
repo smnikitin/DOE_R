@@ -13,7 +13,7 @@ $$
 \text{Number of Runs} = (\text{Number of Levels})^{\text{Number of Factors}}
 $$
 
-$$
+
 **% Equation 1
 \text{Sign} = m \cdot \text{Number} + k
 
@@ -25,4 +25,4 @@ $$
 
 % Equation 3
 \text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}**
-$$
+
