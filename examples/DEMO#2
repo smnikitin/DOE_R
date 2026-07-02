@@ -15,23 +15,28 @@ doe_fractional <- data.frame(
 )
 
 # 2. Fit the Linear Model
-# We use all factors; note that in a 4-run design, this is a saturated model
-model <- lm(Y ~ A + B + C, data = doe_fractional)
+# We use only Main Effects to avoid saturating the 4-run design
+model_frac <- lm(Y ~ A + B + C, data = doe_fractional)
 
-# 3. Model Analysis (Pareto Chart)
+# 3. Display the Regression Summary
+# This helps students see coefficient estimates and p-values
+cat("--- Fractional Factorial Model Summary ---\n")
+print(summary(model_frac))
+
+# 4. Model Analysis (Pareto Chart)
 # The Pareto chart helps students identify which factors have the largest impact
 # install.packages("pid") # Uncomment if you don't have the package
 library(pid)
-paretoPlot(model, main = "Pareto Chart of Effects")
+paretoPlot(model_frac, main = "Pareto Chart of Effects")
 
-# 4. Alias Structure Analysis
+# 5. Alias Structure Analysis
 # Because this is a fractional design, main effects are 'aliased' (confounded) 
-# with two-factor interactions. This section displays those relationships.
+# with 3-factor interactions. 
 cat("\n--- Alias Structure (Confounding) ---\n")
-alias(lm(Y ~ (A + B + C)^3, data = doe_fractional))
+alias(lm(Y ~ A*B*C, data = doe_fractional))
 
 # Educational Note:
-# The output above shows:
-# A = B:C  (Effect of A is indistinguishable from the B*C interaction)
-# B = A:C  (Effect of B is indistinguishable from the A*C interaction)
-# C = A:B  (Effect of C is indistinguishable from the A*B interaction)
+# The alias output confirms the design's Resolution III structure:
+# A = B:C (Effect of A is indistinguishable from the B*C interaction)
+# B = A:C (Effect of B is indistinguishable from the A*C interaction)
+# C = A:B (Effect of C is indistinguishable from the A*B interaction)
