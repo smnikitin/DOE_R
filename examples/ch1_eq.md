@@ -6,7 +6,7 @@ $$
 \text{Number of Runs} = (\text{Number of Levels})^{\text{Number of Factors}}
 $$
 
-* Equation 2
+* Equation (1.2):
 
 $$
 \text{Sign} = m \cdot \text{Number} + k
