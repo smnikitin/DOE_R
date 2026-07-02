@@ -14,7 +14,6 @@ $$
 $$
 
 $$
-**% Equation 1
 \text{Sign} = m \cdot \text{Number} + k
 $$
 % Equation 2
