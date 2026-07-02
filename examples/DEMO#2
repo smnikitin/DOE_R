@@ -14,6 +14,10 @@ doe_fractional <- data.frame(
   Y = c(50.5, 44.5, 44.5, 80.5)
 )
 
+cat("---\n")
+print(doe_fractional)
+cat("---\n")
+
 # 2. Fit the Linear Model
 # We use only Main Effects to avoid saturating the 4-run design
 model_frac <- lm(Y ~ A + B + C, data = doe_fractional)
@@ -40,3 +44,47 @@ alias(lm(Y ~ A*B*C, data = doe_fractional))
 # A = B:C (Effect of A is indistinguishable from the B*C interaction)
 # B = A:C (Effect of B is indistinguishable from the A*C interaction)
 # C = A:B (Effect of C is indistinguishable from the A*B interaction)
+
+cat("---\n")
+cat("---\n")
+cat("---\n")
+
+
+# ==============================================================================
+# Full Factorial DOE Analysis
+# This script demonstrates a 2^3 Full Factorial Design
+# Design: 3 Factors (A, B, C) in 8 Runs, Full Resolution
+# ==============================================================================
+
+# 1. Setup Full Factorial Dataset
+doe_full <- data.frame(
+  A = c(-1,  1, -1,  1, -1,  1,  1, -1),
+  B = c(-1, -1,  1,  1, -1,  1, -1,  1),
+  C = c( 1, -1, -1,  1, -1, -1,  1,  1),
+  Y = c(50.5, 44.5, 44.5, 80.5, 49.5, 79.5, 45.5, 45.5)
+)
+
+cat("---\n")
+print(doe_full)
+cat("---\n")
+
+
+# 2. Fit the Full Factorial Model
+# In a full factorial, we can estimate all interactions up to the 3-way
+model_full <- lm(Y ~ A * B * C, data = doe_full)
+
+# 3. Display the Regression Summary
+cat("--- Full Factorial Model Summary ---\n")
+print(summary(model_full))
+
+# 4. Model Analysis (Pareto Chart)
+# In a full design, the Pareto chart clearly shows which effects are 
+# statistically significant without the ambiguity of aliasing.
+library(pid)
+paretoPlot(model_full, main = "Pareto Chart (Full Factorial)")
+
+# 5. Verify Alias Structure
+# In a FULL factorial design, there is no aliasing. 
+# The alias table will be empty/null, proving that all effects are independent.
+cat("\n--- Alias Structure Check ---\n")
+alias(lm(Y ~ A*B*C, data = doe_full))
