@@ -47,11 +47,3 @@ $$
 $$
 
 
-
-
-Here are the equations for Chapter 1 of the DOE book in LaTeX format:
-
-* Equation 1
-* Equation 2
-* Equation 3
-* Equation 4
