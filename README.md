@@ -44,6 +44,8 @@ This material is developed in support of the following SPIE courses and publicat
 ## 📊 Workflow: AI Microscope Case Study (2^3 Factorial)
 
 The following sequence captures the full computational workflow for the AI Microscope case study, guiding you from experimental design to a refined predictive model.
+![demo3](https://github.com/smnikitin/DOE_R/blob/main/images/DOE3_git.PNG)  <!-- Replace with your own demo image or GIF -->
+
 
 ### 1. Design Generation
 We define our three critical parameters—Light Intensity (A), Lens Magnification (B), and AI Threshold (C)—at two levels (-1, 1). Using `expand.grid`, we create a balanced design matrix that ensures all factor combinations are tested.
