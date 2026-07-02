@@ -37,7 +37,7 @@ $$
 
 ---
 
-* Equation 4
+* Equation (1.4):
 
 $$
 Y = b_0 + b_A A + b_B B + b_{AA} A^2 + b_{BB} B^2 + b_{AB} AB
