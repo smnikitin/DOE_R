@@ -28,4 +28,4 @@ $$
 \end{cases}
 % Equation 3
 \text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}
-$$
+$$ 
