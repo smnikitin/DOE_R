@@ -8,3 +8,7 @@ a^2 + b^2 &= c^2 \\
 $$
 
 Here is the text paragraph after my equation.
+
+$$
+\text{Number of Runs} = (\text{Number of Levels})^{\text{Number of Factors}}
+$$
