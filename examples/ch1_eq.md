@@ -20,4 +20,5 @@ $$
 
 $$
 \boxed{\text{Sign} = m \cdot \text{Number} + k}
+
 $$
