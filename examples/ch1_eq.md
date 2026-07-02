@@ -44,3 +44,11 @@ $$
 % Equation 3
 \text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}
 \end{gather*}
+
+
+Here are the equations for Chapter 1 of the DOE book in LaTeX format:
+
+* Equation 1
+* Equation 2
+* Equation 3
+* Equation 4
