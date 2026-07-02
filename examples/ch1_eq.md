@@ -19,6 +19,7 @@ $$
 
 
 $$
+
 \boxed{\text{Sign} = m \cdot \text{Number} + k}
 
 \vspace{10pt}
@@ -32,4 +33,6 @@ $$
 
 \vspace{10pt}
 
-\boxed{\text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}}$$
+\boxed{\text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}}
+
+$$
