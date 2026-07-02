@@ -33,11 +33,7 @@ paretoPlot(model_frac, main = "Pareto Chart of Effects")
 # Because this is a fractional design, main effects are 'aliased' (confounded) 
 # with 3-factor interactions. 
 cat("\n--- Alias Structure Check ---\n")
-if (length(alias(lm(Y ~ A*B*C, data = doe_fractional))) == 0) {
-  cat("Confirmed: No aliasing detected. This is a Full Factorial design.\n")
-} else {
-  alias(lm(Y ~ A*B*C, data = doe_fractional))
-}
+alias(lm(Y ~ A*B*C, data = doe_fractional))
 
 # Educational Note:
 # The alias output confirms the design's Resolution III structure:
