@@ -177,7 +177,7 @@ DOE_R/
 
 ## 🧑‍💻 Author
 
-* Sergey Nikitin
+* [Dr. Sergey M. Nikitin](https://spie.org/profile/Sergey.Nikitin-125233)
 
 
 ## 📜 License
