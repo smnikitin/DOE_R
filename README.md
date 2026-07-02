@@ -149,7 +149,7 @@ print(anova(model_reduced))
 ## 📂 Project Structure
 
 ```text
-doe-book/
+DOE_R/
 │             
 ├── examples/         # Standalone .R scripts
 ├── images/           # images aligned with book/courses
