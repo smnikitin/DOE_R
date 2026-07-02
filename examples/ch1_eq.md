@@ -1,3 +1,16 @@
+Here are the equations for Chapter 1 of the DOE book in LaTeX format:
+
+* Equation (1.1):
+
+$$
+\text{Number of Runs} = (\text{Number of Levels})^{\text{Number of Factors}}
+$$
+
+* Equation 2
+* Equation 3
+* Equation 4
+
+
 markdownHere is the text paragraph before my equation.
 
 $$
