@@ -1,0 +1,37 @@
+# ==============================================================================
+# Fractional Factorial DOE Analysis
+# This script demonstrates a 2^(3-1) Fractional Factorial Design
+# Design: 3 Factors (A, B, C) in 4 Runs, Resolution III
+# Generator: C = AB
+# ==============================================================================
+
+# 1. Setup Dataset
+# C is constructed as A * B, creating a 1/2 fraction of a full 8-run design
+doe_fractional <- data.frame(
+  A = c(-1,  1, -1,  1),
+  B = c(-1, -1,  1,  1),
+  C = c( 1, -1, -1,  1),
+  Y = c(50.5, 44.5, 44.5, 80.5)
+)
+
+# 2. Fit the Linear Model
+# We use all factors; note that in a 4-run design, this is a saturated model
+model <- lm(Y ~ A + B + C, data = doe_fractional)
+
+# 3. Model Analysis (Pareto Chart)
+# The Pareto chart helps students identify which factors have the largest impact
+# install.packages("pid") # Uncomment if you don't have the package
+library(pid)
+paretoPlot(model, main = "Pareto Chart of Effects")
+
+# 4. Alias Structure Analysis
+# Because this is a fractional design, main effects are 'aliased' (confounded) 
+# with two-factor interactions. This section displays those relationships.
+cat("\n--- Alias Structure (Confounding) ---\n")
+alias(lm(Y ~ (A + B + C)^2, data = doe_fractional))
+
+# Educational Note:
+# The output above shows:
+# A = B:C  (Effect of A is indistinguishable from the B*C interaction)
+# B = A:C  (Effect of B is indistinguishable from the A*C interaction)
+# C = A:B  (Effect of C is indistinguishable from the A*B interaction)
