@@ -14,7 +14,7 @@ $$
 $$
 
 $$
-% Equation 1
+**% Equation 1
 \text{Sign} = m \cdot \text{Number} + k
 
 % Equation 2
@@ -24,5 +24,5 @@ $$
 \end{cases}
 
 % Equation 3
-\text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}
+\text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}**
 $$
