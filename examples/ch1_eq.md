@@ -6,6 +6,8 @@ $$
 \text{Number of Runs} = (\text{Number of Levels})^{\text{Number of Factors}}
 $$
 
+---
+
 * Equation (1.2):
 
 $$
