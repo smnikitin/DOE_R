@@ -150,10 +150,9 @@ print(anova(model_reduced))
 
 ```text
 doe-book/
-│
-├── data/             # Cleaned .csv datasets for all chapters
-├── scripts/          # Standalone .R scripts for rapid analysis
-├── tutorials/        # Interactive .Rmd files aligned with book chapters
+│             
+├── examples/         # Standalone .R scripts
+├── images/           # images aligned with book/courses
 ├── README.md         # Project documentation
 └── LICENSE           # MIT License
 
