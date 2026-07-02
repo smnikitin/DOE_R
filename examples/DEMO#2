@@ -28,7 +28,7 @@ paretoPlot(model, main = "Pareto Chart of Effects")
 # Because this is a fractional design, main effects are 'aliased' (confounded) 
 # with two-factor interactions. This section displays those relationships.
 cat("\n--- Alias Structure (Confounding) ---\n")
-alias(lm(Y ~ (A + B + C)^2, data = doe_fractional))
+alias(lm(Y ~ (A + B + C)^3, data = doe_fractional))
 
 # Educational Note:
 # The output above shows:
