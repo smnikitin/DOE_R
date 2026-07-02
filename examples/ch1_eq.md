@@ -22,17 +22,6 @@ $$
 
 \boxed{\text{Sign} = m \cdot \text{Number} + k}
 
-\vspace{10pt}
 
-\boxed{
-\begin{cases}
--1 = m \cdot \text{Low} + k \\
-+1 = m \cdot \text{High} + k
-\end{cases}
-}
-
-\vspace{10pt}
-
-\boxed{\text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}}
 
 $$
