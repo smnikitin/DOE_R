@@ -13,7 +13,7 @@ $$
 * Equation (1.2):
 
 $$
-\text{Sign} = m \times \text{Number} + k
+\text{Sign} = m \ \text{Number} + k
 $$
 
 $$
@@ -24,7 +24,7 @@ $$
 $$
 
 $$
-\text{Sign} = \frac{2}{\text{High} - \text{Low}} \cdot \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}
+\text{Sign} = \frac{2}{\text{High} - \text{Low}} \times \text{Number} - \frac{\text{High} + \text{Low}}{\text{High} - \text{Low}}
 $$
 
 ---
@@ -32,7 +32,7 @@ $$
 * Equation (1.3):
   
 $$
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_{12} \times X_1 \times X_2
+Y = \beta_0 + \beta_1 \times  X_1 + \beta_2  \times X_2 + \beta_{12} \times X_1 \times X_2
 $$
 
 ---
@@ -40,7 +40,7 @@ $$
 * Equation (1.4):
 
 $$
-Y = b_0 + b_A A + b_B B + b_{AA} A^2 + b_{BB} B^2 + b_{AB} AB
+Y = b_0 + b_A \times  A + b_B \times  B + b_{AA} \times  A^2 + b_{BB} \times  B^2 + b_{AB} \times  AB
 $$
 
 ---
