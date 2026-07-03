@@ -90,3 +90,12 @@ $$
 $$
 
 ---
+
+
+* Equation (2.6):
+
+$$
+\boldsymbol{\beta} = M^{-1} \mathbf{Y}
+$$
+
+---
