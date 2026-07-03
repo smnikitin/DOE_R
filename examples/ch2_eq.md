@@ -10,4 +10,11 @@ $$
 
 ---
 
+* Equation (2.2):
+
+$$
+Y = \beta 0 + \beta 1 * X1 + \beta 2 * X2 + \beta 12 * X1 * X2
+$$
+
+---
 
