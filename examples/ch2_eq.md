@@ -172,3 +172,11 @@ $$
 \alpha = (2^k)^{1/4}
 $$
 
+---
+
+* Equation (2.15):
+
+$$
+y = \beta_0 + \sum \beta_i \times x_i + \sum \beta_{ij} \times x_i \times x_j
+$$
+
