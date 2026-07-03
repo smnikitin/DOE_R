@@ -13,7 +13,7 @@ $$
 * Equation (1.2):
 
 $$
-\text{Sign} = m \ \text{Number} + k
+\text{Sign} = m \times  \text{Number} + k
 $$
 
 $$
