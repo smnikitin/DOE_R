@@ -126,11 +126,30 @@ $$
 
 ---
 
-
 * Equation (2.8):
 
 $$
 \beta_{12} = 0.25 * (1.4 - 2.2 - 5.1 + 9.6) = 0.925
+$$
+
+---
+
+* Equation (2.9):
+
+$$
+\begin{pmatrix} y_1 \\ y_2 \\ y_3 \\ y_4 \\ y_5 \\ y_6 \\ y_7 \\ y_8 \end{pmatrix}
+=
+\left( \overset{\begin{matrix} \scriptstyle b_0 & \scriptstyle b_A & \scriptstyle b_B & \scriptstyle b_C & \scriptstyle b_{AB} & \scriptstyle b_{AC} & \scriptstyle b_{BC} & \scriptstyle b_{ABC} \end{matrix}}{\begin{pmatrix} 
++ & - & - & - & + & + & + & - \\
++ & + & - & - & - & - & + & + \\
++ & - & + & - & - & + & - & + \\
++ & + & + & - & + & - & - & - \\
++ & - & - & + & + & - & - & + \\
++ & + & - & + & - & + & - & - \\
++ & - & + & + & - & - & + & - \\
++ & + & + & + & + & + & + & + 
+\end{pmatrix}} \right)
+\begin{pmatrix} b_0 \\ b_A \\ b_B \\ b_C \\ b_{AB} \\ b_{AC} \\ b_{BC} \\ b_{ABC} \end{pmatrix}
 $$
 
 ---
