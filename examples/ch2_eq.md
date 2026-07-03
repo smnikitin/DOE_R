@@ -46,21 +46,32 @@ $$
 
 $$
 \boxed{
-\begin{aligned}
-Y_1 &= \beta_0(+1) + \beta_1(-1) + \beta_2(-1) + \beta_{12}(-1)(-1) \\
-Y_2 &= \beta_0(+1) + \beta_1(+1) + \beta_2(-1) + \beta_{12}(+1)(-1) \\
-Y_3 &= \beta_0(+1) + \beta_1(-1) + \beta_2(+1) + \beta_{12}(-1)(+1) \\
-Y_4 &= \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)(+1)
-\end{aligned}
+M = \begin{bmatrix}
++1 & -1 & -1 & +1 \\
++1 & -1 & +1 & -1 \\
++1 & +1 & -1 & -1 \\
++1 & +1 & +1 & +1
+\end{bmatrix}
 }
-\implies
+$$
+
+$$
 \boxed{
-\begin{aligned}
-Y_1 &= \beta_0(+1) + \beta_1(-1) + \beta_2(-1) + \beta_{12}(+1) \\
-Y_2 &= \beta_0(+1) + \beta_1(+1) + \beta_2(-1) + \beta_{12}(-1) \\
-Y_3 &= \beta_0(+1) + \beta_1(-1) + \beta_2(+1) + \beta_{12}(-1) \\
-Y_4 &= \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)
-\end{aligned}
+\boldsymbol{\beta} = \begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\beta_{12}
+\end{bmatrix}
+}
+\quad
+\boxed{
+\mathbf{Y} = \begin{bmatrix}
+Y_1 \\
+Y_2 \\
+Y_3 \\
+Y_4
+\end{bmatrix}
 }
 $$
 
