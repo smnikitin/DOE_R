@@ -156,3 +156,11 @@ $$
 y = \beta_0 + \beta_1 \times A + \beta_2 \times B + \beta_{12} \times A \times B + \beta_{11} \times A^2 + \beta_{22} \times B^2
 $$
 
+---
+
+* Equation (2.12):
+
+$$
+\alpha = (2^k)^{1/4}
+$$
+
