@@ -1,6 +1,6 @@
 # 📈 Applied Design of Experiments in Optics with R
 
-Companion R code for [SPIE](https://spie.org/) DOE courses and book form [Dr. Sergey M. Nikitin](https://spie.org/profile/Sergey.Nikitin-125233)
+Companion R code for [SPIE](https://spie.org/) DOE courses and book from [Dr. Sergey M. Nikitin](https://spie.org/profile/Sergey.Nikitin-125233)
 
 ![demo1](https://github.com/smnikitin/DOE_R/blob/main/images/DOE2_git.PNG)  <!-- Replace with your own demo image or GIF -->
 
@@ -48,7 +48,7 @@ The following sequence captures the full computational workflow for the AI Micro
 
 
 ### 1. Design Generation
-We define our three critical parameters—Light Intensity (A), Lens Magnification (B), and AI Threshold (C)—at two levels (-1, 1). Using `expand.grid`, we create a balanced design matrix that ensures all factor combinations are tested.
+We define our three critical parameters—Light Intensity (A), Lens Magnification (B), and AI Threshold (C)—at two levels (-1, 1). Then we create a balanced design matrix that ensures all factor combinations are tested.
 ```R
 
 # Load these libraries before running your plotting functions
@@ -72,7 +72,7 @@ print(design_matrix)
 
 ### 2. Data Collection
 
-After physically executing the experiments on the AI Microscope according to our randomized design, we compile the results. We combine our original design matrix with the observed Accuracy response (Y) to create the final analytical dataset.
+After physically executing the experiments on the AI Microscope according to our design (most cases randomised), we compile the results. We combine our original design matrix with the observed Accuracy response (Y) to create the final analytical dataset.
 
 ```R
 # Physical feature detection accuracy results from laboratory runs
@@ -87,7 +87,7 @@ print(optics_data)
 
 ### 3. Model Fitting & Visualization
 
-We fit a linear model to the data to evaluate the influence of main factors and their interactions. We then generate visual diagnostics to intuitively understand which variables dominate system performance.
+We fit a DOE model to the data to evaluate the influence of main factors and their interactions. We then generate visual diagnostics to intuitively understand which variables dominate system performance.
 
 ```R
 # Fit the full interaction model using numeric indicators for Pareto sorting
@@ -162,8 +162,8 @@ DOE_R/
 
 ## 🧠 Behind the Scenes
 
-* **Statistical Computing:** Powered by R's native linear modeling (`lm()`) and specialized DOE packages.
-* **Methodology:** Bridging the gap between theoretical math (like quadratic interaction models) and applied engineering optimization.
+* **Statistical Computing:** Powered by R's native code.
+* **Methodology:** Bridging the gap between DOE theoretical math and applied engineering optimization.
 * **Design:** Focused on readable code, reproducible research, and clear data visualization.
 
 
