@@ -158,7 +158,15 @@ $$
 
 ---
 
-* Equation (2.12):
+* Equation (2.13):
+
+$$
+N = 2^k + 2 \times k + n_c
+$$
+
+---
+
+* Equation (2.14):
 
 $$
 \alpha = (2^k)^{1/4}
