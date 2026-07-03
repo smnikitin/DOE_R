@@ -99,3 +99,29 @@ $$
 $$
 
 ---
+
+* Equation (2.7):
+
+$$
+\begin{bmatrix}
+\beta_0 \\
+\beta_1 \\
+\beta_2 \\
+\beta_{12}
+\end{bmatrix}
+= \frac{1}{4}
+\begin{bmatrix}
++1 & +1 & +1 & +1 \\
+-1 & -1 & +1 & +1 \\
+-1 & +1 & -1 & +1 \\
++1 & -1 & -1 & +1
+\end{bmatrix}
+\begin{bmatrix}
+Y_1 \\
+Y_2 \\
+Y_3 \\
+Y_4
+\end{bmatrix}
+$$
+
+---
