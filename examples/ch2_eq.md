@@ -141,3 +141,15 @@ $$
 $$
 
 ---
+  
+* Equation (2.10):
+  
+$$
+Y = \beta_0 + \beta_1 \times  X_1 + \beta_2  \times X_2 + \beta_{12} \times X_1 \times X_2
+$$
+
+---
+
+* Equation (2.11):
+
+$$
