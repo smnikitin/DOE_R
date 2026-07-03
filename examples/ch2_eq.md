@@ -180,3 +180,11 @@ $$
 y = \beta_0 + \sum \beta_i \times X_i + \sum \beta_{ij} \times X_i \times X_j
 $$
 
+---
+
+* Equation (2.16):
+
+$$
+\frac{\partial y}{\partial x_1}, \frac{\partial y}{\partial x_2}, \dots \frac{\partial y}{\partial x_k}
+$$
+
