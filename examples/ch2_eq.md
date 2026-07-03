@@ -45,34 +45,40 @@ $$
 * Equation (2.4):
 
 $$
-\boxed{
+\begin{array}{|c|}
+\hline
 M = \begin{bmatrix}
 +1 & -1 & -1 & +1 \\
 +1 & -1 & +1 & -1 \\
 +1 & +1 & -1 & -1 \\
 +1 & +1 & +1 & +1
-\end{bmatrix}
-}
+\end{bmatrix} \\
+\hline
+\end{array}
 $$
 
 $$
-\boxed{
+\begin{array}{|c|}
+\hline
 \boldsymbol{\beta} = \begin{bmatrix}
 \beta_0 \\
 \beta_1 \\
 \beta_2 \\
 \beta_{12}
-\end{bmatrix}
-}
+\end{bmatrix} \\
+\hline
+\end{array}
 \quad
-\boxed{
+\begin{array}{|c|}
+\hline
 \mathbf{Y} = \begin{bmatrix}
 Y_1 \\
 Y_2 \\
 Y_3 \\
 Y_4
-\end{bmatrix}
-}
+\end{bmatrix} \\
+\hline
+\end{array}
 $$
 
 ---
