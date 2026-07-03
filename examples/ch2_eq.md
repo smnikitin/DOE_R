@@ -137,9 +137,12 @@ $$
 * Equation (2.9):
 
 $$
-\begin{pmatrix} y_1 \\ y_2 \\ y_3 \\ y_4 \\ y_5 \\ y_6 \\ y_7 \\ y_8 \end{pmatrix}
-=
-\left( \overset{\begin{matrix} \scriptstyle b_0 & \scriptstyle b_A & \scriptstyle b_B & \scriptstyle b_C & \scriptstyle b_{AB} & \scriptstyle b_{AC} & \scriptstyle b_{BC} & \scriptstyle b_{ABC} \end{matrix}}{\begin{pmatrix} 
+\begin{aligned}
+\begin{pmatrix} y_1 \\ y_2 \\ y_3 \\ y_4 \\ y_5 \\ y_6 \\ y_7 \\ y_8 \end{pmatrix} 
+= &
+\left( 
+\begin{array}{cccccccc} 
+\scriptstyle b_0 & \scriptstyle b_A & \scriptstyle b_B & \scriptstyle b_C & \scriptstyle b_{AB} & \scriptstyle b_{AC} & \scriptstyle b_{BC} & \scriptstyle b_{ABC} \\
 + & - & - & - & + & + & + & - \\
 + & + & - & - & - & - & + & + \\
 + & - & + & - & - & + & - & + \\
@@ -148,8 +151,10 @@ $$
 + & + & - & + & - & + & - & - \\
 + & - & + & + & - & - & + & - \\
 + & + & + & + & + & + & + & + 
-\end{pmatrix}} \right)
+\end{array} 
+\right)
 \begin{pmatrix} b_0 \\ b_A \\ b_B \\ b_C \\ b_{AB} \\ b_{AC} \\ b_{BC} \\ b_{ABC} \end{pmatrix}
+\end{aligned}
 $$
 
 ---
