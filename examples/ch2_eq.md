@@ -153,6 +153,6 @@ $$
 * Equation (2.11):
 
 $$
-Y = b_0 + b_A \times  A + b_B \times  B + b_{AA} \times  A^2 + b_{BB} \times  B^2 + b_{AB} \times  AB
+y = \beta_0 + \beta_1 \times A + \beta_2 \times B + \beta_{12} \times A \times B + \beta_{11} \times A^2 + \beta_{22} \times B^2
 $$
 
