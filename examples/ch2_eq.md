@@ -82,3 +82,11 @@ Y_4
 $$
 
 ---
+
+* Equation (2.5):
+
+$$
+\mathbf{Y} = M \boldsymbol{\beta}
+$$
+
+---
