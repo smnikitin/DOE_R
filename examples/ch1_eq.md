@@ -40,7 +40,7 @@ $$
 * Equation (1.4):
 
 $$
-Y = b_0 + b_A \times  A + b_B \times  B + b_{AA} \times  A^2 + b_{BB} \times  B^2 + b_{AB} \times  AB
+Y = b_0 + b_A \times  A + b_B \times  B + b_{AA} \times  A^2 + b_{BB} \times  B^2 + b_{AB} \times  A \times B
 $$
 
 ---
