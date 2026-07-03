@@ -41,3 +41,27 @@ Y_4 &= \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)
 $$
 
 ---
+
+* Equation (2.4):
+
+$$
+\boxed{
+\begin{aligned}
+Y_1 &= \beta_0(+1) + \beta_1(-1) + \beta_2(-1) + \beta_{12}(-1)(-1) \\
+Y_2 &= \beta_0(+1) + \beta_1(+1) + \beta_2(-1) + \beta_{12}(+1)(-1) \\
+Y_3 &= \beta_0(+1) + \beta_1(-1) + \beta_2(+1) + \beta_{12}(-1)(+1) \\
+Y_4 &= \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)(+1)
+\end{aligned}
+}
+\implies
+\boxed{
+\begin{aligned}
+Y_1 &= \beta_0(+1) + \beta_1(-1) + \beta_2(-1) + \beta_{12}(+1) \\
+Y_2 &= \beta_0(+1) + \beta_1(+1) + \beta_2(-1) + \beta_{12}(-1) \\
+Y_3 &= \beta_0(+1) + \beta_1(-1) + \beta_2(+1) + \beta_{12}(-1) \\
+Y_4 &= \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)
+\end{aligned}
+}
+$$
+
+---
