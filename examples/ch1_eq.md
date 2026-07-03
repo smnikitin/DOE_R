@@ -13,13 +13,13 @@ $$
 * Equation (1.2):
 
 $$
-\text{Sign} = m \cdot \text{Number} + k
+\text{Sign} = m \times \text{Number} + k
 $$
 
 $$
 \begin{cases}
--1 = m \cdot \text{Low} + k \\
-+1 = m \cdot \text{High} + k
+-1 = m \times \text{Low} + k \\
++1 = m \times \text{High} + k
 \end{cases}
 $$
 
@@ -32,7 +32,7 @@ $$
 * Equation (1.3):
   
 $$
-Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_{12} X_1 X_2
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \beta_{12} \times X_1 \times X_2
 $$
 
 ---
