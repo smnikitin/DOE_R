@@ -145,7 +145,7 @@ $$
 * Equation (2.10):
   
 $$
-Y = \beta_0 + \beta_1 \times  X_1 + \beta_2  \times X_2 + \beta_{12} \times X_1 \times X_2
+y = \beta_0 + \beta_1 \times A + \beta_2 \times B + \beta_{12} \times A \times B
 $$
 
 ---
