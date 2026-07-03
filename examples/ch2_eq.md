@@ -29,15 +29,6 @@ Y_3 = \beta_0(+1) + \beta_1(-1) + \beta_2(+1) + \beta_{12}(-1)(+1) \\[6pt]
 Y_4 = \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)(+1)
 \end{array}
 }
-\implies
-\boxed{
-\begin{array}{l}
-Y_1 = \beta_0(+1) + \beta_1(-1) + \beta_2(-1) + \beta_{12}(+1) \\[6pt]
-Y_2 = \beta_0(+1) + \beta_1(+1) + \beta_2(-1) + \beta_{12}(-1) \\[6pt]
-Y_3 = \beta_0(+1) + \beta_1(-1) + \beta_2(+1) + \beta_{12}(-1) \\[6pt]
-Y_4 = \beta_0(+1) + \beta_1(+1) + \beta_2(+1) + \beta_{12}(+1)
-\end{array}
-}
 $$
 
 ---
