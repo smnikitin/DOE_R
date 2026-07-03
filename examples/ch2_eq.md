@@ -158,7 +158,7 @@ $$
 
 ---
 
-* Equation (2.13):
+* Equation (2.12):
 
 $$
 N = 2^k + 2 \times k + n_c
@@ -166,7 +166,7 @@ $$
 
 ---
 
-* Equation (2.14):
+* Equation (2.13):
 
 $$
 \alpha = (2^k)^{1/4}
@@ -174,7 +174,7 @@ $$
 
 ---
 
-* Equation (2.15):
+* Equation (2.14):
 
 $$
 y = \beta_0 + \sum \beta_i \times X_i + \sum \beta_{ij} \times X_i \times X_j
@@ -182,9 +182,16 @@ $$
 
 ---
 
-* Equation (2.16):
+* Equation (2.15):
 
 $$
 \frac{\partial y}{\partial x_1}, \frac{\partial y}{\partial x_2}, \dots \frac{\partial y}{\partial x_k}
 $$
 
+---
+
+* Equation (2.16):
+
+$$
+\text{Uniformity} = 85 + 5.2 \times X_1 - 1.5 \times X_2
+$$
