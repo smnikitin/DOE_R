@@ -13,7 +13,7 @@ $$
 * Equation (2.2):
 
 $$
-Y = \beta 0 + \beta 1 * X1 + \beta 2 * X2 + \beta 12 * X1 * X2
+Y = \beta_0 + \beta_1 * X_1 + \beta_2 * X_2 + \beta_{12} * X_1 * X_2
 $$
 
 ---
