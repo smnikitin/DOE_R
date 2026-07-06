@@ -40,7 +40,7 @@ $$
 
 ---
 
-* Equation (3.4):
+* Equation (3.5):
 
 $$
 \hat{y} = b_0 + b_{\mathrm{A}} \times x_{\mathrm{A}} + b_{\mathrm{B}} \times x_{\mathrm{B}} + b_{\mathrm{C}} \times x_{\mathrm{C}} + b_{\mathrm{AB}} \times x_{\mathrm{A}} \times x_{\mathrm{B}} + \cdots + \textcolor{orange}{b_{\mathrm{T}} \times x_{\mathrm{T}}}
