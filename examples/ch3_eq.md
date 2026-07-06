@@ -10,6 +10,21 @@ $$
 
 ---
 
+
+* Equation (3.2):
+
+$$
+\boxed{
+\begin{aligned}
+\tilde{y}_{(i)} &= y_{(i)} + g \\
+\mathring{y}_{(i)} &= y_{(i)} + h
+\end{aligned}
+}
+$$
+
+---
+
+
 * Equation (3.1):
 
 $$
