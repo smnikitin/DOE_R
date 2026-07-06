@@ -35,5 +35,5 @@ $$
 * Equation (3.4):
 
 $$
-\mathbf{A} = \frac{1}{8} \left[ -y_{(1)} + y_{(2)} - y_{(3)} + y_{(4)} - y_{(5)} + y_{(6)} - y_{(7)} + y_{(8)} \cancelto{0}{-2g + 2g} \cancelto{0}{-2h + 2h} \right]
+\mathbf{A} = \frac{1}{8} \left[ -y_{(1)} + y_{(2)} - y_{(3)} + y_{(4)} - y_{(5)} + y_{(6)} - y_{(7)} + y_{(8)} \underbrace{-2g + 2g}_{=0} \underbrace{-2h + 2h}_{=0} \right]
 $$
