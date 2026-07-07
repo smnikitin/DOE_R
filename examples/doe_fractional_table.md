@@ -10,7 +10,8 @@
 | **32** |  |  | $2^5$ ✅<br>*(full)* | $2_{VI}^{6-1}$ ⚠️<br>$\pm F=ABCDE$ | $2_{IV}^{7-2}$ ⚠️<br>$\pm F=ABC$<br>$\pm G=ABDE$ | $2_{IV}^{8-3}$ ⚠️<br>$\pm F=ABC$<br>$\pm G=ABD$<br>$\pm H=ACDE$ | $2_{IV}^{9-4}$ ⚠️ |
 | **64** |  |  | | $2^6$ ✅<br>*(full)* | $2_{VII}^{7-1}$ ⚠️<br>$\pm G=ABCDEF$ | $2_{V}^{8-2}$ ⚠️<br>$\pm G=ABCD$<br>$\pm H=ABEF$ | $2_{IV}^{9-3}$ ⚠️ |
 
-"""
+```R
+
 library(FrF2)
 library(knitr)
 
@@ -66,4 +67,4 @@ for (i in seq_along(runs_vals)) {
 # ==============================================================================
 kable(res_char_matrix, align = "c", caption = "Max Resolution by Runs and Factors")
 
-"""
+```
