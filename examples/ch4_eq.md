@@ -53,6 +53,6 @@ $$
 * Equation (4.6):
 
 $$
-\beta_{12} = \frac{\left(\frac{y_2+y_3}{2} - y_3\right) - \left(\frac{y_1+y_4}{2} - y_4\right)}{2}
+\beta_{ab} = \frac{\left(\frac{y_2+y_3}{2} - y_3\right) - \left(\frac{y_1+y_4}{2} - y_4\right)}{2}
 $$
 
