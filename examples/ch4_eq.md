@@ -18,15 +18,10 @@ $$
 ---
 
 
-* Equation (3.2):
+* Equation (4.2):
 
 $$
-\boxed{
-\begin{aligned}
-\tilde{y}_{(i)} &= y_{(i)} + g \\
-\mathring{y}_{(i)} &= y_{(i)} + h
-\end{aligned}
-}
+Y = \beta_0 + \beta_a \times A + \beta_b \times B + \beta_{ab} \times A \times B
 $$
 
 ---
