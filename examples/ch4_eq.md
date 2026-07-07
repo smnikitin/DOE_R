@@ -50,9 +50,9 @@ $$
 
 ---
 
-* Equation (4.5):
+* Equation (4.6):
 
 $$
-\beta_b = \beta_0 - \frac{y_1 + y_3}{2}
+\beta_{12} = \frac{\left(\frac{y_2+y_3}{2} - y_3\right) - \left(\frac{y_1+y_4}{2} - y_4\right)}{2}
 $$
 
