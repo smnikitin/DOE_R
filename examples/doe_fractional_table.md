@@ -1,6 +1,6 @@
 # Fractional Factorial Design Trade-off Table
 
-*Note: This matrix maps the number of factors ($k$) against the number of runs, displaying the standard fractional designs, their resolution, and optimal design generators.*
+*Note: This matrix maps the number of factors (k) against the number of runs, displaying the standard fractional designs, their resolution, and optimal design generators.*
 
 | Runs | $k=3$ | $k=4$ | $k=5$ | $k=6$ | $k=7$ | $k=8$ | $k=9$ |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
