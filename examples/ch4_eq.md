@@ -2,10 +2,17 @@ Here are the equations for Chapter 4 of the DOE book in LaTeX format:
 
 ---
 
-* Equation (3.1):
+* Equation (4.1):
 
 $$
-Y = f(X) + \epsilon
+\boxed{
+\begin{aligned}
+(-, -) &\rightarrow y_1 \\
+(+, -) &\rightarrow y_2 \\
+(-, +) &\rightarrow y_3 \\
+(+, +) &\rightarrow y_4
+\end{aligned}
+}
 $$
 
 ---
