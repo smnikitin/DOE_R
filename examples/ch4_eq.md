@@ -7,10 +7,10 @@ Here are the equations for Chapter 4 of the DOE book in LaTeX format:
 $$
 \boxed{
 \begin{aligned}
-(-, -) &\rightarrow  y_1 \\
-(+, -) &\rightarrow  y_2 \\
-(-, +) &\rightarrow  y_3 \\
-(+, +) &\rightarrow  y_4
+(-, -) &\rightarrow y_1 \\
+(+, -) &\rightarrow y_2 \\
+(-, +) &\rightarrow y_3 \\
+(+, +) &\rightarrow y_4
 \end{aligned}
 }
 $$
