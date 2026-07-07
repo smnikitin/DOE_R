@@ -1,0 +1,49 @@
+# ==============================================================================
+# SYSTEM SETUP
+# Note for students: The 'pid' package contains datasets and functions 
+# often used alongside FrF2. The system() command installs underlying 
+# dependencies if you are running this in a Linux environment (like Colab).
+# ==============================================================================
+# system("apt-get update && apt-get install -y r-cran-pid") # Uncomment if needed
+# install.packages("FrF2")
+library(FrF2)
+
+# ==============================================================================
+# 1. FULL FACTORIAL DESIGN (32 runs, 5 factors)
+# A full factorial tests every single physical combination of our factors.
+# Math: 2 levels ^ 5 factors = 32 required runs.
+# ==============================================================================
+# Setting randomize = FALSE keeps the matrix in "Standard Order" (Yates order).
+# We do this for teaching purposes so you can visually see the mathematical 
+# pattern of the -1 and 1 flips in the columns. In a real lab, ALWAYS randomize!
+full_fact <- FrF2(nruns = 32, nfactors = 5, randomize = FALSE)
+
+cat("\n--- FULL FACTORIAL: Design Properties ---\n")
+# The summary here will be brief. Because we ran all 32 combinations, 
+# there is no aliasing. Every main effect and interaction can be estimated independently.
+summary(full_fact)
+
+
+# ==============================================================================
+# 2. FRACTIONAL FACTORIAL DESIGN (8 runs, 5 factors)
+# A heavy fraction! We are squeezing 5 factors into a budget of only 8 runs.
+# Math: 2^(5-2) = 8 runs. Because we dropped from 32 to 8 (a quarter fraction),
+# the software must use two algebraic generators to build the matrix.
+# ==============================================================================
+frac_fact <- FrF2(nruns = 8, nfactors = 5, randomize = FALSE)
+
+cat("\n--- FRACTIONAL FACTORIAL: Design Properties ---\n")
+# Pay close attention to the summary output here! 
+# 1. Look for $generators (e.g., D=AB, E=AC) to see how columns D and E were built.
+# 2. Look at the Alias structure ($main). You will see main effects are perfectly 
+#    confounded with 2-way interactions (e.g., B=AD). This makes it a Resolution III design.
+summary(frac_fact)
+
+# ==============================================================================
+# 3. EXTRACTING METADATA PROGRAMMATICALLY
+# If you are writing an automated script and need to pull the exact Resolution 
+# number without reading the text summary, you can extract it directly from 
+# the design's hidden catalog entry:
+# ==============================================================================
+cat("\n--- Programmatic Resolution Check ---\n")
+cat("Resolution:", design.info(frac_fact)$catlg.entry[[1]]$res, "\n")
