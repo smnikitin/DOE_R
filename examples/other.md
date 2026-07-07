@@ -17,3 +17,8 @@
 | **16** | $2^3$<br>*(twice)* | $2^4$<br><span style="background-color: #d4edda; color: #155724; padding: 2px 6px; border-radius: 4px;">*(full)*</span> | $2_{V}^{5-1}$<br>$\pm E=ABCD$ | $2_{IV}^{6-2}$<br>$\pm E=ABC$<br>$\pm F=ABD$ | $2_{IV}^{7-3}$<br>$\pm E=ABC$<br>$\pm F=ABD$<br>$\pm G=ACD$ | $2_{IV}^{8-4}$<br>$\pm E=ABC$<br>$\pm F=ABD$<br>$\pm G=ACD$<br>$\pm H=BCD$ | $2_{III}^{9-5}$ |
 | **32** | $2^3$<br>*(4 times)* | $2^4$<br>*(twice)* | $2^5$<br><span style="background-color: #d4edda; color: #155724; padding: 2px 6px; border-radius: 4px;">*(full)*</span> | $2_{VI}^{6-1}$<br>$\pm F=ABCDE$ | $2_{IV}^{7-2}$<br>$\pm F=ABC$<br>$\pm G=ABDE$ | $2_{IV}^{8-3}$<br>$\pm F=ABC$<br>$\pm G=ABD$<br>$\pm H=ACDE$ | $2_{IV}^{9-4}$ |
 | **64** | $2^3$<br>*(8 times)* | $2^4$<br>*(4 times)* | $2^5$<br>*(twice)* | $2^6$<br><span style="background-color: #d4edda; color: #155724; padding: 2px 6px; border-radius: 4px;">*(full)*</span> | $2_{VII}^{7-1}$<br>$\pm G=ABCDEF$ | $2_{V}^{8-2}$<br>$\pm G=ABCD$<br>$\pm H=ABEF$ | $2_{IV}^{9-3}$ |
+
+
+| Runs | $k=3$ | $k=4$ | $k=5$ | $k=6$ |
+| :--- | :--- | :--- | :--- | :--- |
+| **8** | $2^3$ ✅ <br> *(full)* | $2_{IV}^{4-1}$ | $2_{III}^{5-2}$ | ... |
