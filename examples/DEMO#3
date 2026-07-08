@@ -1,0 +1,52 @@
+# ==============================================================================
+# SYSTEM SETUP
+# Note for students: We use 'FrF2' for experimental design generation and 
+# 'pid' for Pareto visualization. 
+# ==============================================================================
+# install.packages("FrF2")
+# install.packages("pid")
+library(FrF2)
+library(pid)
+
+# ==============================================================================
+# 1. SATURATED FRACTIONAL FACTORIAL DESIGN (8 runs, 7 factors)
+# We are fitting 7 factors into an 8-run budget. This is a "saturated" design.
+# Math: 2^(7-4) = 8 runs. 
+# Because the number of factors (7) equals the available degrees of freedom (8 runs - 1),
+# we have zero degrees of freedom left for error estimation.
+# ==============================================================================
+doe_matrix <- FrF2(nruns = 8, nfactors = 7, randomize = FALSE)
+
+# ==============================================================================
+# 2. RESPONSE INTEGRATION & MODELING
+# We attach our raw results to the matrix. Since this is a saturated design,
+# the linear model (lm) will consume all 7 degrees of freedom to solve 
+# the main effects.
+# ==============================================================================
+data_Y <- c(49.9, 44.3, 44.9, 78.9, 50.5, 45.3, 44.7, 81.5)
+doe_analyzed <- add.response(doe_matrix, response = data_Y)
+
+# Fit the Linear Model
+# We explicitly define factors A through G.
+model <- lm(data_Y ~ A + B + C + D + E + F + G, data = doe_analyzed)
+
+cat("\n--- Design Matrix with Responses ---\n")
+print(doe_analyzed)
+
+# ==============================================================================
+# 3. PARETO CHART OF EFFECTS
+# The 'pid' package automatically calculates the standardized effects 
+# (2 * coefficients) and sorts them. This is the visual baseline for 
+# determining which factors drive the process.
+# ==============================================================================
+paretoPlot(model, main = "Pareto Chart of Effects")
+
+# ==============================================================================
+# 4. FULL ALIAS STRUCTURE ANALYSIS
+# In a Resolution III design, main effects are aliased with 2-factor interactions.
+# By setting the formula to .^20, we force R to display the complete 
+# confounding chain, including higher-order interactions that are 
+# typically truncated by the software.
+# ==============================================================================
+cat("\n--- Complete Alias Structure ---\n")
+print(aliases(lm(data_Y ~ .^20, data = doe_analyzed)))
