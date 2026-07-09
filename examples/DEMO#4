@@ -155,8 +155,11 @@ library(pid)
 # ==============================================================================
 # 1. DEFINE THE DATASET
 # Definitive Screening Designs analyze main effects, interactions, and 
-# quadratic curvature in a single 17-run matrix (for 7 factors) or use R 15-run
-# dsd_matrix_17 <- DefScreen(m = 7)
+# quadratic curvature in a single 17-run matrix (for 7 factors) or use R 15-run:
+# dsd_matrix <- DefScreen(m = 7, randomize = FALSE)
+# dsd_matrix$Response <- c(79.0, 66.0, 65.4, 79.6, 45.9, 44.1, 44.6, 45.4, 50.4, 79.6, 45.4, 44.6, 81.1, 48.9, 90.0)
+# new_effects_model <- lm(Response ~ ., data = dsd_matrix)
+# paretoPlot(new_effects_model, main = "Pareto Chart of Main Effects ")
 # ==============================================================================
 doe_data <- data.frame(
   A = c(0, 0, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0),
