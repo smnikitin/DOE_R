@@ -51,7 +51,7 @@ $$
 * Equation (5.6):
 
 $$
-f(x) \approx f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \dots
+f(x_1, x_2) \approx f(0, 0) + \left[ x_1 \frac{\partial f}{\partial x_1}(0, 0) + x_2 \frac{\partial f}{\partial x_2}(0, 0) \right] + \frac{1}{2!} \left[ x_1^2 \frac{\partial^2 f}{\partial x_1^2}(0, 0) + 2x_1 x_2 \frac{\partial^2 f}{\partial x_1 \partial x_2}(0, 0) + x_2^2 \frac{\partial^2 f}{\partial x_2^2}(0, 0) \right]
 $$
 
 ---
