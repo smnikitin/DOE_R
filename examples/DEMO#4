@@ -155,7 +155,8 @@ library(pid)
 # ==============================================================================
 # 1. DEFINE THE DATASET
 # Definitive Screening Designs analyze main effects, interactions, and 
-# quadratic curvature in a single 17-run matrix (for 7 factors).
+# quadratic curvature in a single 17-run matrix (for 7 factors) or use R 15-run
+# dsd_matrix_17 <- DefScreen(m = 7)
 # ==============================================================================
 doe_data <- data.frame(
   A = c(0, 0, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0),
@@ -187,27 +188,4 @@ summary(main_effects_model)
 # ==============================================================================
 paretoPlot(main_effects_model, main = "Pareto Chart of Main Effects")
 
-library(knitr)
 
-# ==============================================================================
-# 1. DEFINE RANGE OF EXPERIMENTS
-# DSDs follow the rule: Runs = 2*Factors + 1
-# ==============================================================================
-factors_vals <- 3:20
-# Calculate the required runs for each number of factors
-runs_vals <- 2 * factors_vals + 1
-
-# ==============================================================================
-# 2. CREATE AND POPULATE DSD EXISTENCE MATRIX
-# ==============================================================================
-# We create a table to show students where DSDs exist in the design space
-dsd_table <- data.frame(
-  Factors = factors_vals,
-  Required_Runs = runs_vals
-)
-
-# ==============================================================================
-# 3. PRINT FOR PUBLICATION
-# ==============================================================================
-kable(dsd_table, align = "c", 
-      caption = "DSD Existence: Required Runs for m Factors (Runs = 2m + 1)")
