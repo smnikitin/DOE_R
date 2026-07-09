@@ -12,10 +12,10 @@ $$
 ---
 
 
-* Equation (4.2):
+* Equation (5.2):
 
 $$
-Y = \beta_0 + \beta_a \times A + \beta_b \times B + \beta_{ab} \times A \times B
+Y = 80.2 + 2.8 \times A + 3.7 \times B + 0.4 \times A \times B 
 $$
 
 ---
