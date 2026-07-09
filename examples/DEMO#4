@@ -1,0 +1,144 @@
+# ==============================================================================
+# SYSTEM SETUP
+# Plackett-Burman designs are available via the 'FrF2' package, 
+# which is the standard tool for generating non-geometric designs in R.
+# ==============================================================================
+# install.packages("FrF2")
+library(FrF2)
+
+# ==============================================================================
+# 1. PLACKETT-BURMAN DESIGN GENERATION
+# PB designs are distinct from standard fractional factorials.
+# To match the 12-run, 11-factor structure seen in "image_cac746.png", 
+# we simply specify the number of runs.
+# ==============================================================================
+# nruns = 12 is the smallest possible PB design.
+# It automatically generates 11 factors (A through L).
+pb_design <- pb(nruns = 12)
+
+cat("\n--- Plackett-Burman Design Matrix (12 Runs, 11 Factors) ---\n")
+# Print the design to the console to see the -1 and 1 layout
+print(pb_design)
+
+# ==============================================================================
+# 2. VERIFYING DESIGN PROPERTIES
+# Use summary() to confirm the design specifications.
+# Note that PB designs are Resolution III, meaning main effects are 
+# confounded with 2-factor interactions.
+# ==============================================================================
+summary(pb_design)
+
+library(FrF2)
+library(knitr)
+
+# ==============================================================================
+# 1. GENERATE THE RAW LOOKUP DATA (Fractional Designs)
+# ==============================================================================
+doe_lookup <- data.frame(
+  Factors    = sapply(catlg, function(x) x$nfac),
+  Runs       = sapply(catlg, function(x) x$nruns),
+  Resolution = sapply(catlg, function(x) x$res)
+)
+
+clean_lookup <- aggregate(Resolution ~ Factors + Runs, data = doe_lookup, max)
+final_table <- subset(clean_lookup, Factors >= 2 & Factors <= 64)
+
+# ==============================================================================
+# 2. PIVOT INTO A 2D MATRIX
+# ==============================================================================
+res_matrix <- tapply(final_table$Resolution, 
+                     list(Runs = final_table$Runs, Factors = final_table$Factors), 
+                     max)
+
+# Convert the numeric matrix to a character matrix so we can insert text
+res_char_matrix <- as.matrix(res_matrix)
+runs_vals <- as.numeric(rownames(res_char_matrix))
+factors_vals <- as.numeric(colnames(res_char_matrix))
+
+# ==============================================================================
+# 3. INJECT FULL FACTORIALS AND CLEAN UP
+# ==============================================================================
+for (i in seq_along(runs_vals)) {
+  for (j in seq_along(factors_vals)) {
+    r <- runs_vals[i]
+    f <- factors_vals[j]
+    
+    # Rule 1: If Runs exactly equals 2^Factors, it's a Full Factorial
+    if (r == 2^f) {
+      res_char_matrix[i, j] <- "Full"
+    } 
+    # Rule 2: If Runs are greater than 2^Factors, it's a Replicated Full Factorial
+    else if (r > 2^f) {
+      res_char_matrix[i, j] <- "" 
+    } 
+    # Rule 3: Replace any remaining NAs (impossible designs) with a dash
+    else if (is.na(res_char_matrix[i, j])) {
+      res_char_matrix[i, j] <- "   "
+    }
+  }
+}
+
+# ==============================================================================
+# 4. PRINT FOR PUBLICATION
+# ==============================================================================
+# Convert rownames (Runs) and colnames (Factors) to numeric for filtering
+r_idx <- as.numeric(rownames(res_char_matrix))
+c_idx <- as.numeric(colnames(res_char_matrix))
+
+# Create logical masks
+# Filter rows: 8 to 64
+# Filter columns: 12 to 64
+row_mask <- r_idx >= 8 & r_idx <= 64
+col_mask <- c_idx >= 7 & c_idx <= 33
+
+# Subset the matrix using the masks
+matrix_subset <- res_char_matrix[row_mask, col_mask]
+
+# Print the subsetted matrix
+kable(matrix_subset, align = "c", caption = "Max Resolution by Runs (8-64) and Factors (12-64)")
+
+library(knitr)
+
+# ==============================================================================
+# 1. DEFINE RANGE OF EXPERIMENTS
+# ==============================================================================
+# Plackett-Burman designs start at 12 runs
+runs_vals <- seq(8, 64, by = 4)
+factors_vals <- 2:64
+
+# ==============================================================================
+# 2. CREATE AND POPULATE PB EXISTENCE MATRIX
+# ==============================================================================
+pb_matrix <- matrix("   ", 
+                    nrow = length(runs_vals), 
+                    ncol = length(factors_vals),
+                    dimnames = list(Runs = runs_vals, Factors = factors_vals))
+
+# Populate with "PB" for ALL valid designs:
+# Rule: Runs must be a multiple of 4 AND Factors <= Runs - 1
+for (i in seq_along(runs_vals)) {
+  for (j in seq_along(factors_vals)) {
+    r <- runs_vals[i]
+    f <- factors_vals[j]
+    
+    if (r %% 4 == 0 && f <= (r - 1)) {
+      pb_matrix[i, j] <- "PB"
+    }
+  }
+}
+
+# ==============================================================================
+# 3. PRINT FOR PUBLICATION (Subsetted View)
+# ==============================================================================
+# Filter rows (Runs): 8 to 64
+# Filter columns (Factors): 12 to 64
+r_vals <- as.numeric(rownames(pb_matrix))
+f_vals <- as.numeric(colnames(pb_matrix))
+
+row_mask <- r_vals >= 8 & r_vals <= 64
+col_mask <- f_vals >= 7 & f_vals <= 33
+
+pb_subset <- pb_matrix[row_mask, col_mask]
+
+kable(pb_subset, align = "c", 
+      caption = "Full Scope of Plackett-Burman (PB) Design Points (Runs 12-64, Factors 12-64)")
