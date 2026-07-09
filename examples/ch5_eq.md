@@ -2,22 +2,12 @@ Here are the equations for Chapter 5 of the DOE book in LaTeX format:
 
 ---
 
-* Equation (4.1):
+* Equation (5.1):
 
 $$
 Y = 69.225 + 2.175\times A + 2.625 \times B + 0.075 \times A \times B
 $$
 
-$$
-\boxed{
-\begin{aligned}
-(-, -) &\rightarrow \ \ y_1 \\
-(+, -) &\rightarrow \ \ y_2 \\
-(-, +) &\rightarrow \ \ y_3 \\
-(+, +) &\rightarrow \ \ y_4
-\end{aligned}
-}
-$$
 
 ---
 
