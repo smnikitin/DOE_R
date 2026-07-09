@@ -142,3 +142,72 @@ pb_subset <- pb_matrix[row_mask, col_mask]
 
 kable(pb_subset, align = "c", 
       caption = "Full Scope of Plackett-Burman (PB) Design Points (Runs 12-64, Factors 12-64)")
+
+# ==============================================================================
+# SYSTEM SETUP
+# Definitive Screening Designs (DSD) are generated via the 'daewr' package, 
+# and analysis visualization is handled by 'pid'.
+# ==============================================================================
+# install.packages(c("daewr", "pid"))
+library(daewr)
+library(pid)
+
+# ==============================================================================
+# 1. DEFINE THE DATASET
+# Definitive Screening Designs analyze main effects, interactions, and 
+# quadratic curvature in a single 17-run matrix (for 7 factors).
+# ==============================================================================
+doe_data <- data.frame(
+  A = c(0, 0, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 1, -1, 0),
+  B = c(1, -1, 0, 0, -1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 0),
+  C = c(1, -1, 1, -1, 0, 0, 1, -1, -1, 1, -1, 1, -1, 1, 1, -1, 0),
+  D = c(1, -1, -1, 1, -1, 1, 0, 0, 1, -1, -1, 1, 1, -1, 1, -1, 0),
+  E = c(1, -1, 1, -1, 1, -1, -1, 1, 0, 0, -1, 1, -1, -1, -1, 1, 0),
+  F = c(1, -1, -1, 1, 1, -1, 1, -1, 1, -1, 0, 0, -1, 1, -1, 1, 0),
+  G = c(1, -1, -1, 1, 1, -1, -1, 1, -1, 1, 1, -1, 0, 0, 1, -1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 44.5, 45.5, 
+               79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+
+cat("\n--- Definitive Screening Design Matrix (17 Runs, 7 Factors) ---\n")
+print(doe_data)
+
+# ==============================================================================
+# 2. FIT THE MAIN EFFECTS MODEL
+# Fitting a linear model to identify the primary drivers of the system.
+# ==============================================================================
+main_effects_model <- lm(Response ~ ., data = doe_data)
+
+cat("\n--- Model Summary ---\n")
+summary(main_effects_model)
+
+# ==============================================================================
+# 3. VISUALIZATION
+# The Pareto chart clearly displays the statistically significant factors.
+# ==============================================================================
+paretoPlot(main_effects_model, main = "Pareto Chart of Main Effects")
+
+library(knitr)
+
+# ==============================================================================
+# 1. DEFINE RANGE OF EXPERIMENTS
+# DSDs follow the rule: Runs = 2*Factors + 1
+# ==============================================================================
+factors_vals <- 3:20
+# Calculate the required runs for each number of factors
+runs_vals <- 2 * factors_vals + 1
+
+# ==============================================================================
+# 2. CREATE AND POPULATE DSD EXISTENCE MATRIX
+# ==============================================================================
+# We create a table to show students where DSDs exist in the design space
+dsd_table <- data.frame(
+  Factors = factors_vals,
+  Required_Runs = runs_vals
+)
+
+# ==============================================================================
+# 3. PRINT FOR PUBLICATION
+# ==============================================================================
+kable(dsd_table, align = "c", 
+      caption = "DSD Existence: Required Runs for m Factors (Runs = 2m + 1)")
