@@ -33,7 +33,7 @@ $$
 * Equation (5.4):
 
 $$
-Y = 92.103 - 1.767A + 0.483B - 4.362A^2 - 4.412B^2 + 2.475AB
+Y = 92.103 - 1.767 \times A + 0.483 \times B - 4.362 \times A^2 - 4.412 \times B^2 + 2.475 \times A \times B
 $$
 
 ---
