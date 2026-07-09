@@ -37,3 +37,12 @@ Y = 92.103 - 1.767 \times A + 0.483 \times B - 4.362 \times A^2 - 4.412 \times B
 $$
 
 ---
+
+
+* Equation (5.5):
+
+$$
+Y = 90 + 7.5 \times A + 7.5 \times B - 17.5 \times A^2 - 17.5 \times B^2 + 10 \times A \times B
+$$
+
+---
