@@ -51,7 +51,7 @@ $$
 * Equation (5.6):
 
 $$
-f(A, B) \approx f(0, 0) + \left[ A \frac{\partial f}{\partial A} + B \frac{\partial f}{\partial B} \right] + \frac{1}{2!} \left[ A^2 \frac{\partial^2 f}{\partial A^2} + 2A B \frac{\partial^2 f}{\partial A \partial B} + x_2^2 \frac{\partial^2 f}{\partial B^2} \right]
+f(A, B) \approx f(0, 0) + \left[ A \frac{\partial f}{\partial A} + B \frac{\partial f}{\partial B} \right] + \frac{1}{2!} \left[ A^2 \frac{\partial^2 f}{\partial A^2} + 2A B \frac{\partial^2 f}{\partial A \partial B} + B^2 \frac{\partial^2 f}{\partial B^2} \right]
 $$
 
 ---
