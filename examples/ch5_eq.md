@@ -46,3 +46,12 @@ Y = 90 + 7.5 \times A + 7.5 \times B - 17.5 \times A^2 - 17.5 \times B^2 + 10 \t
 $$
 
 ---
+
+
+* Equation (5.6):
+
+$$
+f(x) \approx f(a) + f'(a)(x - a) + \frac{f''(a)}{2!}(x - a)^2 + \dots
+$$
+
+---
