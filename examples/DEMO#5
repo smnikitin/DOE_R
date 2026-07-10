@@ -8,6 +8,7 @@ doe_data <- data.frame(
   B = c(-1, -1, 1, 1),
   Y = c(64.5, 68.7, 69.6, 74.1)
 )
+print(doe_data)
 
 # Fit the Full Factorial Model (Main effects + Interaction)
 model_ff <- lm(Y ~ A * B, data = doe_data)
