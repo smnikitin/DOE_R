@@ -51,7 +51,7 @@ $$
 * Equation (5.6):
 
 $$
-f(A, B) \approx \underbrace{f(0, 0)}_{\text{Intercept}} + \underbrace{\left[ A \times \frac{\partial f}{\partial A} + B \times \frac{\partial f}{\partial B} \right]}_{\text{Linear Main Effects}} + \frac{1}{2!} \left[ \underbrace{A^2 \times \frac{\partial^2 f}{\partial A^2} + B^2 \times \frac{\partial^2 f}{\partial B^2}}_{\text{Quadratic Curvature}} + \underbrace{2 \times A \times B \times \frac{\partial^2 f}{\partial A \partial B}}_{\text{Interaction}} \right]
+f(x_1, x_2) = f(A, B) \approx \underbrace{f(0, 0)}_{\text{Intercept}} + \underbrace{\left[ A \times \frac{\partial f}{\partial A} + B \times \frac{\partial f}{\partial B} \right]}_{\text{Linear Main Effects}} + \frac{1}{2!} \left[ \underbrace{A^2 \times \frac{\partial^2 f}{\partial A^2} + B^2 \times \frac{\partial^2 f}{\partial B^2}}_{\text{Quadratic Curvature}} + \underbrace{2 \times A \times B \times \frac{\partial^2 f}{\partial A \partial B}}_{\text{Interaction}} \right]
 $$
 
 ---
