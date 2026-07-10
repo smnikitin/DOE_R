@@ -32,3 +32,119 @@ filled.contour(a_seq, b_seq, z_vals,
                ylab = "Factor B",
                main = "Contour Plot of Y vs A and B", 
                nlevels = 10)
+
+# same but norm units:
+doe_data <- data.frame(
+  A = c(-0.7, -0.5, -0.7, -0.5),
+  B = c(-0.8, -0.8, -0.6, -0.6),
+  Y = c(64.575, 68.675, 69.575, 74.075)
+)
+
+# area 2:
+doe_data <- data.frame(
+  A = c(-1, 1, -1, 1),
+  B = c(-1, -1, 1, 1),
+  Y = c(74.1, 78.9, 80.7, 87.1)
+)
+
+# area 3:
+
+# CREATE THE DATASET (Face-Centered Central Composite Design)
+rsm_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, 0, 0, 0, 0, 0, 0, 0),
+  B = c(-1, -1, 1, 1, 0, 0, -1, 1, 0, 0, 0, 0, 0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 86.0, 87.2, 88.2, 92.1, 92.1, 92.1, 92.1, 92.1)
+)
+print(rsm_data)
+
+# FIT THE FULL QUADRATIC MODEL
+model_rsm <- lm(Y ~ A + B + A:B + I(A^2) + I(B^2), data = rsm_data)
+
+# View the model performance
+summary(model_rsm)
+
+# GENERATE THE PARETO PLOT
+paretoPlot(model_rsm, main = "Pareto Plot of RSM Effects") 
+
+# DEFINE PREDICTION GRID & GENERATE CONTOUR PLOT
+a_seq <- seq(-1, 1, length.out = 50)
+b_seq <- seq(-1, 1, length.out = 50)
+grid <- expand.grid(A = a_seq, B = b_seq)
+grid$Y_pred <- predict(model_rsm, newdata = grid)
+z_vals <- matrix(grid$Y_pred, nrow = length(a_seq), ncol = length(b_seq))
+filled.contour(a_seq, b_seq, z_vals,
+               # Black=High (0), White=Low (0.9)
+               color.palette = function(n) gray.colors(n, start = 0.9, end = 0),
+               xlab = "Factor A",
+               ylab = "Factor B",
+               main = "RSM Contour Plot (Grayscale)",
+               nlevels = 10)
+
+# area 3 (norm units)
+
+rsm_data <- data.frame(
+  A       = c(-0.1,  0.9, -0.1,  0.9,  0.4,  0.4,  0.4,  0.9, -0.1),
+  B       = c(-0.2, -0.2,  0.8,  0.8,  0.3,  0.8, -0.2,  0.3,  0.3),
+  Y       = c(87.075, 78.575, 83.075, 84.575, 92.075, 88.200, 87.200, 85.950, 89.450)
+)
+
+# bonus: 
+
+# 1. Input your custom un-coded dataset
+rsm_data <- data.frame(
+  Section = c("Factorial", "Factorial", "Factorial", "Factorial", "Center", "Star", "Star", "Star", "Star"),
+  A       = c(-0.1,  0.9, -0.1,  0.9,  0.4,  0.4,  0.4,  0.9, -0.1),
+  B       = c(-0.2, -0.2,  0.8,  0.8,  0.3,  0.8, -0.2,  0.3,  0.3),
+  Y       = c(87.075, 78.575, 83.075, 84.575, 92.075, 88.200, 87.200, 85.950, 89.450)
+)
+
+# 2. Fit the second-order quadratic model
+model_rsm <- lm(Y ~ A + B + A:B + I(A^2) + I(B^2), data = rsm_data)
+
+# 3. Print out the regression coefficients
+print(summary(model_rsm))
+
+# 4. Generate the high-precision grid matching your actual boundaries
+a_seq <- seq(-0.2, 1.0, length.out = 100)
+b_seq <- seq(-0.3, 0.9, length.out = 100)
+grid  <- expand.grid(A = a_seq, B = b_seq)
+z_vals <- matrix(predict(model_rsm, newdata = grid), nrow = 100, ncol = 100)
+
+# 5. Plot the final surface layout
+filled.contour(
+  a_seq, b_seq, z_vals,
+  color.palette = function(n) gray.colors(n, start = 0.9, end = 0.1, rev = FALSE),
+  xlab = "Factor A (Actual Units)",
+  ylab = "Factor B (Actual Units)",
+  main = "RSM Optimization Surface",
+  nlevels = 30,
+  plot.axes = {
+    axis(1); axis(2)
+    contour(a_seq, b_seq, z_vals, add = TRUE, col = "white", lwd = 0.5)
+    points(rsm_data$A, rsm_data$B, pch = 21, bg = "red", col = "black", cex = 1.2)
+    # Mark the exact mathematical maximum point
+    points(0.3, 0.3, pch = 4, col = "cyan", lwd = 3, cex = 1.5)
+  }
+)
+
+# 1. Plot the A and B coordinates
+plot(rsm_data$A, rsm_data$B,
+     pch = 19,
+     col = "blue",
+     xlab = "Factor A",
+     ylab = "Factor B",
+     main = "Experimental Design Layout with Y Values",
+     xlim = c(-1.5, 1.5),
+     ylim = c(-1.5, 1.5))
+
+# 2. Add grid lines
+grid()
+
+# 3. Add labels for each point using the Y values
+# 'pos = 3' places the text just above the point
+text(rsm_data$A, rsm_data$B,
+     labels = rsm_data$Y,
+     pos = 3,
+     cex = 0.8,
+     col = "darkblue")
+
