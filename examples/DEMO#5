@@ -1,0 +1,33 @@
+# system("apt-get update && apt-get install -y r-cran-pid")
+# install.packages("pid")
+library(pid)
+
+# Create the dataset from your table
+doe_data <- data.frame(
+  A = c(-1, 1, -1, 1),
+  B = c(-1, -1, 1, 1),
+  Y = c(64.5, 68.7, 69.6, 74.1)
+)
+
+# Fit the Full Factorial Model (Main effects + Interaction)
+model_ff <- lm(Y ~ A * B, data = doe_data)
+
+# View the results
+summary(model_ff)
+
+# Pareto chart
+paretoPlot(model_ff, main = "Pareto Chart of Effects")
+
+# Generate the Grayscale Contour Plot
+a_seq <- seq(-1, 1, length.out = 50)
+b_seq <- seq(-1, 1, length.out = 50)
+grid_data <- expand.grid(A = a_seq, B = b_seq)
+grid_data$Y_pred <- predict(model_ff, newdata = grid_data)
+z_vals <- matrix(grid_data$Y_pred, nrow = length(a_seq), ncol = length(b_seq))
+filled.contour(a_seq, b_seq, z_vals,
+               # Black=High (0), White=Low (0.9)
+               color.palette = function(n) gray.colors(n, start = 0.9, end = 0),
+               xlab = "Factor A",
+               ylab = "Factor B",
+               main = "Contour Plot of Y vs A and B", 
+               nlevels = 10)
