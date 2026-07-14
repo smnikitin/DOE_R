@@ -1,0 +1,63 @@
+# Define the DOE data from your matrix
+doe_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, -1, 1),
+  B = c(-1, -1, 1, 1, -1, -1, 1, 1),
+  C = c(-1, -1, -1, -1, 1, 1, 1, 1),
+  Response = c(49.5, 44.5, 44.5, 79.5, 50.5, 45.5, 45.5, 80.5)
+)
+print(doe_data)
+
+# Fit the linear model with all interactions
+model_DOE <- lm(Response ~ (A + B + C)^3, data = doe_data)
+summary(model_DOE)
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box()
+
+# ---
+
+# Define the DOE data from your matrix
+doe_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, -1, 1),
+  B = c(-1, -1, 1, 1, -1, -1, 1, 1),
+  C = c(-1, -1, -1, -1, 1, 1, 1, 1),
+  Response = c(49.5, 44.5, 44.5, 79.5, 30.5, 25.5, 25.5, 60.5)
+)
+print(doe_data)
+
+# Fit the linear model with all interactions
+model_DOE <- lm(Response ~ (A + B + C)^3, data = doe_data)
+summary(model_DOE)
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box()
+
+# ---
+
+#  Define your data
+doe_data <- data.frame(
+  Blocks = as.factor(c(1, 1, 1, 1, 2, 2, 2, 2)),
+  A = c(-1, 1, 1, -1, 1, -1, -1, 1),
+  B = c(-1, 1, -1, 1, -1, 1, -1, 1),
+  C = c(-1, -1, 1, 1, -1, -1, 1, 1),
+  Response = c(49.5, 79.5, 45.5, 45.5, 24.5, 24.5, 30.5, 60.5)
+)
+print(doe_data)
+
+# Fit the linear model with all interactions
+model_DOE <- lm(Response ~ (A + B + C)^3, data = doe_data)
+summary(model_DOE)
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box()
+
+
