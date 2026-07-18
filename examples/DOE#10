@@ -1,0 +1,27 @@
+doe_data <- data.frame(
+  A = c(-1, 1, -1, 1),
+  B = c(-1, -1, 1, 1),
+  Response = c(74.1, 78.9, 80.7, 87.1)
+)
+print(doe_data)
+
+# Fit the model
+model_DOE <- lm(Response ~ A * B, data = doe_data)
+
+# View results
+summary(model_DOE)
+
+#---
+
+doe_data <- data.frame(
+  A = c(-1, 1, -1, 0.8),
+  B = c(-1, -1, 1, 1),
+  Response = c(74.1, 78.9, 80.7, 86.1)
+)
+print(doe_data)
+
+# Fit the model
+model_DOE <- lm(Response ~ A * B, data = doe_data)
+
+# View results
+summary(model_DOE)
