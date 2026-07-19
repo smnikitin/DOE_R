@@ -9,6 +9,7 @@ print(doe_data)
 doe_data$Center_Curvature <- as.numeric(doe_data$A == 0 & doe_data$B == 0)
 
 model <- lm(Response ~ A * B + Center_Curvature, data = doe_data)
+summary(model)
 
 # STANDARD OUTPUTS 
 print(anova(model))
@@ -17,7 +18,7 @@ print(anova(model))
 model <- lm(Response ~ A * B, data = doe_data)
 print(data.frame(
   Metric = c("      R-sq  :", "      R-sq(adj) :", "      S  :"),
-  Value  = c(paste0(round(summary(model)$r.squared, 4)), paste0(round(max(0, summary(model)$adj.r.squared), 4)), round(summary(model)$sigma, 4))))
+  Value  = c(summary(model)$r.squared*100, max(0, summary(model)$adj.r.squared*100), summary(model)$sigma)))
 
 # main effect plots
 par(mfrow=c(1,2)); y_lim <- range(doe_data$Response)
