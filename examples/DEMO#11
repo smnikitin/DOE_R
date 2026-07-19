@@ -1,0 +1,56 @@
+doe_data <- data.frame(
+  A = rep(c(-1, 1, -1, 1), 3),
+  B = rep(c(-1, -1, 1, 1), 3),
+  Response = c(73.6, 79.0, 76.3, 87.5, 
+               76.9, 79.8, 77.9, 84.2, 
+               71.1, 74.3, 83.0, 89.0)
+)
+print(doe_data)
+
+# Fit the model and get the base flat ANOVA table
+model <- lm(Response ~ A * B, data = doe_data)
+summary(model)
+
+# simple ANOVA
+print(anova(model))
+
+# ---
+
+# advance ANOVA:
+
+base_aov <- anova(model)
+
+# Extract the Error metrics (needed for all F-value calculations)
+df_err <- base_aov["Residuals", "Df"]
+ms_err <- base_aov["Residuals", "Mean Sq"]
+
+# Create a mathematical helper function to group rows
+get_row <- function(name, rows) {
+  df <- sum(base_aov$Df[rows])
+  ss <- sum(base_aov$`Sum Sq`[rows])
+  ms <- ss / df
+  f_val <- ms / ms_err
+  p_val <- pf(f_val, df, df_err, lower.tail = FALSE)
+  
+  data.frame(Source = name, DF = df, Adj_SS = ss, Adj_MS = ms, 
+             F_Value = f_val, P_Value = p_val)
+}
+
+# Construct the table hierarchy
+minitab_style <- rbind(
+  get_row("Model", 1:3),
+  get_row("  Linear", 1:2),
+  get_row("    A", 1),
+  get_row("    B", 2),
+  get_row("  2-Way Interactions", 3),
+  get_row("    A*B", 3),
+  data.frame(Source = "Error", DF = df_err, 
+             Adj_SS = base_aov["Residuals", "Sum Sq"], Adj_MS = ms_err, 
+             F_Value = NA, P_Value = NA),
+  data.frame(Source = "Total", DF = sum(base_aov$Df), 
+             Adj_SS = sum(base_aov$`Sum Sq`), Adj_MS = NA, 
+             F_Value = NA, P_Value = NA)
+)
+
+# Print with formatted decimal places
+print(minitab_style, row.names = FALSE, digits = 4)
