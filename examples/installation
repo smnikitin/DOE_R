@@ -12,3 +12,4 @@ install.packages("ggplot2")    # Professional visualization for your book
 install.packages("qcc")
 install.packages("knitr") 
 install.packages("car")
+install.packages("equatiomatic")
