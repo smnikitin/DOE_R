@@ -1,0 +1,163 @@
+library(equatiomatic)
+
+# data
+
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+print(doe_data)
+
+# Fit Model
+model_DOE <- lm(Response ~ A+B, data = doe_data)
+
+#  Coefficients
+print(summary(model_DOE)$coefficients[, 1, drop = FALSE])
+
+# Eqetion
+IRdisplay::display_markdown(paste0("$$", gsub("\\operatorname{\\widehat{Response}}", "Y", 
+gsub("\\texttt{\\^{}}", "^", as.character(extract_eq(model_DOE, use_coefs = TRUE)), fixed = TRUE), fixed = TRUE), "$$"))
+
+# Anova
+print(anova(model_DOE)[, ncol(anova(model_DOE)), drop = FALSE])
+
+# Summory
+print(data.frame(Metric = c("                   R-sq(Mul) :", "                               R-sq(Adj) :", "            S(Noise) :"),
+                 Value  = c(summary(model_DOE)$r.squared*100, max(0, summary(model_DOE)$adj.r.squared*100), summary(model_DOE)$sigma)))
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box() 
+
+#---
+
+library(equatiomatic)
+
+# data
+
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+print(doe_data)
+
+# Fit Model
+model_DOE <- lm(Response ~ A*B, data = doe_data)
+
+#  Coefficients
+print(summary(model_DOE)$coefficients[, 1, drop = FALSE])
+
+# Eqetion
+IRdisplay::display_markdown(paste0("$$", gsub("\\operatorname{\\widehat{Response}}", "Y", 
+gsub("\\texttt{\\^{}}", "^", as.character(extract_eq(model_DOE, use_coefs = TRUE)), fixed = TRUE), fixed = TRUE), "$$"))
+
+# Anova
+print(anova(model_DOE)[, ncol(anova(model_DOE)), drop = FALSE])
+
+# Summory
+print(data.frame(Metric = c("                   R-sq(Mul) :", "                               R-sq(Adj) :", "            S(Noise) :"),
+                 Value  = c(summary(model_DOE)$r.squared*100, max(0, summary(model_DOE)$adj.r.squared*100), summary(model_DOE)$sigma)))
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box()   
+
+#---
+
+library(equatiomatic)
+
+# data
+
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+print(doe_data)
+
+# Fit Model
+model_DOE <- lm(Response ~ A*B + I(A^2) + I(B^2), data = doe_data)
+
+#  Coefficients
+print(summary(model_DOE)$coefficients[, 1, drop = FALSE])
+
+# Eqetion
+IRdisplay::display_markdown(paste0("$$", gsub("\\operatorname{\\widehat{Response}}", "Y", 
+gsub("\\texttt{\\^{}}", "^", as.character(extract_eq(model_DOE, use_coefs = TRUE)), fixed = TRUE), fixed = TRUE), "$$"))
+
+# Anova
+print(anova(model_DOE)[, ncol(anova(model_DOE)), drop = FALSE])
+
+# Summory
+print(data.frame(Metric = c("                   R-sq(Mul) :", "                               R-sq(Adj) :", "            S(Noise) :"),
+                 Value  = c(summary(model_DOE)$r.squared*100, max(0, summary(model_DOE)$adj.r.squared*100), summary(model_DOE)$sigma)))
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box()
+
+#---
+
+library(equatiomatic)
+
+# data
+
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+print(doe_data)
+
+# Fit Model
+model_DOE <- lm(Response ~ A*B + I(A^2) + I(B^2)+C, data = doe_data)
+
+#  Coefficients
+print(summary(model_DOE)$coefficients[, 1, drop = FALSE])
+
+# Eqetion
+IRdisplay::display_markdown(paste0("$$", gsub("\\operatorname{\\widehat{Response}}", "Y", 
+gsub("\\texttt{\\^{}}", "^", as.character(extract_eq(model_DOE, use_coefs = TRUE)), fixed = TRUE), fixed = TRUE), "$$"))
+
+# Anova
+print(anova(model_DOE)[, ncol(anova(model_DOE)), drop = FALSE])
+
+# Summory
+print(data.frame(Metric = c("                   R-sq(Mul) :", "                               R-sq(Adj) :", "            S(Noise) :"),
+                 Value  = c(summary(model_DOE)$r.squared*100, max(0, summary(model_DOE)$adj.r.squared*100), summary(model_DOE)$sigma)))
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box() 
