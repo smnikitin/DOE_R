@@ -68,3 +68,51 @@ mtext("PROBLEMATIC MODEL: Bad Residual Data", outer = TRUE, cex = 1.5, font = 2)
 par(mfrow = c(1, 1), bg = "white")
 
 # ---
+
+# 1. LOAD LIBRARIES
+library(olsrr)
+
+# 2. DATA ENTRY
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+
+# 3. FIT MODEL
+model_DOE <- lm(Response ~ A*B, data = doe_data)
+
+# 4. OLSRR COMPREHENSIVE OUTPUT (Replaces summary, coefficients, anova, and R-sq tables)
+ols_regress(model_DOE)
+summary(model_DOE)$sigma
+
+#---
+
+# 1. LOAD LIBRARIES
+install.packages("rsm")
+library(rsm)
+
+# 2. DATA ENTRY
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+
+# Fit rsm directly using raw column names
+fit <- rsm(Response ~ SO(A, B) + C, data = doe_data)
+
+summary(fit)
+
