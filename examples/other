@@ -150,3 +150,44 @@ print(cbind(Value = c(
   `95% PI` = sprintf("(%.2f, %.2f)", p[2], p[3])
 )))
 
+#---
+
+# 1. Experimental Data
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+
+# 2. Fit Model
+model_DOE <- lm(Response ~ A*B , data = doe_data)
+
+# 3. Extract Real Model Values for Diagnostics
+fits_model <- fitted(model_DOE)
+res_model <- residuals(model_DOE)
+
+# 4. Set up 2x2 grid with light gray background matching your template
+par(mfrow = c(2, 2), bg = "#F0F0F0", oma = c(0, 0, 2, 0))
+
+# 1. Normal Probability Plot
+qqnorm(res_model, main = "Normal Probability Plot", xlab = "Residual", ylab = "Percent", pch = 19, col = "#0055A4")
+qqline(res_model, col = "red")
+
+# 2. Versus Fits
+plot(fits_model, res_model, main = "Versus Fits", xlab = "Fitted Value", ylab = "Residual", pch = 19, col = "#0055A4")
+abline(h = 0, col = "gray", lty = 2)
+
+# 3. Histogram (adjusted breaks to 5 since n=17)
+hist(res_model, main = "Histogram", xlab = "Residual", col = "#7CA8D8", border = "black", breaks = 5)
+
+# 4. Versus Order
+plot(res_model, main = "Versus Order", xlab = "Observation Order", ylab = "Residual", type = "b", pch = 19, col = "#0055A4")
+abline(h = 0, col = "gray", lty = 2)
+
+mtext("RESIDUAL DIAGNOSTICS: model_DOE", outer = TRUE, cex = 1.3, font = 2)
