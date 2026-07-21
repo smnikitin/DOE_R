@@ -116,3 +116,37 @@ fit <- rsm(Response ~ SO(A, B) + C, data = doe_data)
 
 summary(fit)
 
+#---
+
+# Experimental Data
+doe_data <- data.frame(
+  A = c( 0, 0, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 1,-1, 0),
+  B = c( 1,-1, 0, 0,-1, 1, 1,-1,-1, 1, 1,-1, 1,-1,-1, 1, 0),
+  C = c( 1,-1, 1,-1, 0, 0, 1,-1,-1, 1,-1, 1,-1, 1, 1,-1, 0),
+  D = c( 1,-1,-1, 1,-1, 1, 0, 0, 1,-1,-1, 1, 1,-1, 1,-1, 0),
+  E = c( 1,-1, 1,-1, 1,-1,-1, 1, 0, 0,-1, 1,-1,-1,-1, 1, 0),
+  F = c( 1,-1,-1, 1, 1,-1, 1,-1, 1,-1, 0, 0,-1, 1,-1, 1, 0),
+  G = c( 1,-1,-1, 1, 1,-1,-1, 1,-1, 1, 1,-1, 0, 0, 1,-1, 0),
+  Response = c(81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 
+               44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+print(doe_data)
+
+# Fit Model
+model_DOE <- lm(Response ~ A*B + I(A^2) + I(B^2) + C, data = doe_data)
+
+
+# Vertical Prediction Table (Center Point A=0, B=0, C=0)
+cat("\n--- PREDICTION (Center Point A=0, B=0, C=0) ---\n")
+nd <- data.frame(A = 0, B = 0, C = 0)
+c <- predict(model_DOE, nd, interval = "confidence", se.fit = TRUE)
+p <- predict(model_DOE, nd, interval = "prediction")
+
+print(cbind(Value = c(
+  Response = "Response",
+  Fit      = sprintf("%.2f", c$fit[1]),
+  `SE Fit` = sprintf("%.2f", c$se.fit),
+  `95% CI` = sprintf("(%.2f, %.2f)", c$fit[2], c$fit[3]),
+  `95% PI` = sprintf("(%.2f, %.2f)", p[2], p[3])
+)))
+
