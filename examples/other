@@ -1,0 +1,70 @@
+# Set the plot dimensions for Google Colab output
+options(repr.plot.width = 10, repr.plot.height = 8)
+
+# Set seed so the random data looks exactly the same every time you run it
+set.seed(5)
+
+# ==============================================================================
+# PART 1: THE "GOOD" DATA (Ideal Model)
+# ==============================================================================
+n <- 100
+fits_good <- runif(n, 10, 60)                  # Random fitted values
+res_good <- rnorm(n, mean = 0, sd = 5)         # Perfectly normal, random errors
+
+# Set up 2x2 grid with light gray background
+par(mfrow = c(2, 2), bg = "#F0F0F0", oma = c(0, 0, 2, 0))
+
+# 1. Normal Probability Plot (Good: Follows the line)
+qqnorm(res_good, main = "Normal Probability Plot", xlab = "Residual", ylab = "Percent", pch = 19, col = "#0055A4")
+qqline(res_good, col = "red")
+
+# 2. Versus Fits (Good: Random scatter, constant width)
+plot(fits_good, res_good, main = "Versus Fits", xlab = "Fitted Value", ylab = "Residual", pch = 19, col = "#0055A4")
+abline(h = 0, col = "gray", lty = 2)
+
+# 3. Histogram (Good: Bell-shaped, centered at 0)
+hist(res_good, main = "Histogram", xlab = "Residual", col = "#7CA8D8", border = "black", breaks = 10)
+
+# 4. Versus Order (Good: Random static noise)
+plot(res_good, main = "Versus Order", xlab = "Observation Order", ylab = "Residual", type = "b", pch = 19, col = "#0055A4")
+abline(h = 0, col = "gray", lty = 2)
+
+mtext("IDEAL MODEL: Good Residual Data", outer = TRUE, cex = 1.5, font = 2)
+
+
+# ==============================================================================
+# PART 2: THE "BAD" DATA (Violating Assumptions)
+# ==============================================================================
+# Generate specific errors to highlight specific problems
+fits_bad <- seq(10, 60, length.out = n)
+res_skewed <- rlnorm(n, meanlog = 1, sdlog = 0.8) - 4            # Skewed (Not normal)
+res_funnel <- rnorm(n, mean = 0, sd = fits_bad / 3)              # Funnel (Non-constant variance)
+res_drift <- seq(-15, 15, length.out = n) + rnorm(n, 0, 3)       # Upward drift (Time-dependent)
+
+# Wait for a brief moment in Colab before drawing the next plot (optional, just ensures clean rendering)
+Sys.sleep(1)
+
+# Set up 2x2 grid for the bad data
+par(mfrow = c(2, 2), bg = "#F0F0F0", oma = c(0, 0, 2, 0))
+
+# 1. Normal Probability Plot (Bad: Distinct curve away from the line)
+qqnorm(res_skewed, main = "Normal Probability Plot", xlab = "Residual", ylab = "Percent", pch = 19, col = "#D32F2F")
+qqline(res_skewed, col = "black")
+
+# 2. Versus Fits (Bad: Megaphone/Funnel shape fanning out)
+plot(fits_bad, res_funnel, main = "Versus Fits", xlab = "Fitted Value", ylab = "Residual", pch = 19, col = "#D32F2F")
+abline(h = 0, col = "gray", lty = 2)
+
+# 3. Histogram (Bad: Heavily skewed to the right)
+hist(res_skewed, main = "Histogram", xlab = "Residual", col = "#EF9A9A", border = "black", breaks = 10)
+
+# 4. Versus Order (Bad: Clear upward trend over time)
+plot(res_drift, main = "Versus Order", xlab = "Observation Order", ylab = "Residual", type = "b", pch = 19, col = "#D32F2F")
+abline(h = 0, col = "gray", lty = 2)
+
+mtext("PROBLEMATIC MODEL: Bad Residual Data", outer = TRUE, cex = 1.5, font = 2)
+
+# Reset plotting layout to standard
+par(mfrow = c(1, 1), bg = "white")
+
+# ---
