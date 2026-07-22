@@ -16,7 +16,7 @@ print(anova(model))
 
 # ---
 
-# advance ANOVA:
+#--- advance ANOVA:
 
 base_aov <- anova(model)
 
@@ -54,3 +54,33 @@ minitab_style <- rbind(
 
 # Print with formatted decimal places
 print(minitab_style, row.names = FALSE, digits = 4)
+
+#--- advance Pareto plot
+
+doe_data <- data.frame(
+  A = rep(c(-0.1, 0.1, -0.1, 0.1), 3),
+  B = rep(c(-1, -1, 1, 1), 3),
+  Response = c(73.6, 79.0, 76.3, 87.5, 
+               76.9, 79.8, 77.9, 84.2, 
+               71.1, 74.3, 83.0, 89.0)
+)
+print(doe_data)
+
+# Fit the model and get the base flat ANOVA table
+model_DOE <- lm(Response ~ A * B, data = doe_data)
+
+summary(model_DOE)
+anova(model_DOE)
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box() 
+
+# Pareto plot (Standardized Effects)
+t_vals <- abs(summary(model_DOE)$coefficients[-1, "t value"])
+barplot(sort(t_vals), horiz = TRUE, xlim = c(0, max(c(t_vals, qt(0.975, model_DOE$df.residual))) * 1.1), space = 0)
+abline(v = qt(0.975, model_DOE$df.residual), col = "red", lty = 2, lwd = 2)
+grid(nx = NULL, ny = NULL)
+box()
