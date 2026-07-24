@@ -1,0 +1,32 @@
+# Load Experimental Data 
+doe_2x2 <- data.frame(
+  A = c(-1, -1,  1, 1),
+  B = c(-1,  1, -1, 1),
+  Response = c(5, 6, 7, 8)
+)
+print(doe_2x2)
+
+# Fit the Full 2x2 Factorial Model (Main Effects + Interaction)
+model_DOE <- lm(Response ~ A * B, data = doe_2x2)
+
+# View the Model Coefficients
+print(summary(model_DOE)$coefficients[, 1, drop = FALSE])
+
+# Equation  
+c <- coef(model_DOE)
+IRdisplay::display_markdown(sprintf("$$Y = %.2f %s$$", c[1], paste(sprintf("%+.2f%s", c[-1], gsub(":", "", names(c)[-1])), collapse = " ")))
+
+# Pareto plot
+effects <- abs(coef(model_DOE) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_DOE)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box() 
+
+# main effect plots
+par(mfrow=c(1,2)); y_lim <- range(doe_2x2$Response)
+for(f in c("A", "B")) { m <- tapply(doe_2x2$Response, doe_2x2[[f]], mean)
+  plot(c(-1, 1), m, pch=19, ylim=y_lim, main=paste("Effect:", f)); lines(c(-1, 1), m) }
+
+# interaction plot
+par(mfrow=c(1,1))
+interaction.plot(doe_2x2$A, doe_2x2$B, doe_2x2$Response, type="b", pch=19, ylim=y_lim, main="Interaction: A*B")                              
