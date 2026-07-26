@@ -1,0 +1,106 @@
+# ==============================================================================
+# BASE R MIXTURE DESIGN ANALYSIS (Zero Dependencies)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# STEP 1: Create the Design Table & Response Data
+# ------------------------------------------------------------------------------
+# 3-Component Simplex-Centroid Design (x1 + x2 + x3 = 1.0)
+mixture_data <- data.frame(
+  x1 = c(1.000, 0.000, 0.000, 0.500, 0.500, 0.000, 0.333), # Ingredient A
+  x2 = c(0.000, 1.000, 0.000, 0.500, 0.000, 0.500, 0.333), # Ingredient B
+  x3 = c(0.000, 0.000, 1.000, 0.000, 0.500, 0.500, 0.333), # Ingredient C
+  Taste = c(5.0,  4.0,   6.0,   8.5,   7.0,   6.5,   9.0)   # Measured Response
+)
+
+cat("--- STEP 1: DESIGN TABLE ---\n")
+print(mixture_data)
+
+
+# ------------------------------------------------------------------------------
+# STEP 2: Model Fitting (Scheffé Model) & Mixture ANOVA
+# ------------------------------------------------------------------------------
+# Fit Scheffé Quadratic Model: Taste ~ x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3
+# Note: '0 +' removes the intercept because sum(x_i) = 1.0
+scheffe_model <- lm(Taste ~ 0 + x1 + x2 + x3 + x1:x2 + x1:x3 + x2:x3, data = mixture_data)
+
+cat("\n--- STEP 2A: MODEL COEFFICIENTS & FIT ---\n")
+print(summary(scheffe_model))
+
+cat("\n--- STEP 2B: MIXTURE ANOVA TABLE ---\n")
+print(anova(scheffe_model))
+
+
+# ------------------------------------------------------------------------------
+# STEP 3: Pareto Chart of Effect Strengths
+# ------------------------------------------------------------------------------
+# Extract absolute t-values for all linear and interaction terms
+model_summary <- summary(scheffe_model)
+t_stats <- abs(model_summary$coefficients[, "t value"])
+sorted_t <- sort(t_stats, decreasing = TRUE)
+
+# Set up graphic layout (2 plots side-by-side)
+par(mfrow = c(1, 2), mar = c(7, 4, 4, 2))
+
+# Plot Pareto Chart
+barplot(
+  sorted_t,
+  las = 2,
+  col = "steelblue",
+  main = "Step 3: Pareto Chart (|t-value|)",
+  ylab = "Absolute t-statistic",
+  ylim = c(0, max(sorted_t) * 1.2)
+)
+abline(h = 2.57, col = "darkred", lty = 2, lwd = 2) # Example threshold
+legend("topright", legend = "Significance Threshold", col = "darkred", lty = 2, bty = "n")
+
+
+# ------------------------------------------------------------------------------
+# STEP 4: Cox Response Trace Plot (Main Effects Visual)
+# ------------------------------------------------------------------------------
+# Sequence of component proportions from 0.0 to 1.0
+steps <- seq(0, 1, length.out = 50)
+
+# Predict response along each component axis while keeping others equal
+pred_x1 <- predict(scheffe_model, newdata = data.frame(x1 = steps, x2 = (1 - steps)/2, x3 = (1 - steps)/2))
+pred_x2 <- predict(scheffe_model, newdata = data.frame(x1 = (1 - steps)/2, x2 = steps, x3 = (1 - steps)/2))
+pred_x3 <- predict(scheffe_model, newdata = data.frame(x1 = (1 - steps)/2, x2 = (1 - steps)/2, x3 = steps))
+
+# Plot the curves
+plot(steps, pred_x1, type = "l", col = "red", lwd = 2, ylim = c(3, 10),
+     xlab = "Component Proportion (x_i)", ylab = "Predicted Taste Score",
+     main = "Step 4: Trace Plot (Main Effects)")
+lines(steps, pred_x2, col = "blue", lwd = 2)
+lines(steps, pred_x3, col = "green3", lwd = 2)
+grid()
+legend("topleft", legend = c("Ingredient A (x1)", "Ingredient B (x2)", "Ingredient C (x3)"),
+       col = c("red", "blue", "green3"), lwd = 2, bty = "n")
+
+# Reset plotting parameters
+par(mfrow = c(1, 1))
+
+# ------------------------------------------------------------------------------
+# STEP 5: Find the Optimal (Best) Ingredient Proportion
+# ------------------------------------------------------------------------------
+
+# 1. Create a fine grid of x1 and x2 from 0 to 1 in steps of 0.01
+grid <- expand.grid(
+  x1 = seq(0, 1, by = 0.01),
+  x2 = seq(0, 1, by = 0.01)
+)
+
+# 2. Calculate x3 so that x1 + x2 + x3 ALWAYS equals 1.0
+grid$x3 <- 1 - grid$x1 - grid$x2
+
+# 3. Filter out invalid rows (where x3 < 0)
+valid_grid <- grid[grid$x3 >= 0, ]
+
+# 4. Predict the response (Taste) for every single mix on the grid
+valid_grid$Predicted_Taste <- predict(scheffe_model, newdata = valid_grid)
+
+# 5. Extract the row with the maximum predicted taste
+best_proportion <- valid_grid[which.max(valid_grid$Predicted_Taste), ]
+
+# Display the optimal mix
+cat("--- OPTIMAL INGREDIENT PROPORTION ---\n")
+print(best_proportion)
