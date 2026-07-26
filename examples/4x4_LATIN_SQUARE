@@ -1,0 +1,79 @@
+# ==========================================
+# 1. LOAD BALANCED 4x4 LATIN SQUARE DATA
+# ==========================================
+ar_coating_data <- data.frame(
+  Row_Operator = factor(rep(1:4, each = 4)),
+  Col_Chamber  = factor(rep(1:4, times = 4)),
+  Treatment    = factor(c("A", "B", "C", "D",  
+                          "B", "C", "D", "A",  
+                          "C", "D", "A", "B",  
+                          "D", "A", "B", "C")),
+  Transmittance = c(60, 70, 90, 80,
+                    60, 80, 70, 50,  
+                    80, 70, 50, 60,  
+                    80, 60, 60, 80)  
+)
+
+# ==========================================
+# 2. FIT THE MODELS
+# ==========================================
+# lm() is standard for the ANOVA table
+model_lm <- lm(Transmittance ~ Row_Operator + Col_Chamber + Treatment, data = ar_coating_data)
+
+# aov() is required to run the Tukey HSD post-hoc test in base R
+model_aov <- aov(Transmittance ~ Row_Operator + Col_Chamber + Treatment, data = ar_coating_data)
+
+# ==========================================
+# 3. CLASSICAL NUMERICAL OUTPUTS
+# ==========================================
+cat("--- 1. ANOVA TABLE ---\n")
+print(anova(model_lm))
+
+cat("\n--- 2. TREATMENT SUMS ---\n")
+print(tapply(ar_coating_data$Transmittance, ar_coating_data$Treatment, sum))
+
+cat("\n--- 3. TUKEY HSD PAIRWISE COMPARISONS ---\n")
+tukey_results <- TukeyHSD(model_aov, "Treatment")
+print(tukey_results)
+
+# ==========================================
+# 4. CLASSICAL VISUAL OUTPUTS (Grayscale)
+# ==========================================
+# Set up a 2x2 layout to view all classical plots in a single figure
+par(mfrow=c(2,2))
+
+# Plot A: Treatment Boxplot
+boxplot(
+  Transmittance ~ Treatment, 
+  data = ar_coating_data,
+  col = "#E0E0E0",        # Strict grayscale fill
+  border = "black", 
+  main = "A: Formulation Variance",
+  xlab = "Coating Formulation", 
+  ylab = "Transmittance (%)",
+  pch = 19
+)
+grid(nx = NULL, ny = NULL, col = "#DDDDDD")
+
+# Plot B: Design Plot (Compares Treatments to Nuisance Blocks)
+plot.design(
+  Transmittance ~ Row_Operator + Col_Chamber + Treatment, 
+  data = ar_coating_data, 
+  main = "B: Main Effects Comparison",
+  ylab = "Mean Transmittance"
+)
+
+# Plot C: Residuals vs Fitted (Checks for constant variance)
+plot(
+  model_lm, 
+  which = 1, 
+  pch = 19, 
+  main = "C: Residuals vs Fitted"
+)
+
+# Plot D: Tukey HSD Plot (Visualizes statistical significance between pairs)
+plot(tukey_results, las = 1)
+title(main = "D: Tukey 95% Confidence Intervals", line = 2)
+
+# Reset plotting window to default
+par(mfrow=c(1,1))
