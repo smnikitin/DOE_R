@@ -1,4 +1,178 @@
 # ==============================================================================
+# COMPLETE R MIXTURE DESIGN ANALYSIS: High-Refractive Index Glass Optimization
+# Components: B2O3 (x1 = Top), ZnO (x2 = Bottom-Right), CoO (x3 = Bottom-Left)
+# Target Optimum: 40% B2O3 / 40% ZnO / 20% CoO | Predicted nd = 1.85
+# ==============================================================================
+
+# Install and load required packages
+# Checks if ggtern is installed, installs it if missing, then loads it into the session.
+if(!require(ggtern)) install.packages("ggtern")
+library(ggtern)
+
+# ------------------------------------------------------------------------------
+# STEP 1: Create the Design Table & Response Data
+# ------------------------------------------------------------------------------
+# Defines a simplex lattice/centroid design mapping pure components, binary blends, 
+# and ternary blends to their observed Refractive Index (nd).
+glass_mixture_data <- data.frame(
+  B2O3 = c(1.000, 0.000, 0.000, 0.500, 0.500, 0.000, 0.333, 0.400),
+  ZnO  = c(0.000, 1.000, 0.000, 0.500, 0.000, 0.500, 0.333, 0.400),
+  CoO  = c(0.000, 0.000, 1.000, 0.000, 0.500, 0.500, 0.333, 0.200),
+  Refractive_Index = c(1.50, 1.55, 1.60, 1.77, 1.80, 1.81, 1.84, 1.85) 
+)
+
+cat("--- STEP 1: DESIGN TABLE ---\n")
+print(glass_mixture_data)
+
+
+# ------------------------------------------------------------------------------
+# STEP 2: Model Fitting (Scheffé Quadratic Model) & Mixture ANOVA
+# ------------------------------------------------------------------------------
+# Fits a Scheffé polynomial quadratic mixture model. The '0 +' removes the 
+# standard intercept, which is necessary because the mixture proportions must sum to 1.
+scheffe_model <- lm(
+  Refractive_Index ~ 0 + B2O3 + ZnO + CoO + I(B2O3 * ZnO) + I(B2O3 * CoO) + I(ZnO * CoO), 
+  data = glass_mixture_data
+)
+
+cat("\n--- STEP 2A: MODEL COEFFICIENTS & FIT ---\n")
+print(summary(scheffe_model))
+
+cat("\n--- STEP 2B: MIXTURE ANOVA TABLE ---\n")
+print(anova(scheffe_model))
+
+
+# ------------------------------------------------------------------------------
+# STEP 3: Pareto Chart of Effect Strengths
+# ------------------------------------------------------------------------------
+# Extracts the absolute t-values from the model to rank which terms have 
+# the strongest statistical effect on the refractive index.
+model_summary <- summary(scheffe_model)
+t_stats <- abs(model_summary$coefficients[, "t value"])
+sorted_t <- sort(t_stats, decreasing = TRUE)
+
+# Sets the plot window to hold 1 row and 2 columns of plots, adjusting margins.
+par(mfrow = c(1, 2), mar = c(7, 4, 4, 2))
+
+# Renders the Pareto bar chart using the sorted t-statistics.
+barplot(
+  sorted_t,
+  las = 2,
+  col = "gray70",
+  border = "black",
+  main = "Step 3: Pareto Chart (|t-value|)",
+  ylab = "Absolute t-statistic",
+  ylim = c(0, max(sorted_t) * 1.2)
+)
+# Adds a dashed reference line representing the typical statistical significance threshold.
+abline(h = 2.57, col = "black", lty = 2, lwd = 1.5)
+legend("topright", legend = "Significance Threshold", lty = 2, bty = "n")
+
+
+# ------------------------------------------------------------------------------
+# STEP 4: Cox Response Trace Plot (Main Effects)
+# ------------------------------------------------------------------------------
+# Generates 50 proportional steps from 0 to 1 for the trace plot.
+steps <- seq(0, 1, length.out = 50)
+
+# Predicts the response as each single component increases (steps) while the 
+# remaining two components are held at a constant ratio to each other ((1 - steps)/2).
+pred_b2o3 <- predict(scheffe_model, newdata = data.frame(B2O3 = steps, ZnO = (1 - steps)/2, CoO = (1 - steps)/2))
+pred_zno  <- predict(scheffe_model, newdata = data.frame(B2O3 = (1 - steps)/2, ZnO = steps, CoO = (1 - steps)/2))
+pred_coo  <- predict(scheffe_model, newdata = data.frame(B2O3 = (1 - steps)/2, ZnO = (1 - steps)/2, CoO = steps))
+
+# Plots the trace lines for all three components on a 2D line graph for comparison.
+plot(steps, pred_b2o3, type = "l", col = "black", lwd = 2, lty = 1, ylim = c(1.4, 1.9),
+     xlab = "Component Proportion (xi)", ylab = "Predicted Refractive Index (nd)",
+     main = "Step 4: Trace Plot (Main Effects)")
+lines(steps, pred_zno, col = "black", lwd = 2, lty = 2)
+lines(steps, pred_coo, col = "black", lwd = 2, lty = 3)
+grid(nx = NULL, ny = NULL, col = "#DDDDDD")
+legend("topleft", legend = c("B2O3", "ZnO", "CoO"),
+       lty = c(1, 2, 3), lwd = 2, bty = "n")
+
+# Resets the plot layout back to standard 1x1 framing for any future plots.
+par(mfrow = c(1, 1)) # Reset plot layout
+
+
+# ------------------------------------------------------------------------------
+# STEP 5: Find the Optimal Glass Composition via Grid Search
+# ------------------------------------------------------------------------------
+# Creates a comprehensive search grid testing all possible component proportions at 0.01 increments.
+grid <- expand.grid(
+  B2O3 = seq(0, 1, by = 0.01),
+  ZnO  = seq(0, 1, by = 0.01)
+)
+
+# Enforces the fundamental mixture constraint: all three components must sum exactly to 1.
+grid$CoO <- 1 - grid$B2O3 - grid$ZnO
+valid_grid <- grid[grid$CoO >= 0, ]
+
+# Calculates the predicted refractive index for every valid coordinate in the grid.
+valid_grid$Predicted_RI <- predict(scheffe_model, newdata = valid_grid)
+
+# Extracts the single row representing the absolute highest predicted refractive index.
+best_proportion <- valid_grid[which.max(valid_grid$Predicted_RI), ]
+
+cat("\n--- OPTIMAL GLASS COMPOSITION (ABSOLUTE MAX) ---\n")
+print(best_proportion)
+
+
+# 1. Generate grid data constrained to sum to 1.0 (x1 + x2 + x3 = 1)
+# Creates a very high-resolution mesh grid (600x600) specifically for ternary mapping.
+resolution <- 600
+grid_points <- expand.grid(
+  x1 = seq(0, 1, length.out = resolution),
+  x2 = seq(0, 1, length.out = resolution)
+)
+grid_points$x3 <- 1 - (grid_points$x1 + grid_points$x2)
+
+# Filter for physically realistic points inside the simplex triangle
+df <- grid_points[grid_points$x3 >= 0 & grid_points$x3 <= 1, ]
+
+# 2. Apply the Quadratic Scheffé Equation to create the response variable
+# Manually computes the Z-axis (Response) across the grid using the exact model coefficients.
+df$Response <- with(df,
+  (1.50 * x1) + (1.55 * x2) + (1.60 * x3) +
+  (0.98 * x1 * x2) + (1.00 * x1 * x3) + (0.94 * x2 * x3)
+)
+
+# 3. Create the Ternary Plot with Expanded Color Resolution
+# Initializes the ggtern plot mapping x1, x2, x3 and the predicted response.
+ggtern(data = df, aes(x = x1, y = x2, z = x3, value = Response)) +
+  # Fits a 10th-degree polynomial smoothing layer to create ultra-smooth color gradients.
+  stat_interpolate_tern(
+    geom = "polygon",
+    method = "lm",
+    formula = value ~ poly(x, y, degree = 10),
+    n = 200, # Increased resolution for finer color gradient
+    aes(fill = after_stat(level))
+  ) +
+  # Applies the viridis color scale to represent intensity, using 5 distinct breakpoints.
+  scale_fill_viridis_c(
+    option = "viridis",
+    name = "Predicted Y",
+    n.breaks = 5 # Increased number of color intervals
+  ) +
+  # Sets main title, subtitle, and vertex labels to match the generic x1/x2/x3 format.
+  labs(
+    title = "Simplex Response Surface",
+    subtitle = "Y = 1.50x1 + 1.55x2 + 1.60x3 + 0.98x1x2 + 1.00x1x3 + 0.94x2x3",
+    x = "x1",
+    y = "x2",
+    z = "x3"
+  ) +
+  # Enforces a high-contrast theme structure with a white background.
+  theme_rgbw()+
+  # Formats the three ternary axes to display values as a percentage (out of 100).
+  scale_T_continuous(breaks = 1, labels = "100") +
+  scale_L_continuous(breaks = 1, labels = "100") +
+  scale_R_continuous(breaks = 1, labels = "100")
+
+
+#---
+
+# ==============================================================================
 # BASE R MIXTURE DESIGN ANALYSIS (Zero Dependencies)
 # ==============================================================================
 
