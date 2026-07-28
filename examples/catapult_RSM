@@ -1,0 +1,51 @@
+# Load the Experimental Data (https://www.sigmazone.com/catapult/)
+ccf_data <- data.frame(
+  A = c(90, 140, 90, 140, 90, 140, 115, 115, 115),
+  B = c(145, 145, 185, 185, 165, 165, 145, 185, 165),
+  Y = c(210, 35, 275, 435, 248, 248, 308, 632, 484)
+)
+
+# Fit the Second-Order Model Directly Using Real Units (A and B)
+real_model <- lm(Y ~ A + B + I(A^2) + I(B^2) + A:B, data = ccf_data)
+
+# View the Statistical Summary (ANOVA and Coefficients)
+print(summary(real_model))
+
+# Pareto Plot of Effects
+effects <- abs(coef(real_model) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(real_model)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box() 
+
+# Pareto plot (Standardized Effects)
+t_vals <- abs(summary(real_model)$coefficients[-1, "t value"])
+barplot(sort(t_vals), horiz = TRUE, xlim = c(0, max(c(t_vals, qt(0.975, real_model$df.residual))) * 1.1), space = 0)
+abline(v = qt(0.975, real_model$df.residual), col = "red", lty = 2, lwd = 2)
+grid(nx = NULL, ny = NULL)
+box()
+
+# Custom Grayscale Contour Plot
+a_seq <- seq(min(ccf_data$A), max(ccf_data$A), length.out = 50)
+b_seq <- seq(min(ccf_data$B), max(ccf_data$B), length.out = 50)
+grid_df <- expand.grid(A = a_seq, B = b_seq)
+grid_df$Y_pred <- predict(real_model, newdata = grid_df)
+z_vals <- matrix(grid_df$Y_pred, nrow = length(a_seq), ncol = length(b_seq))
+filled.contour(a_seq, b_seq, z_vals, color.palette = function(n) gray.colors(n, start = 0.9, end = 0),
+               xlab = "A", ylab = "B", main = "RSM",nlevels = 10)
+
+# Equation Generation (Cleaned LaTeX Output with A and B)
+c_real <- coef(real_model)
+eq_real_string <- sprintf("$$Y = %.2f %+.2f A %+.2f B %+.2f A^2 %+.2f B^2 %+.2f (A \\times B)$$", 
+                          c_real[1], c_real[2], c_real[3], c_real[4], c_real[5], c_real[6])
+IRdisplay::display_markdown(eq_real_string)
+
+# Predict Response (Y) for New Factor Combinations (A and B)
+new_points <- data.frame(
+  A = c(100, 115, 130),
+  B = c(150, 165, 175)
+)
+pred_results <- predict(real_model, newdata = new_points, interval = "prediction")
+final_predictions <- cbind(new_points, pred_results)
+print(final_predictions)
+
+#---
