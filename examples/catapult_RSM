@@ -83,9 +83,15 @@ abline(v = t_crit, lty = 2, lwd = 2) # Dashed line for 95% significance
 grid(nx = NULL, ny = NULL)
 box()
 
-#  Custom Grayscale Contour Plot
+# Contour Plot
 a_seq <- seq(min(ccf_data$x1), max(ccf_data$x1), length.out = 50)
 b_seq <- seq(min(ccf_data$x2), max(ccf_data$x2), length.out = 50)
 grid_df <- expand.grid(x1 = a_seq, x2 = b_seq)
 z_vals <- matrix(predict(model_real, newdata = grid_df), nrow = 50, ncol = 50)
 filled.contour(a_seq, b_seq, z_vals, nlevels = 10)
+
+# Summory
+model <- model_coded
+print(data.frame(
+  Metric = c("                   R-sq  :", "                           R-sq(adj) :", "              S  :"),
+  Value  = c(summary(model)$r.squared*100, max(0, summary(model)$adj.r.squared*100), summary(model)$sigma)))
