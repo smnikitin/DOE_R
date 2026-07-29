@@ -49,3 +49,43 @@ final_predictions <- cbind(new_points, pred_results)
 print(final_predictions)
 
 #---
+
+# Load the Experimental Data 
+ccf_data <- data.frame(
+  x1 = c(90, 140, 90, 140, 90, 140, 115, 115, 115, 115, 115, 115, 115),
+  x2 = c(150, 150, 185, 185, 167.5, 167.5, 150, 185, 167.5, 167.5, 167.5, 167.5, 167.5),
+  Y = c(220, 83, 275, 435, 250, 277, 355, 632, 502, 501, 498, 500, 505)
+)
+
+#  Add Coded Units (A, B) alongside Real Units (x1, x2)
+ccf_data$A <- (ccf_data$x1 - mean(range(ccf_data$x1))) / (diff(range(ccf_data$x1)) / 2)
+ccf_data$B <- (ccf_data$x2 - mean(range(ccf_data$x2))) / (diff(range(ccf_data$x2)) / 2)
+
+# Fit TWO Models to demonstrate their distinct purposes
+print (ccf_data)
+model_real  <- lm(Y ~ x1 + x2 + I(x1^2) + I(x2^2) + x1:x2, data = ccf_data)
+model_coded <- lm(Y ~ A + B + I(A^2) + I(B^2) + A:B, data = ccf_data)
+
+#  Equation Generation & Prediction (Using Real Model)
+c_real <- coef(model_real)
+IRdisplay::display_markdown(sprintf("$$Y = %.2f %+.2f x_1 %+.2f x_2 %+.2f x_1 x_1 %+.2f x_2 x_2 %+.2f x_1 x_2$$", c_real[1], c_real[2], c_real[3], c_real[4], c_real[5], c_real[6]))
+
+#  Statistical Summary 
+predict(model_real, data.frame(x1 = 100, x2 = 160), interval = "prediction")
+print(summary(model_coded))
+print(anova(model_coded))
+
+# Pareto Plot of Standardized Effects
+t_vals <- sort(abs(summary(model_coded)$coefficients[-1, "t value"]))
+t_crit <- qt(0.975, model_coded$df.residual)
+barplot(t_vals, horiz = TRUE, las = 1, space = 0, xlim = c(0, max(t_vals, t_crit) * 1.1))
+abline(v = t_crit, lty = 2, lwd = 2) # Dashed line for 95% significance
+grid(nx = NULL, ny = NULL)
+box()
+
+#  Custom Grayscale Contour Plot
+a_seq <- seq(min(ccf_data$x1), max(ccf_data$x1), length.out = 50)
+b_seq <- seq(min(ccf_data$x2), max(ccf_data$x2), length.out = 50)
+grid_df <- expand.grid(x1 = a_seq, x2 = b_seq)
+z_vals <- matrix(predict(model_real, newdata = grid_df), nrow = 50, ncol = 50)
+filled.contour(a_seq, b_seq, z_vals, nlevels = 10)
