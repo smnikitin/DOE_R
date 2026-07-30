@@ -16,6 +16,8 @@ model_coded <- lm(Response ~ A + B + A:B, data = data)
 
 #  Equation Generation 
 IRdisplay::display_markdown(paste0("$$Y = ", sub("^\\+", "", paste(sprintf("%+.2f %s", coef(model_real), c("", gsub(":", " \\\\cdot ", gsub("I\\((.*?)\\)", "\\1", names(coef(model_real))[-1])))), collapse = " ")), "$$"))
+IRdisplay::display_markdown(paste0("$$Y = ", sub("^\\+", "", paste(sprintf("%+.2f %s", coef(model_coded), c("", gsub(":", " \\\\cdot ", gsub("I\\((.*?)\\)", "\\1", names(coef(model_coded))[-1])))), collapse = " ")), "$$"))
+
 
 #  Statistical Summary
 data.frame(x1 = 100, x2 = 160, Pred = predict(m_real, data.frame(x1 = 100, x2 = 160)))
