@@ -1,0 +1,36 @@
+# Load the Experimental Data
+data <- data.frame(
+  x1 = c(90, 140, 90, 140),
+  x2 = c(150, 150, 185, 185),
+  Response = c(220, 83, 275, 435)
+)
+
+#  Add Coded Units (A, B) alongside Real Units (x1, x2)
+data$A <- (data$x1 - mean(range(data$x1))) / (diff(range(data$x1)) / 2)
+data$B <- (data$x2 - mean(range(data$x2))) / (diff(range(data$x2)) / 2)
+
+# Fit TWO Models to demonstrate their distinct purposes
+print(data)
+model_real  <- lm(Response ~ x1 + x2 + x1:x2, data = data)
+model_coded <- lm(Response ~ A + B + A:B, data = data)
+
+#  Equation Generation 
+IRdisplay::display_markdown(paste0("$$Y = ", sub("^\\+", "", paste(sprintf("%+.2f %s", coef(model_real), c("", gsub(":", " \\\\cdot ", gsub("I\\((.*?)\\)", "\\1", names(coef(model_real))[-1])))), collapse = " ")), "$$"))
+
+#  Statistical Summary
+data.frame(x1 = 100, x2 = 160, Pred = predict(m_real, data.frame(x1 = 100, x2 = 160)))
+((s <- summary(m_coded))$coefficients); cat(paste(c("Noise","R^2","R^2_adj"), c(s$sigma,s$r.squared*100,s$adj.r.squared*100), sep=":"), sep="\n")
+
+# Pareto Plot of Effects
+effects <- abs(coef(model_coded) * 2)[!grepl("Intercept|Blocks|A:B:C|Covariate", names(coef(model_coded)))]
+barplot(sort(effects), horiz = TRUE, xlim = c(0, max(effects) * 1.1), space = 0)
+grid(nx = NULL, ny = NULL)
+box()
+
+#  Contour Plot
+a_seq <- seq(min(data$x1), max(data$x1), length.out = 50)
+b_seq <- seq(min(data$x2), max(data$x2), length.out = 50)
+z_vals <- matrix(predict(model_real, newdata = expand.grid(x1 = a_seq, x2 = b_seq)), nrow = 50, ncol = 50)
+filled.contour(a_seq, b_seq, z_vals)
+
+
