@@ -37,3 +37,109 @@ axis(2, at = seq(1, 10, by = 1), las = 1, tck = 0)
 
 # Draw the outer frame box
 box(lwd = 1, col = "gray10")
+
+#---
+
+# Data points for the interaction plot
+fov <- c(-1.0, 1.0)
+comfort_neg1 <- c(1.4, 2.2)  # Brightness -1 series
+comfort_pos1 <- c(5.1, 9.5)  # Brightness 1 series
+
+# Figure size and graphical parameters (Textbook serif grayscale style)
+options(repr.plot.width = 7.5, repr.plot.height = 7.5)
+par(
+  family = "serif",
+  mar = c(5.5, 5.8, 4, 0.8),
+  mgp = c(3.0, 1.0, 0),
+  cex.lab = 2,
+  cex.axis = 1.5,
+  cex.main = 2.1
+)
+
+# Create the empty plot canvas with exact limits
+plot(NA, 
+     xlim = c(-1.1, 1.1), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i",
+     xlab = "FOV", ylab = "User Comfort",
+     main = "Interaction Plot",
+     axes = FALSE)
+
+# Draw background grid lines (subtle gray)
+abline(h = seq(1, 10, by = 1), col = "gray90", lwd = 1)
+abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray90", lwd = 1)
+
+# Draw lines and points for Brightness -1 (Solid line, solid circle)
+lines(fov, comfort_neg1, col = "gray20", lwd = 2, lty = 1)
+points(fov, comfort_neg1, pch = 19, col = "gray10", cex = 1.5)
+
+# Draw lines and points for Brightness 1 (Dashed line, open circle for distinction in grayscale)
+lines(fov, comfort_pos1, col = "gray20", lwd = 2, lty = 2)
+points(fov, comfort_pos1, pch = 21, col = "gray10", bg = "white", cex = 1.5, lwd = 1.5)
+
+# Draw custom axes with one decimal place on the X-axis
+axis(1, at = seq(-1.0, 1.0, by = 0.5), labels = sprintf("%.1f", seq(-1.0, 1.0, by = 0.5)), tck = 0)
+axis(2, at = seq(1, 10, by = 1), las = 1, tck = 0)
+
+# Draw the outer frame box
+box(lwd = 1, col = "gray10")
+
+# Add the legend in the top-left corner
+legend("topleft", 
+       legend = c("Brightness = -1", "Brightness = 1"), 
+       col = c("gray10", "gray10"), 
+       lty = c(1, 2), lwd = 2, pch = c(19, 21), 
+       title = "Brightness", 
+       cex = 1.2, bty = "o", box.col = "gray80", bg = "white")
+
+#---
+
+# Data points for the interaction plot
+fov <- c(-1.0, 1.0)
+comfort_neg1 <- c(1.4, 2.2)  # Brightness -1 series
+comfort_pos1 <- c(5.1, 9.5)  # Brightness 1 series
+
+# Figure size and graphical parameters (Textbook serif grayscale style)
+options(repr.plot.width = 7.5, repr.plot.height = 7.5)
+par(
+  family = "serif",
+  mar = c(5.5, 5.8, 4, 0.8),
+  mgp = c(3.0, 1.0, 0),
+  cex.lab = 2,
+  cex.axis = 1.5,
+  cex.main = 2.1
+)
+
+# Create the empty plot canvas with exact limits
+plot(NA, 
+     xlim = c(-1.1, 1.1), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i",
+     xlab = "FOV", ylab = "User Comfort",
+     main = "Interaction Plot",
+     axes = FALSE)
+
+# Draw background grid lines (subtle gray)
+abline(h = seq(1, 10, by = 1), col = "gray90", lwd = 1)
+abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray90", lwd = 1)
+
+# Draw lines and points for Brightness -1 (Solid line, solid circle)
+lines(fov, comfort_neg1, col = "gray20", lwd = 2, lty = 1)
+points(fov, comfort_neg1, pch = 19, col = "gray10", cex = 1.5)
+
+# Draw lines and points for Brightness 1 (Dashed line, open circle for distinction in grayscale)
+lines(fov, comfort_pos1, col = "gray20", lwd = 2, lty = 2)
+points(fov, comfort_pos1, pch = 21, col = "gray10", bg = "white", cex = 1.5, lwd = 1.5)
+
+# Draw custom axes with one decimal place on the X-axis
+axis(1, at = seq(-1.0, 1.0, by = 0.5), labels = sprintf("%.1f", seq(-1.0, 1.0, by = 0.5)), tck = 0)
+axis(2, at = seq(1, 10, by = 1), las = 1, tck = 0)
+
+# Draw the outer frame box
+box(lwd = 1, col = "gray10")
+
+# Add the legend in the top-left corner
+legend("topleft", 
+       legend = c("Brightness = -1", "Brightness = 1"), 
+       col = c("gray10", "gray10"), 
+       lty = c(1, 2), lwd = 2, pch = c(19, 21), 
+       title = "Brightness", 
+       cex = 1.2, bty = "o", box.col = "gray80", bg = "white")
