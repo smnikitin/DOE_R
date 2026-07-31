@@ -66,3 +66,43 @@ box()
 
 # Generate the ANOVA table
 print(anova(model_DOE))
+
+#---
+
+# Data for the Pareto Chart of Effects (named vector for automatic Y-axis labels)
+effects <- c("AB" = 0.5, "BC" = 1.8, "AC" = 3.1, "A" = 3.1, "B" = 6.2, "C" = 7.0, "ABC" = 7.5)
+
+# Sort data in ascending order so the largest effect appears at the top
+df <- data.frame(term = terms, effect = effects)
+df <- df[order(df$effect), ]
+
+# Figure size and graphical parameters (Textbook serif grayscale style)
+options(repr.plot.width = 7.5, repr.plot.height = 7.5)
+par(
+  family = "serif",
+  mar = c(5.5, 5.8, 4, 0.8),
+  mgp = c(3.0, 1.0, 0),
+  cex.lab = 2,
+  cex.axis = 1.5,
+  cex.main = 2.1
+)
+
+# Create the horizontal bar plot with X and Y axis labels
+barplot(
+  sort(effects), 
+  horiz = TRUE, 
+  xlim = c(0, max(effects) * 1.1), 
+  space = 0,
+  col = "gray80",
+  border = "gray30",
+  xlab = "Effect",
+  main = "Pareto Chart of the Effects",
+  las = 1 # Keeps the term labels horizontal and readable
+)
+
+# Place "Term" at the top-left, unrotated and scaled to match cex.lab
+mtext("Term", side = 3, adj = -0.15, line = 0.5, las = 1, cex = 2)
+
+# Add the background grid and outer border box
+grid(nx = NULL, ny = NULL) # Adds vertical grid lines matching ticks
+box(lwd = 1, col = "gray10")
