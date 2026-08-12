@@ -1,0 +1,133 @@
+# Data points for the main effect plots
+fov <- c(-1.0, 1.0)
+comfort_fov <- c(3.25, 5.90)
+
+brightness <- c(-1.0, 1.0)
+comfort_brightness <- c(1.80, 7.35)
+
+# Matplotlib blue line color matching the image
+line_color <- "#1f77b4"
+
+# Set up canvas with 1 row and 2 columns
+options(repr.plot.width = 12, repr.plot.height = 6)
+par(
+  mfrow = c(1, 2),
+  family = "sans",
+  mar = c(4.5, 4.5, 3.5, 1.5),
+  mgp = c(2.5, 0.8, 0),
+  cex.lab = 1.1,
+  cex.axis = 0.9,
+  cex.main = 1.2
+)
+
+# ==========================================
+# PLOT 1: Main Effect of FOV on User Comfort
+# ==========================================
+
+# Create empty canvas with exact limits
+plot(NA, 
+     xlim = c(-1.05, 1.05), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i",
+     xlab = "FOV", ylab = "Mean User Comfort",
+     main = "Main Effect of FOV on User Comfort",
+     axes = FALSE)
+
+# Draw background grid lines (0.25 on X, 1 on Y)
+abline(h = seq(1, 10, by = 1), col = "gray80", lwd = 0.8)
+abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray80", lwd = 0.8)
+
+# Draw connecting line and circular data points
+lines(fov, comfort_fov, col = line_color, lwd = 1.8)
+points(fov, comfort_fov, pch = 19, col = line_color, cex = 1.2)
+
+# Draw custom axes
+axis(1, at = seq(-1.0, 1.0, by = 0.25), labels = sprintf("%.2f", seq(-1.0, 1.0, by = 0.25)), tck = 0)
+axis(2, at = seq(1, 10, by = 1), las = 1, tck = 0)
+
+# Draw outer frame box
+box(lwd = 1, col = "black")
+
+# ==================================================
+# PLOT 2: Main Effect of Brightness on User Comfort
+# ==================================================
+
+# Create empty canvas with exact limits
+plot(NA, 
+     xlim = c(-1.05, 1.05), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i",
+     xlab = "Brightness", ylab = "Mean User Comfort",
+     main = "Main Effect of Brightness on User Comfort",
+     axes = FALSE)
+
+# Draw background grid lines (0.25 on X, 1 on Y)
+abline(h = seq(1, 10, by = 1), col = "gray80", lwd = 0.8)
+abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray80", lwd = 0.8)
+
+# Draw connecting line and circular data points
+lines(brightness, comfort_brightness, col = line_color, lwd = 1.8)
+points(brightness, comfort_brightness, pch = 19, col = line_color, cex = 1.2)
+
+# Draw custom axes
+axis(1, at = seq(-1.0, 1.0, by = 0.25), labels = sprintf("%.2f", seq(-1.0, 1.0, by = 0.25)), tck = 0)
+axis(2, at = seq(1, 10, by = 1), las = 1, tck = 0)
+
+# Draw outer frame box
+box(lwd = 1, col = "black")
+
+# Set exact inline display size for Google Colab (800x600 aspect ratio)
+options(repr.plot.width = 12, repr.plot.height = 6)
+
+# Data points for the interaction plot
+fov <- c(-1.0, 1.0)
+comfort_bright_neg1 <- c(1.35, 2.20)
+comfort_bright_pos1 <- c(5.10, 9.60)
+
+# Matplotlib default colors (blue and orange)
+col_blue <- "#1f77b4"
+col_orange <- "#ff7f0e"
+
+# Set up canvas parameters matching matplotlib's layout
+par(
+  family = "sans",
+  mar = c(4.5, 4.5, 3, 1.5),
+  mgp = c(2.5, 0.8, 0),
+  cex.lab = 1.1,
+  cex.axis = 0.9,
+  cex.main = 1.2
+)
+
+# Create empty plot canvas with exact limits
+plot(NA, 
+     xlim = c(-1.05, 1.05), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i",
+     xlab = "FOV", ylab = "User Comfort",
+     main = "Interaction Plot of FOV and Brightness on User Comfort",
+     axes = FALSE)
+
+# Draw background grid lines (0.25 on X, 1 on Y)
+abline(h = seq(1, 10, by = 1), col = "gray80", lwd = 0.8)
+abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray80", lwd = 0.8)
+
+# Draw lines and circular data points for Brightness -1
+lines(fov, comfort_bright_neg1, col = col_blue, lwd = 1.8)
+points(fov, comfort_bright_neg1, pch = 19, col = col_blue, cex = 1.2)
+
+# Draw lines and circular data points for Brightness 1
+lines(fov, comfort_bright_pos1, col = col_orange, lwd = 1.8)
+points(fov, comfort_bright_pos1, pch = 19, col = col_orange, cex = 1.2)
+
+# Draw custom axes
+axis(1, at = seq(-1.0, 1.0, by = 0.25), labels = sprintf("%.2f", seq(-1.0, 1.0, by = 0.25)), tck = 0)
+axis(2, at = seq(1, 10, by = 1), las = 1, tck = 0)
+
+# Draw outer frame box
+box(lwd = 1, col = "black")
+
+# Add legend in the top-left corner
+legend("topleft", 
+       legend = c("Brightness -1", "Brightness 1"), 
+       col = c(col_blue, col_orange), 
+       pch = 19, lty = 1, lwd = 1.8, 
+       title = "Brightness",
+       bg = "white", box.col = "gray80", cex = 0.9, 
+       inset = c(0.02, 0.02))
