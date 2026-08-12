@@ -1,0 +1,42 @@
+# Data points extracted from the image
+categories <- c("B", "A", "AB", "AA", "BB")
+values <- c(67, 248, 286, 419, 425)
+
+# Figure dimensions
+options(repr.plot.width = 8, repr.plot.height = 5)
+par(
+  family = "sans",
+  mar = c(3, 4, 1, 1),
+  mgp = c(2, 0.6, 0)
+)
+
+# 1. Create an empty plot canvas
+plot(NA, 
+     xlim = c(0, 450), 
+     ylim = c(0, 5),
+     xaxs = "i", yaxs = "i", 
+     xlab = "", ylab = "", 
+     axes = FALSE)
+
+# 2. Draw background grid lines matching bar boundaries
+abline(v = seq(0, 400, by = 100), col = "gray85", lwd = 1)
+abline(h = seq(0, 5, by = 1), col = "gray85", lwd = 1)
+
+# 3. Draw the horizontal bars with space = 0 to eliminate gaps
+bp <- barplot(values, horiz = TRUE, add = TRUE,
+              space = 0,         # Removes all gaps between bars
+              col = "#729fcf",   # Soft blue color
+              border = "gray30", # Dark border around bars
+              axes = FALSE)
+
+# 4. Draw the red dashed reference line at x = 0
+abline(v = 0, col = "red", lty = "dashed", lwd = 1.5)
+
+# 5. Draw the X-axis at the bottom
+axis(1, at = seq(0, 400, by = 100), tck = 0, col = "gray50", cex.axis = 0.9)
+
+# 6. Place category labels aligned with the center of each touching bar
+text(x = -12, y = bp, labels = categories, xpd = TRUE, cex = 1.0, adj = 1)
+
+# 7. Draw the outer frame box
+box(lwd = 1, col = "gray50")
