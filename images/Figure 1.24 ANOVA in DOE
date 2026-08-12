@@ -1,0 +1,79 @@
+# Figure parameters matching the table's aspect ratio with a larger canvas area
+options(repr.plot.width = 10, repr.plot.height = 8)
+par(mar = c(0.5, 0.5, 0.5, 0.5), family = "sans")
+
+# Create an empty plot canvas
+plot(NA, 
+     xlim = c(0, 10), ylim = c(0, 10), 
+     xaxs = "i", yaxs = "i", 
+     axes = FALSE, xlab = "", ylab = "")
+
+# Draw the outer black border frame
+box(lwd = 2, col = "black")
+
+# ==========================================
+# 1. TOP MODEL SUMMARY SECTION (Larger Font Size)
+# ==========================================
+text(0.5, 9.4, "S", font = 2, cex = 1.3, adj = 0)
+text(2.8, 9.4, "R-sq", font = 2, cex = 1.3, adj = 0)
+text(5.2, 9.4, "R-sq(adj)", font = 2, cex = 1.3, adj = 0)
+text(7.8, 9.4, "R-sq(pred)", font = 2, cex = 1.3, adj = 0)
+
+segments(0.5, 9.15, 9.5, 9.15, lwd = 1.5)
+
+text(0.5, 8.85, "0.756127", cex = 1.3, adj = 0)
+text(2.8, 8.85, "98.18%", cex = 1.3, adj = 0)
+text(5.2, 8.85, "96.89%", cex = 1.3, adj = 0)
+text(7.8, 8.85, "97.34%", cex = 1.3, adj = 0)
+
+segments(0.5, 8.55, 9.5, 8.55, lwd = 1)
+
+# ==========================================
+# 2. ANALYSIS OF VARIANCE TITLE
+# ==========================================
+text(0.5, 7.8, "Analysis of Variance", font = 2, cex = 1.5, adj = 0)
+
+# ==========================================
+# 3. ANOVA TABLE HEADERS & ROWS (Larger Font Size)
+# ==========================================
+y_start <- 7.1
+dy <- 0.42
+
+# Column Headers
+text(0.5, y_start, "Source", font = 2, cex = 1.3, adj = 0)
+text(4.0, y_start, "DF", font = 2, cex = 1.3, adj = 1)
+text(5.7, y_start, "Adj SS", font = 2, cex = 1.3, adj = 1)
+text(7.3, y_start, "Adj MS", font = 2, cex = 1.3, adj = 1)
+text(8.5, y_start, "F-Value", font = 2, cex = 1.3, adj = 1)
+text(9.5, y_start, "P-Value", font = 2, cex = 1.3, adj = 1)
+
+segments(0.5, y_start - 0.15, 9.5, y_start - 0.15, lwd = 1.2)
+
+# Original Row Data Structure
+rows <- list(
+  c("Model", "5", "216.370", "43.2740", "75.69", "0.000"),
+  c("  Linear", "2", "20.128", "10.0642", "17.60", "0.002"),
+  c("    A", "1", "18.727", "18.7267", "32.75", "0.001"),
+  c("    B", "1", "1.402", "1.4017", "2.45", "0.161"),
+  c("  Square", "2", "171.739", "85.8697", "150.19", "0.000"),
+  c("    A*A", "1", "52.553", "52.5525", "91.92", "0.000"),
+  c("    B*B", "1", "53.764", "53.7642", "94.04", "0.000"),
+  c("  2-Way Interaction", "1", "24.503", "24.5025", "42.86", "0.000"),
+  c("    A*B", "1", "24.503", "24.5025", "42.86", "0.000"),
+  c("Error", "7", "4.002", "0.5717", "", ""),
+  c("  Lack-of-Fit", "3", "0.002", "0.0007", "0.00", "1.000"),
+  c("  Pure Error", "4", "4.000", "1.0000", "", ""),
+  c("Total", "12", "220.372", "", "", "")
+)
+
+# Populate Table Rows with larger font size (cex = 1.3)
+curr_y <- y_start - 0.5
+for (r in rows) {
+  text(0.5, curr_y, r[1], cex = 1.3, adj = 0)
+  if (r[2] != "") text(4.0, curr_y, r[2], cex = 1.3, adj = 1)
+  if (r[3] != "") text(5.7, curr_y, r[3], cex = 1.3, adj = 1)
+  if (r[4] != "") text(7.3, curr_y, r[4], cex = 1.3, adj = 1)
+  if (r[5] != "") text(8.5, curr_y, r[5], cex = 1.3, adj = 1)
+  if (r[6] != "") text(9.5, curr_y, r[6], cex = 1.3, adj = 1)
+  curr_y <- curr_y - dy
+}
