@@ -1,0 +1,47 @@
+# Set exact inline display dimensions for Google Colab
+options(repr.plot.width = 6, repr.plot.height = 6)
+
+# Set up canvas parameters and margins to match Matplotlib's default styling
+par(
+  family = "sans",
+  mar = c(3.5, 3.5, 1, 1),
+  mgp = c(2, 0.7, 0),
+  cex.axis = 1.0,
+  xaxs = "i", yaxs = "i" # Prevents R from adding unwanted padding to the axes
+)
+
+# Define grid coordinates from -1 to 1
+n <- 400
+x <- seq(-1, 1, length.out = n)
+y <- seq(-1, 1, length.out = n)
+
+# Create meshgrid-like matrices
+X <- matrix(x, nrow = n, ncol = n)
+Y <- matrix(y, nrow = n, ncol = n, byrow = TRUE)
+
+# Quadratic response surface function matching the specific tilt and center point
+# Center is at (-0.15, 0.05). The cross term tilts the ellipse by 45 degrees.
+Xc <- X + 0.15
+Yc <- Y - 0.05
+Z <- Xc^2 + Yc^2 - 1.2 * Xc * Yc
+
+# Define the exact number of contour levels
+n_levels <- 9
+breaks <- seq(min(Z), max(Z), length.out = n_levels + 1)
+
+# Create a custom diverging grayscale palette to match the image's shading exactly:
+# (Dark Center -> Light Middle Rings -> Very Dark Edges)
+gray_pal <- colorRampPalette(c("#5E5E5E", "#D4D4D4", "#1A1A1A"))(n_levels)
+
+# Render the filled contour regions using image()
+image(x, y, Z, col = gray_pal, breaks = breaks, axes = FALSE, xlab = "", ylab = "")
+
+# Overlay the dark contour lines to create the distinct boundary rings
+contour(x, y, Z, levels = breaks, add = TRUE, col = "gray20", lwd = 1.2, drawlabels = FALSE)
+
+# Draw custom axes with exact tick marks and labels, matching Matplotlib's outward ticks
+axis(1, at = seq(-1, 1, by = 0.5), labels = sprintf("%.1f", seq(-1, 1, by = 0.5)), tck = -0.02)
+axis(2, at = seq(-1, 1, by = 0.5), labels = sprintf("%.1f", seq(-1, 1, by = 0.5)), las = 1, tck = -0.02)
+
+# Draw the outer frame box
+box(lwd = 1.5, col = "black")
