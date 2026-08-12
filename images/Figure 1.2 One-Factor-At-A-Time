@@ -1,1 +1,115 @@
+# Define the data shown in the table
+wavelength <- c("800", "850", "900", "950", "1000", "1050", "1100")
+optical_power <- c("12", "18", "25", "30", "28", "22", "15")
 
+# Figure parameters for a wide, table-like layout
+options(repr.plot.width = 8, repr.plot.height = 3.5)
+par(mar = c(0.5, 0.5, 0.5, 0.5), family = "sans")
+
+# Create an empty plot canvas
+plot(NA, 
+     xlim = c(0, 10), ylim = c(0, 8), 
+     xaxs = "i", yaxs = "i", 
+     axes = FALSE, xlab = "", ylab = "")
+
+# Draw the thick outer black frame
+box(lwd = 3, col = "black")
+
+# Define table boundaries with a small margin
+margin_x <- 0.2
+margin_y <- 0.2
+left_edge <- margin_x
+right_edge <- 10 - margin_x
+bottom_edge <- margin_y
+top_edge <- 8 - margin_y
+
+# Calculate row height for 8 rows (1 header + 7 data rows)
+num_rows <- 8
+row_height <- (top_edge - bottom_edge) / num_rows
+y_coords <- seq(top_edge, bottom_edge, by = -row_height)
+
+# Draw the main table outline
+rect(left_edge, bottom_edge, right_edge, top_edge, border = "gray75", lwd = 1.5)
+
+# Draw the light gray background for the header row
+rect(left_edge, y_coords[2], right_edge, y_coords[1], 
+     col = "#EAEAEA", border = "gray75", lwd = 1.5)
+
+# Draw horizontal lines to separate the data rows
+for (i in 2:7) {
+  segments(left_edge, y_coords[i+1], right_edge, y_coords[i+1], 
+           col = "gray85", lwd = 1)
+}
+
+# Draw the vertical line to separate the two columns
+mid_x <- 5.5
+segments(mid_x, bottom_edge, mid_x, top_edge, col = "gray85", lwd = 1)
+
+# Define column text alignment (X coordinates)
+col1_text_x <- left_edge + 0.15
+col2_text_x <- mid_x + 0.15
+
+# Add Header Text
+text(col1_text_x, y_coords[1] - row_height/2, "Wavelength (nm) (X-axis)", 
+     pos = 4, font = 2, col = "gray30", cex = 1.1)
+text(col2_text_x, y_coords[1] - row_height/2, "Optical Power (mW) (Y-axis)", 
+     pos = 4, font = 2, col = "gray30", cex = 1.1)
+
+# Add Data Row Text
+for (i in 1:7) {
+  text(col1_text_x, y_coords[i+1] - row_height/2, wavelength[i], 
+       pos = 4, col = "gray20", cex = 1.0)
+  text(col2_text_x, y_coords[i+1] - row_height/2, optical_power[i], 
+       pos = 4, col = "gray20", cex = 1.0)
+}
+
+# Data points extracted from the plot (approx. 10nm intervals)
+wavelength <- seq(800, 1100, by = 10)
+power <- c(
+  -2.5, 2.5, 3.3, 0.8, 0.9, 1.8, 0.0, 2.1, 1.7, 7.5, 
+  11.0, 17.7, 21.5, 23.7, 30.5, 32.2, 25.4, 20.9, 18.2, 13.1, 
+  7.0, 5.5, 3.0, 1.7, -2.4, 1.5, 1.3, 3.7, 0.6, -1.0, -1.1
+)
+
+# Figure parameters
+options(repr.plot.width = 8.5, repr.plot.height = 6)
+par(
+  family = "sans",
+  mar = c(4.5, 4.5, 3.5, 1.5),
+  mgp = c(2.5, 0.8, 0),
+  cex.lab = 1.1,
+  cex.axis = 0.95,
+  cex.main = 1.4
+)
+
+# Create the empty plot canvas with exact limits
+plot(NA, 
+     xlim = c(790, 1110), ylim = c(-4, 34),
+     xaxs = "i", yaxs = "i",
+     xlab = "Wavelength (nm)", ylab = "Optical Power (mW)",
+     main = "Optical Power vs. Wavelength",
+     col.main = "gray25", col.lab = "gray25",
+     axes = FALSE)
+
+# Draw dotted background grid lines
+abline(h = seq(0, 30, by = 5), col = "gray85", lty = "dotted", lwd = 1.5)
+abline(v = seq(800, 1100, by = 50), col = "gray85", lty = "dotted", lwd = 1.5)
+
+# Draw the connecting line and points (Vibrant Blue)
+line_col <- "#0000FF"
+lines(wavelength, power, col = line_col, lwd = 1.5)
+points(wavelength, power, pch = 19, col = line_col, cex = 1.0)
+
+# Draw custom axes with gray colors matching the image
+axis(1, at = seq(800, 1100, by = 50), col = "gray50", col.axis = "gray25", tck = -0.015)
+axis(2, at = seq(0, 30, by = 5), las = 1, col = "gray50", col.axis = "gray25", tck = -0.015)
+
+# Draw the outer frame box
+box(lwd = 1.5, col = "gray25")
+
+# Add the legend in the top right corner
+legend("topright", legend = "Optical Power", 
+       col = line_col, pch = 19, lty = 1, lwd = 1.5, 
+       pt.cex = 1.0, text.col = "gray30", 
+       box.col = "gray80", bg = "white", 
+       cex = 0.85, inset = c(0.02, 0.02))
