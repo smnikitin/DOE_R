@@ -1,0 +1,70 @@
+# Set plotting dimensions (wide aspect ratio matches the spreadsheet)
+options(repr.plot.width = 10, repr.plot.height = 5)
+par(mar = c(1.5, 1.5, 1.5, 1.5), family = "sans")
+
+# 1. Set up canvas coordinate system
+plot(NA, xlim = c(0, 8.5), ylim = c(0, 10),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 2. Draw Background colors
+# Header area (rows 9 to 11)
+rect(0, 9, 8.5, 11, col = "#F4F5F5", border = NA)
+# Row index area (col 0 to 0.5)
+rect(0, 0, 0.5, 9, col = "#F4F5F5", border = NA)
+
+# 3. Draw grid lines
+# Horizontal grid lines
+abline(h = 0:11, col = "#D4D4D4", lwd = 1.5)
+# Vertical grid lines
+v_lines <- c(0, 0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5, 8.5)
+abline(v = v_lines, col = "#D4D4D4", lwd = 1.5)
+
+# 4. Draw thick outer border
+rect(0, 0, 8.5, 11, border = "black", lwd = 3.5)
+
+# 5. Add Top Headers & Sub Headers
+# Top Headers (C5 - C12)
+c_labels <- paste0("C", 5:12)
+text(x = 1:8, y = 10.5, labels = c_labels, col = "#1F648A", font = 2, cex = 2)
+
+# Sub Headers (A - G)
+text(x = 1:7, y = 9.5, labels = LETTERS[1:7], col = "black", font = 1, cex = 2)
+
+# Row Indices (1 - 9)
+text(x = 0.25, y = seq(8.5, 0.5, by = -1), labels = 1:9, col = "black", font = 2, cex = 2)
+
+# 6. Insert Data
+d1 <- c(-1, 1, -1, 1, -1, 1, -1, 1)
+d2 <- c(-1, -1, 1, 1, -1, -1, 1, 1)
+d3 <- c(-1, -1, -1, -1, 1, 1, 1, 1)
+d4 <- c(1, -1, -1, 1, 1, -1, -1, 1)
+d5 <- c(1, -1, 1, -1, -1, 1, -1, 1)
+d6 <- c(1, 1, -1, -1, -1, -1, 1, 1)
+d7 <- c(-1, 1, 1, -1, 1, -1, -1, 1)
+d8 <- c(49.9, 44.3, 44.9, 78.9, 50.5, 45.3, 44.7, 81.5)
+
+data_cols <- list(d1, d2, d3, d4, d5, d6, d7, d8)
+
+for (col_idx in 1:8) {
+  d <- data_cols[[col_idx]]
+  
+  # Format column C12 with a single decimal place like the image
+  if (col_idx == 8) {
+    labels_str <- sprintf("%.1f", d)
+  } else {
+    labels_str <- as.character(d)
+  }
+  
+  # Place text (adj = 1 right-aligns the text)
+  # X is positioned slightly left of the right gridline to give spreadsheet padding
+  text(x = col_idx + 0.35, y = seq(8.5, 1.5, by = -1),
+       labels = labels_str, adj = 1, cex = 2, col = "gray20")
+}
+
+# 7. Add UI Icons
+# Small down arrow in top-left cell
+arrows(x0 = 0.25, y0 = 10.6, x1 = 0.25, y1 = 10.35, length = 0.04, col = "#606060", lwd = 2)
+
+# Small green checkmark square in C12 cell
+rect(8.28, 10.35, 8.43, 10.65, border = "#5CB85C", lwd = 1.5)
+lines(c(8.30, 8.34, 8.41), c(10.5, 10.42, 10.6), col = "#5CB85C", lwd = 2)
