@@ -33,10 +33,10 @@ bp <- barplot(values, horiz = TRUE, add = TRUE,
 abline(v = 0, col = "red", lty = "dashed", lwd = 1.5)
 
 # 5. Draw the X-axis at the bottom
-axis(1, at = seq(0, 400, by = 100), tck = 0, col = "gray50", cex.axis = 0.9)
+axis(1, at = seq(0, 400, by = 100), tck = 0, col = "gray50", cex.axis = 2)
 
 # 6. Place category labels aligned with the center of each touching bar
-text(x = -12, y = bp, labels = categories, xpd = TRUE, cex = 1.0, adj = 1)
+text(x = -12, y = bp, labels = categories, xpd = TRUE, cex = 2, adj = 1)
 
 # 7. Draw the outer frame box
 box(lwd = 1, col = "gray50")
