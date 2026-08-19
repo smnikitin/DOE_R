@@ -15,9 +15,9 @@ par(
   family = "sans",
   mar = c(4.5, 4.5, 3.5, 1.5),
   mgp = c(2.5, 0.8, 0),
-  cex.lab = 1.1,
-  cex.axis = 0.9,
-  cex.main = 1.2
+  cex.lab = 2,
+  cex.axis = 2,
+  cex.main = 2
 )
 
 # ==========================================
@@ -29,7 +29,7 @@ plot(NA,
      xlim = c(-1.05, 1.05), ylim = c(1, 10),
      xaxs = "i", yaxs = "i",
      xlab = "FOV", ylab = "Mean User Comfort",
-     main = "Main Effect of FOV on User Comfort",
+     main = "Main Effect of FOV",
      axes = FALSE)
 
 # Draw background grid lines (0.25 on X, 1 on Y)
@@ -38,7 +38,7 @@ abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray80", lwd = 0.8)
 
 # Draw connecting line and circular data points
 lines(fov, comfort_fov, col = line_color, lwd = 1.8)
-points(fov, comfort_fov, pch = 19, col = line_color, cex = 1.2)
+points(fov, comfort_fov, pch = 19, col = line_color, cex = 2)
 
 # Draw custom axes
 axis(1, at = seq(-1.0, 1.0, by = 0.25), labels = sprintf("%.2f", seq(-1.0, 1.0, by = 0.25)), tck = 0)
@@ -56,7 +56,7 @@ plot(NA,
      xlim = c(-1.05, 1.05), ylim = c(1, 10),
      xaxs = "i", yaxs = "i",
      xlab = "Brightness", ylab = "Mean User Comfort",
-     main = "Main Effect of Brightness on User Comfort",
+     main = "Main Effect of Brightness",
      axes = FALSE)
 
 # Draw background grid lines (0.25 on X, 1 on Y)
@@ -65,7 +65,7 @@ abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray80", lwd = 0.8)
 
 # Draw connecting line and circular data points
 lines(brightness, comfort_brightness, col = line_color, lwd = 1.8)
-points(brightness, comfort_brightness, pch = 19, col = line_color, cex = 1.2)
+points(brightness, comfort_brightness, pch = 19, col = line_color, cex = 2)
 
 # Draw custom axes
 axis(1, at = seq(-1.0, 1.0, by = 0.25), labels = sprintf("%.2f", seq(-1.0, 1.0, by = 0.25)), tck = 0)
@@ -91,9 +91,9 @@ par(
   family = "sans",
   mar = c(4.5, 4.5, 3, 1.5),
   mgp = c(2.5, 0.8, 0),
-  cex.lab = 1.1,
-  cex.axis = 0.9,
-  cex.main = 1.2
+  cex.lab = 2,
+  cex.axis = 2,
+  cex.main = 2
 )
 
 # Create empty plot canvas with exact limits
@@ -101,7 +101,7 @@ plot(NA,
      xlim = c(-1.05, 1.05), ylim = c(1, 10),
      xaxs = "i", yaxs = "i",
      xlab = "FOV", ylab = "User Comfort",
-     main = "Interaction Plot of FOV and Brightness on User Comfort",
+     main = "Interaction Plot",
      axes = FALSE)
 
 # Draw background grid lines (0.25 on X, 1 on Y)
@@ -110,11 +110,11 @@ abline(v = seq(-1.0, 1.0, by = 0.25), col = "gray80", lwd = 0.8)
 
 # Draw lines and circular data points for Brightness -1
 lines(fov, comfort_bright_neg1, col = col_blue, lwd = 1.8)
-points(fov, comfort_bright_neg1, pch = 19, col = col_blue, cex = 1.2)
+points(fov, comfort_bright_neg1, pch = 19, col = col_blue, cex = 2)
 
 # Draw lines and circular data points for Brightness 1
 lines(fov, comfort_bright_pos1, col = col_orange, lwd = 1.8)
-points(fov, comfort_bright_pos1, pch = 19, col = col_orange, cex = 1.2)
+points(fov, comfort_bright_pos1, pch = 19, col = col_orange, cex = 2)
 
 # Draw custom axes
 axis(1, at = seq(-1.0, 1.0, by = 0.25), labels = sprintf("%.2f", seq(-1.0, 1.0, by = 0.25)), tck = 0)
@@ -125,9 +125,9 @@ box(lwd = 1, col = "black")
 
 # Add legend in the top-left corner
 legend("topleft", 
-       legend = c("Brightness -1", "Brightness 1"), 
+       legend = c("-1", " 1"), 
        col = c(col_blue, col_orange), 
        pch = 19, lty = 1, lwd = 1.8, 
        title = "Brightness",
-       bg = "white", box.col = "gray80", cex = 0.9, 
+       bg = "white", box.col = "gray80", cex = 1, 
        inset = c(0.02, 0.02))
