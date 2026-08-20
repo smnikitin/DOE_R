@@ -68,3 +68,52 @@ arrows(x0 = 0.25, y0 = 10.6, x1 = 0.25, y1 = 10.35, length = 0.04, col = "#60606
 # Small green checkmark square in C12 cell
 rect(8.28, 10.35, 8.43, 10.65, border = "#5CB85C", lwd = 1.5)
 lines(c(8.30, 8.34, 8.41), c(10.5, 10.42, 10.6), col = "#5CB85C", lwd = 2)
+
+# ---------------------------------------------------------
+# Recreate Main Effects Plot (image_df392c.png) in Base R
+# ---------------------------------------------------------
+
+# 1. Define the experimental data
+levels <- c(-1, 1)
+effect_a_y <- c(85.1, 81.6)
+effect_b_y <- c(82.6, 83.8)
+
+# Define center points (Level 0.0)
+center_pt_x <- 0
+center_pt_y <- 92 
+
+# 2. Configure the plotting layout and TEXT SIZES
+# Set up 1 row and 2 columns, with outer margins for the main bounding box
+par(mfrow = c(1, 2), 
+    oma = c(2, 2, 2, 2),  # Outer margins
+    mar = c(4, 4, 3, 1),  # Inner margins per plot
+    xpd = NA,             # Disable clipping to allow the red box to span across panels
+    
+    # --- TEXT AND NUMBER SCALING ---
+    cex.axis = 2,       # Increases the size of the axis numbers by 20%
+    cex.main = 2,       # Increases the size of the main titles ("Effect: A") by 50%
+    cex.lab  = 2)       # Increases axis labels (if added later) by 20%
+
+# 3. Plot for Effect A (Left Panel)
+plot(levels, effect_a_y, 
+     type = "o", pch = 19, 
+     xlim = c(-1.2, 1.2), ylim = c(78, 95),
+     xlab = "", ylab = "", main = "Effect: A")
+points(center_pt_x, center_pt_y, pch = 19)
+
+# 4. Plot for Effect B (Right Panel)
+plot(levels, effect_b_y, 
+     type = "o", pch = 19, 
+     xlim = c(-1.2, 1.2), ylim = c(78, 95),
+     xlab = "", ylab = "", main = "Effect: B")
+points(center_pt_x, center_pt_y, pch = 19)
+
+# 5. Add Overlays
+# Draw the overall outer bounding box encompassing both plots
+box("outer", col = "black")
+
+# Draw the red box highlighting the center points.
+rect(xleft = -4.2, ybottom = 91, 
+     xright = 0.5, ytop = 93, 
+     border = "red", lwd = 1.5)
+
