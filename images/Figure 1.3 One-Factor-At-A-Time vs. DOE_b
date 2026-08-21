@@ -117,6 +117,9 @@ rect(xleft = -4.2, ybottom = 91,
      xright = 0.5, ytop = 93, 
      border = "red", lwd = 1.5)
 
+# ---------------------------------------------------------
+
+
 # Set inline display size for Google Colab
 options(repr.plot.width = 6, repr.plot.height = 6)
 
@@ -155,6 +158,9 @@ mtext("Contour Plot of C7 vs B, A", side = 3, line = 1, font = 2, cex = 2, col =
 axis(1, at = seq(-1, 1, by = 0.5), labels = c("-1.0", "-0.5", "0.0", "0.5", "1.0"), tck = -0.015)
 axis(2, at = seq(-1, 1, by = 0.5), labels = c("-1.0", "-0.5", "0.0", "0.5", "1.0"), las = 1, tck = -0.015)
 
+# ---------------------------------------------------------
+
+
 # Set inline display size for Google Colab
 options(repr.plot.width = 8, repr.plot.height = 4)
 
@@ -191,6 +197,9 @@ for (i in 1:length(alias_lines)) {
 # Draw outer frame box
 box(lwd = 1.2, col = "gray30")
 
+# ---------------------------------------------------------
+
+
 # Set inline display size for Google Colab
 options(repr.plot.width = 6, repr.plot.height = 3)
 
@@ -212,6 +221,9 @@ text(6.8, 4.0, "Value", adj = 0, cex = 2, font = 1, col = "gray20")
 text(0.8, 3.0, "R-sq(Mul) : 99.9083804", adj = 0, cex = 2, col = "gray10")
 text(0.8, 2.0, "R-sq(Adj) : 99.8534086", adj = 0, cex = 2, col = "gray10")
 text(1.1, 1.0, "S(Noise) :  0.6480741", adj = 0, cex = 2, col = "gray10")
+
+# ---------------------------------------------------------
+
 
 # Set inline display dimensions for Google Colab
 options(repr.plot.width = 8, repr.plot.height = 6)
@@ -267,6 +279,8 @@ axis(1, at = seq(0, 20, by = 5), labels = seq(0, 20, by = 5), tck = 0, col = "gr
 
 # 6. Draw outer frame box
 box(lwd = 1, col = "gray50")
+
+# ---------------------------------------------------------
 
 # Set inline display dimensions for Google Colab (increased width and height for larger text)
 options(repr.plot.width = 16, repr.plot.height = 7)
