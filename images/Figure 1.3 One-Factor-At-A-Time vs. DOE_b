@@ -191,3 +191,25 @@ for (i in 1:length(alias_lines)) {
 # Draw outer frame box
 box(lwd = 1.2, col = "gray30")
 
+# Set inline display size for Google Colab
+options(repr.plot.width = 6, repr.plot.height = 3)
+
+# Set canvas margins and use a monospace font to match the code/terminal look
+par(mar = c(0.5, 0.5, 0.5, 0.5), family = "mono")
+
+# Create empty canvas
+plot(NA, xlim = c(0, 10), ylim = c(0, 5),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 1. Draw outer border box
+box(lwd = 1.5, col = "black")
+
+# 2. Header Row
+text(2.5, 4.0, "Metric", adj = 0, cex = 2, font = 1, col = "gray20")
+text(6.8, 4.0, "Value", adj = 0, cex = 2, font = 1, col = "gray20")
+
+# 3. Data Rows
+text(0.8, 3.0, "R-sq(Mul) : 99.9083804", adj = 0, cex = 2, col = "gray10")
+text(0.8, 2.0, "R-sq(Adj) : 99.8534086", adj = 0, cex = 2, col = "gray10")
+text(1.1, 1.0, "S(Noise) :  0.6480741", adj = 0, cex = 2, col = "gray10")
+
