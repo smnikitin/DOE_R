@@ -213,3 +213,57 @@ text(0.8, 3.0, "R-sq(Mul) : 99.9083804", adj = 0, cex = 2, col = "gray10")
 text(0.8, 2.0, "R-sq(Adj) : 99.8534086", adj = 0, cex = 2, col = "gray10")
 text(1.1, 1.0, "S(Noise) :  0.6480741", adj = 0, cex = 2, col = "gray10")
 
+# Set inline display dimensions for Google Colab
+options(repr.plot.width = 8, repr.plot.height = 6)
+
+# Data points extracted from the Pareto Chart
+terms <- c("F", "G", "E", "C", "B", "A", "D")
+effects <- c(0.2, 0.6, 0.75, 0.9, 15.0, 15.0, 20.5)
+
+# Setup graphics parameters
+par(
+  family = "sans",
+  mar = c(3.5, 4.5, 4.5, 1.5),
+  mgp = c(2, 0.6, 0)
+)
+
+# 1. Create empty plot canvas
+plot(NA, 
+     xlim = c(0, 21), 
+     ylim = c(0, 7),
+     xaxs = "i", yaxs = "i", 
+     xlab = "", ylab = "", 
+     axes = FALSE)
+
+# 2. Draw background grid lines matching tick locations
+abline(v = seq(0, 20, by = 5), col = "gray90", lwd = 1)
+abline(h = seq(0, 7, by = 1), col = "gray90", lwd = 0.8)
+
+# 3. Draw horizontal bars touching each other (space = 0)
+bp <- barplot(effects, horiz = TRUE, add = TRUE,
+              space = 0,               # Eliminates gaps between bars
+              col = "#7DB0DD",         # Minitab blue bar color
+              border = "gray30",       # Dark border around bars
+              axes = FALSE)
+
+# 4. Red dashed reference line at 3.95
+abline(v = 3.95, col = "red", lty = "dashed", lwd = 1.8)
+
+# Add the red "3.95" text label above the dashed line
+text(x = 3.95, y = 7.25, labels = "3.95", col = "red", cex = 2, font = 2, xpd = TRUE)
+
+# 5. Add Titles and Axis Labels
+mtext("Pareto Chart of the Effects", side = 3, line = 3, font = 2, cex = 2, col = "gray20")
+mtext("(response is C12, \u03b1 = 0.05)", side = 3, line = 1.3, font = 1, cex = 2, col = "gray40")
+
+# Y-axis label "Term"
+text(x = -2.2, y = 7.3, labels = "Term", font = 2, cex = 2, xpd = TRUE, adj = 0)
+
+# Y-axis Category Labels (F, G, E, C, B, A, D)
+text(x = -0.6, y = bp, labels = terms, xpd = TRUE, cex = 2, adj = 1)
+
+# X-axis Ticks and Labels
+axis(1, at = seq(0, 20, by = 5), labels = seq(0, 20, by = 5), tck = 0, col = "gray50", cex.axis = 2)
+
+# 6. Draw outer frame box
+box(lwd = 1, col = "gray50")
