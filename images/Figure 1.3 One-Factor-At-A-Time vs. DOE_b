@@ -155,6 +155,39 @@ mtext("Contour Plot of C7 vs B, A", side = 3, line = 1, font = 2, cex = 2, col =
 axis(1, at = seq(-1, 1, by = 0.5), labels = c("-1.0", "-0.5", "0.0", "0.5", "1.0"), tck = -0.015)
 axis(2, at = seq(-1, 1, by = 0.5), labels = c("-1.0", "-0.5", "0.0", "0.5", "1.0"), las = 1, tck = -0.015)
 
+# Set inline display size for Google Colab
+options(repr.plot.width = 8, repr.plot.height = 4)
+
+# Set canvas margins
+par(mar = c(0.5, 0.5, 0.5, 0.5), family = "sans")
+
+# Create empty canvas
+plot(NA, xlim = c(0, 10), ylim = c(0, 9),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 1. Header "Aliases" and dividing line
+text(0.3, 8.6, "Aliases", adj = 0, cex = 2, font = 1, col = "black")
+segments(0.3, 8.0, 9.7, 8.0, col = "gray40", lwd = 1.2)
+
+# 2. Alias terms extracted from the image
+alias_lines <- c(
+  "I + ABD + ACE + AFG + BCF + BEG + CDG + DEF",
+  "A + BD + CE + FG + BCG + BEF + CDF + DEG",
+  "B + AD + CF + EG + ACG + AEF + CDE + DFG",
+  "C + AE + BF + DG + ABG + ADF + BDE + EFG",
+  "D + AB + CG + EF + ACF + AEG + BCE + BFG",
+  "E + AC + BG + DF + ABF + ADG + BCD + CFG",
+  "F + AG + BC + DE + ABE + ACD + BDG + CEG",
+  "G + AF + BE + CD + ABC + ADE + BDF + CEF"
+)
+
+# 3. Render each row of alias structures
+y_positions <- seq(7.2, 0.9, length.out = 8)
+
+for (i in 1:length(alias_lines)) {
+  text(0.3, y_positions[i], alias_lines[i], adj = 0, cex = 2, col = "gray10")
+}
+
 # Draw outer frame box
 box(lwd = 1.2, col = "gray30")
 
