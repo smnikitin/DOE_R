@@ -1,1 +1,41 @@
+# Set square display dimensions (enlarged for cex = 2)
+options(repr.plot.width = 8, repr.plot.height = 8)
 
+# Configure graphics parameters with global cex = 2
+par(
+  mar = c(5, 5.5, 3.5, 1.5), 
+  family = "sans", 
+  cex = 2, 
+  cex.lab = 1, 
+  cex.axis = 1,
+  mgp = c(2, 0.5, 0)
+)
+
+# Common grid ticks matching the image
+x_ticks <- seq(-1, 1, by = 0.25)
+y_ticks <- seq(5, 8, by = 0.5)
+
+# Data points
+x <- c(-1, 1)
+y <- c(5.5, 7.5)
+
+# 1. Create empty plot canvas (cex.main = 1 inherits global size 2)
+plot(NA, xlim = c(-1.1, 1.1), ylim = c(5, 8),
+     xaxs = "i", yaxs = "i", axes = FALSE,
+     xlab = "FOV", ylab = "User Comfort",
+     main = "Main Effect of FOV", font.main = 1, cex.main = 1)
+
+# 2. Draw background grid lines
+abline(v = x_ticks, col = "gray80", lwd = 1)
+abline(h = y_ticks, col = "gray80", lwd = 1)
+
+# 3. Draw main effect line and endpoint dots
+lines(x, y, col = "#707070", lwd = 2.5)
+points(x, y, col = "#707070", pch = 16, cex = 1.3)
+
+# 4. Custom axes with tick mark values
+axis(1, at = x_ticks, labels = sprintf("%.1f", x_ticks), tck = -0.015)
+axis(2, at = y_ticks, labels = sprintf("%.1f", y_ticks), las = 1, tck = -0.015)
+
+# 5. Draw outer frame box
+box(col = "gray40", lwd = 1.2)
