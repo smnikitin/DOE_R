@@ -31,3 +31,56 @@ mtext("Pareto Chart of the Effects", side = 3, line = 2.8, font = 1, cex = 2)
 mtext("(response is C7, \u03b1 = 0.05)", side = 3, line = 0.8, col = "gray40", cex = 2)
 
 ---
+
+# Set inline display dimensions
+options(repr.plot.width = 8, repr.plot.height = 6)
+
+# Configure margins (increased left and bottom margins for larger text)
+par(mar = c(5.5, 6.5, 4.5, 2), xpd = TRUE, family = "sans")
+
+# 1. Initialize Canvas (X domain split into two halves: 0-2 for A, 2-4 for B)
+plot(0, type = "n", xlim = c(0, 4), ylim = c(5.4, 7.8),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 2. Draw Background Gridlines
+abline(h = seq(5.5, 7.5, by = 0.5), col = "#F0F0F0", lwd = 1)
+abline(v = c(0.5, 1.5, 2.5, 3.5), col = "#F0F0F0", lwd = 1)
+
+# 3. Draw Center Reference Line (Mean = 6.5)
+abline(h = 6.5, col = "gray60", lty = 2, lwd = 1)
+
+# 4. Outer Borders and Panel Dividers
+rect(0, 5.4, 4, 7.8, border = "gray50", lwd = 1.2)        # Main outer boundary
+segments(2, 5.4, 2, 7.8, col = "gray50", lwd = 1.2)       # Vertical panel divider
+segments(0, 7.6, 4, 7.6, col = "gray50", lwd = 1.2)       # Horizontal header divider
+
+# 5. Panel Headers
+text(x = 1, y = 7.7, labels = "A", font = 1, cex = 2)
+text(x = 3, y = 7.7, labels = "B", font = 1, cex = 2)
+
+# 6. Plot Data Points and Lines (Minitab Dark Blue)
+minitab_blue <- "#164DB4"
+
+# Factor A (Mapped to x = 0.5 and x = 1.5)
+lines(c(0.5, 1.5), c(5.5, 7.5), col = minitab_blue, lwd = 1.5)
+points(c(0.5, 1.5), c(5.5, 7.5), pch = 16, col = minitab_blue, cex = 2)
+
+# Factor B (Mapped to x = 2.5 and x = 3.5)
+lines(c(2.5, 3.5), c(6.0, 7.0), col = minitab_blue, lwd = 1.5)
+points(c(2.5, 3.5), c(6.0, 7.0), pch = 16, col = minitab_blue, cex = 2)
+
+# 7. Axes and Labels (cex.axis = 2 makes the numbers bigger)
+# Y-axis 
+axis(2, at = seq(5.5, 7.5, by = 0.5), pos = 0, las = 1, col = NA, col.ticks = "gray50", col.axis = "black", tck = -0.015, cex.axis = 2)
+mtext("Mean", side = 2, line = 4.2, cex = 2)
+
+# X-axis (Panel A ticks)
+axis(1, at = c(0.5, 1.5), labels = c("-1", "1"), pos = 5.4, col = NA, col.ticks = "gray50", col.axis = "black", tck = -0.015, cex.axis = 2)
+# X-axis (Panel B ticks)
+axis(1, at = c(2.5, 3.5), labels = c("-1", "1"), pos = 5.4, col = NA, col.ticks = "gray50", col.axis = "black", tck = -0.015, cex.axis = 2)
+
+# 8. Main Titles
+mtext("Main Effects Plot", side = 3, line = 2.2, font = 1, cex = 2)
+
+---
+
