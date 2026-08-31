@@ -47,3 +47,49 @@ title(main = "Main Effect of FOV on User Comfort", font.main = 1, cex.main = 2, 
 
 ---
 
+# Set inline display dimensions for square aspect ratio
+options(repr.plot.width = 7, repr.plot.height = 7)
+
+# Configure margins and font family
+par(mar = c(4.5, 4.5, 3, 2), xpd = FALSE, family = "serif")
+
+# 1. Initialize Canvas
+plot(0, type = "n", 
+     xlim = c(-1.1, 1.1), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 2. Draw Dark Gray Major Gridlines
+x_grid <- seq(-1.0, 1.0, by = 0.25)
+y_grid <- seq(1, 10, by = 1)
+
+abline(v = x_grid, col = "#808080", lwd = 0.8)
+abline(h = y_grid, col = "#808080", lwd = 0.8)
+
+# 3. Draw Main Line and End Points (Dark Charcoal)
+line_color <- "#505050"
+x_pts <- c(-1.0, 1.0)
+y_pts <- c(1.81, 7.37)
+
+lines(x_pts, y_pts, col = line_color, lwd = 2.5)
+points(x_pts, y_pts, pch = 16, col = line_color, cex = 2)
+
+# 4. Outer Border
+box("plot", col = "black", lwd = 1)
+
+# 5. Axes and Labels
+# Y-Axis Ticks (1 to 10)
+axis(2, at = y_grid, labels = y_grid, las = 1, 
+     col = "black", col.ticks = "black", tck = -0.015, cex.axis = 2)
+
+# X-Axis Ticks (-1.00 to 1.00)
+x_ticks <- seq(-1.00, 1.00, by = 0.25)
+x_labels <- sprintf("%.2f", x_ticks)
+axis(1, at = x_ticks, labels = x_labels, 
+     col = "black", col.ticks = "black", tck = -0.015, cex.axis = 2)
+
+# Axis Titles
+mtext("Mean User Comfort", side = 2, line = 2.8, cex = 2, font = 1)
+mtext("Brightness", side = 1, line = 2.8, cex = 2, font = 1)
+
+# 6. Title
+title(main = "Main Effect of Brightness on User Comfort", font.main = 1, cex.main = 2, line = 0.8)
