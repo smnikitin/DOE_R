@@ -97,3 +97,84 @@ axis(1, at = c(2.5, 3.5), labels = c("-1", "1"), pos = 1.5, col = NA, col.ticks 
 
 # 8. Main Titles
 mtext("Main Effects Plot", side = 3, line = 2.2, font = 2, cex = 2)
+
+---
+
+# Set inline display dimensions
+options(repr.plot.width = 11, repr.plot.height = 7)
+
+# Configure margins (extra right margin for legends)
+par(mar = c(5, 5, 5, 7), xpd = TRUE, family = "sans")
+
+# 1. Initialize Canvas (Domain: X = [0, 4], Y = [0, 4])
+plot(0, type = "n", xlim = c(0, 4), ylim = c(0, 4),
+     xaxs = "i", yaxs = "i", axes = FALSE, xaxs = "i", yaxs = "i", xlab = "", ylab = "")
+
+# 2. Outer Boundaries and 2x2 Grid Lines
+rect(0, 0, 4, 4, border = "gray50", lwd = 1.2)
+segments(2, 0, 2, 4, col = "gray50", lwd = 1.2) # Vertical divider
+segments(0, 2, 4, 2, col = "gray50", lwd = 1.2) # Horizontal divider
+
+# Custom Colors
+gray_dark <- "#404040"
+gray_light <- "#808080"
+
+# --- TOP-RIGHT PANEL (B * A) ---
+# Gridlines
+abline(v = c(2.5, 3.5), col = "#E5E5E5", lwd = 1)
+segments(2, c(2.4, 2.8, 3.2, 3.6), 4, c(2.4, 2.8, 3.2, 3.6), col = "#E5E5E5", lwd = 1)
+
+# Header Banner
+rect(2, 3.8, 4, 4, border = "gray50", lwd = 1)
+text(x = 3, y = 3.9, labels = "B * A", cex = 2)
+
+# Data Lines (Y mapped from range 2-10 to vertical space 2.0-3.8)
+# A = 1.0 (Long dash, dark)
+lines(c(2.5, 3.5), c(2.2, 3.6), col = gray_dark, lwd = 1.8, lty = 5)
+points(c(2.5, 3.5), c(2.2, 3.6), pch = 16, col = gray_dark, cex = 2)
+
+# A = -1.0 (Dotted, light)
+lines(c(2.5, 3.5), c(2.05, 2.8), col = gray_light, lwd = 1.8, lty = 3)
+points(c(2.5, 3.5), c(2.05, 2.8), pch = 15, col = gray_light, cex = 2)
+
+# Top Axis (-1, 1 for panel B * A)
+axis(3, at = c(2.5, 3.5), labels = c("-1", "1"), pos = 4, col = NA, col.ticks = "gray50", tck = -0.015, cex.axis = 2)
+
+# Right Y-Axis (2, 4, 6, 8, 10)
+axis(4, at = c(2.0, 2.45, 2.9, 3.35, 3.8), labels = c("2", "4", "6", "8", "10"), pos = 4, las = 1, col = NA, col.ticks = "gray50", tck = -0.015, cex.axis = 2)
+
+
+# --- BOTTOM-LEFT PANEL (B * B) ---
+# Gridlines
+abline(v = c(0.5, 1.5), col = "#E5E5E5", lwd = 1)
+segments(0, c(0.4, 0.8, 1.2, 1.6), 2, c(0.4, 0.8, 1.2, 1.6), col = "#E5E5E5", lwd = 1)
+
+# Header Banner
+rect(0, 1.8, 2, 2, border = "gray50", lwd = 1)
+text(x = 1, y = 1.9, labels = "A * B", cex = 2)
+
+# Data Lines
+# B = 1.0 (Long dash, dark)
+lines(c(0.5, 1.5), c(1.0, 1.7), col = gray_dark, lwd = 1.8, lty = 5)
+points(c(0.5, 1.5), c(1.0, 1.7), pch = 16, col = gray_dark, cex = 2)
+
+# B = -1.0 (Dotted, light)
+lines(c(0.5, 1.5), c(0.28, 0.42), col = gray_light, lwd = 1.8, lty = 3)
+points(c(0.5, 1.5), c(0.28, 0.42), pch = 15, col = gray_light, cex = 2)
+
+# Bottom Axis (-1, 1 for panel A)
+axis(1, at = c(0.5, 1.5), labels = c("-1", "1"), pos = 0, col = NA, col.ticks = "gray50", tck = -0.015, cex.axis = 2)
+
+# Left Y-Axis (2, 4, 6, 8, 10)
+axis(2, at = c(0.2, 0.6, 1.0, 1.4, 1.8), labels = c("2", "4", "6", "8", "10"), pos = 0, las = 1, col = NA, col.ticks = "gray50", tck = -0.015, cex.axis = 2)
+
+
+# --- AXIS LABELS AND TITLES ---
+mtext("A", side = 1, line = 2.5, at = 1, cex = 2)
+mtext("B", side = 1, line = 2.5, at = 3, cex = 2)
+mtext("Mean", side = 2, line = 3, at = 2, cex = 2, font = 3)
+
+mtext("Interaction Plot ", side = 3, line = 3.2, font = 2, cex = 2)
+
+
+
