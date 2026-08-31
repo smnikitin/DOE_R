@@ -1,0 +1,51 @@
+# Set inline display dimensions
+options(repr.plot.width = 10, repr.plot.height = 6)
+
+# Configure margins (expanded right margin for factor table)
+par(mar = c(5, 5, 4, 8), xpd = TRUE, family = "sans")
+
+# Data preparation
+terms <- c("AB", "A", "B")
+effects <- c(2.0, 2.78, 5.58)  # Values corresponding to the bar lengths
+
+# Bar midpoints along Y axis
+y_pos <- c(1, 2.5, 4)
+bar_height <- 1.2
+
+# 1. Initialize Canvas
+plot(0, type = "n", xlim = c(0, 55), ylim = c(0.2, 4.8),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 2. Draw Background Gridlines
+abline(v = seq(0, 50, by = 10), col = "#E5E5E5", lwd = 1)
+
+# 3. Draw Horizontal Bars (Gray with dark borders)
+y_edges <- c(0.5, 1.8, 3.1, 4.4)  # Contiguous boundary points
+
+for (i in 1:length(terms)) {
+  rect(xleft = 0, 
+       ybottom = y_edges[i], 
+       xright = effects[i], 
+       ytop = y_edges[i+1],
+       col = "#A0A0A0", border = "gray30", lwd = 1)
+}
+
+
+# 5. Plot Outer Border Box
+rect(0, 0.2, 53, 4.8, border = "gray50", lwd = 1.2)
+
+# 6. Axes and Labels
+# X-Axis Ticks
+axis(1, at = seq(0, 50, by = 10), pos = 0.2, col = NA, col.ticks = "gray50", 
+     col.axis = "black", tck = -0.015, cex.axis = 2)
+mtext("Effect", side = 1, line = 2.8, cex = 2, font = 2)
+
+# Y-Axis Term Labels
+text(x = -2.5, y = y_pos, labels = terms, xpd = TRUE, font = 1, cex = 2)
+text(x = -3.5, y = 5.0, labels = "Term", xpd = TRUE, font = 2, cex = 2)
+
+# 7. Main Titles
+mtext("Pareto Chart of the Effects", side = 3, line = 2.2, font = 2, cex = 2)
+
+---
+
