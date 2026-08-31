@@ -1,0 +1,57 @@
+# Set display canvas parameters
+options(repr.plot.width = 8, repr.plot.height = 6)
+
+# Padded margins for legend placement and labels
+par(mar = c(4.5, 4.5, 3, 2), xpd = TRUE, family = "sans")
+
+# 1. Initialize Base Canvas
+plot(0, type = "n", 
+     xlim = c(-1.1, 1.1), ylim = c(1, 10),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 2. Draw Light Gray Background Gridlines
+x_ticks <- seq(-1.00, 1.00, by = 0.25)
+y_ticks <- seq(2, 10, by = 2)
+
+abline(v = x_ticks, col = "#D3D3D3", lwd = 0.8)
+abline(h = y_ticks, col = "#D3D3D3", lwd = 0.8)
+
+# 3. Plot Interaction Lines and Markers
+# Data Series
+x_pts <- c(-1.0, 1.0)
+y_b_minus1 <- c(1.4, 2.2)  # Brightness -1 (Blue)
+y_b_plus1  <- c(5.1, 9.6)  # Brightness 1 (Orange)
+
+# Brightness -1 (Matplotlib Blue)
+lines(x_pts, y_b_minus1, col = "#1f77b4", lwd = 1.8)
+points(x_pts, y_b_minus1, pch = 16, col = "#1f77b4", cex = 2)
+
+# Brightness 1 (Matplotlib Orange)
+lines(x_pts, y_b_plus1, col = "#ff7f0e", lwd = 1.8)
+points(x_pts, y_b_plus1, pch = 16, col = "#ff7f0e", cex = 2)
+
+# 4. Outer Border
+box("plot", col = "gray30", lwd = 1)
+
+# 5. Axes and Labels
+axis(2, at = y_ticks, labels = y_ticks, las = 1, 
+     col = "gray30", col.axis = "gray20", tck = -0.015, cex.axis = 2)
+
+axis(1, at = x_ticks, labels = sprintf("%.2f", x_ticks), 
+     col = "gray30", col.axis = "gray20", tck = -0.015, cex.axis = 2)
+
+mtext("User Comfort", side = 2, line = 2.8, cex = 2, col = "gray10")
+mtext("FOV", side = 1, line = 2.8, cex = 2, col = "gray10")
+
+# 6. Title
+title(main = "Interaction Plot", 
+      font.main = 1, cex.main = 2, line = 0.8, col.main = "gray10")
+
+# 7. Upper-Left Legend Box (Matplotlib Style)
+legend("topleft", 
+       inset = c(0.02, 0.02),
+       title = "Brightness",
+       legend = c("Brightness -1", "Brightness 1"),
+       col = c("#1f77b4", "#ff7f0e"),
+       pch = 16, lty = 1, lwd = 1.8,
+       bg = "white", box.col = "#CCCCCC", cex = 1, title.font = 1)
