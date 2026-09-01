@@ -108,3 +108,129 @@ mtext("Main Effects Plot", side = 3, line = 2.2, font = 2, cex = 2)
 
 ---
 
+# Set canvas display dimensions
+options(repr.plot.width = 11, repr.plot.height = 7.5)
+
+# Configure margins (extra right margin for stacked legends)
+par(mar = c(5, 5.5, 4.5, 7.5), xpd = TRUE, family = "sans")
+
+# 1. Initialize Canvas (3x3 grid matrix domain [0,3] x [0,3])
+plot(0, type = "n", xlim = c(0, 3), ylim = c(0, 3),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "")
+
+# 2. Outer Border and 3x3 Grid Matrix Dividers
+rect(0, 0, 3, 3, border = "gray50", lwd = 1.2)
+segments(c(1, 2), 0, c(1, 2), 3, col = "gray50", lwd = 1.2) # Vertical panel dividers
+segments(0, c(1, 2), 3, c(1, 2), col = "gray50", lwd = 1.2) # Horizontal panel dividers
+
+# Color and Line Definitions
+blue_col <- "#2B6CB0" # Level -1.0 (Solid line, circular points)
+red_col  <- "#B83280" # Level  1.0 (Dashed line, square points)
+
+# Helper function to map Y-data (80 to 95) to panel coordinate spaces
+map_y <- function(val, panel_row) {
+  # panel_row: 3 = top, 2 = middle, 1 = bottom
+  y_bottom <- panel_row - 1
+  return(y_bottom + (val - 80) / 15 * 0.82)
+}
+
+# 3. Draw Background Gridlines for Active Panels
+x_ticks_rel <- c(0.25, 0.75)
+y_ticks <- c(80, 85, 90, 95)
+
+for (r in 1:3) {
+  for (c in 1:3) {
+    if (r != c) { # Skip diagonal panels
+      # Vertical gridlines
+      abline(v = (c - 1) + x_ticks_rel, col = "#EBF0F5", lwd = 1)
+      # Horizontal gridlines
+      for (y_val in y_ticks) {
+        y_coord <- map_y(y_val, 4 - r)
+        segments(c - 1, y_coord, c, y_coord, col = "#EBF0F5", lwd = 1)
+      }
+    }
+  }
+}
+
+# 4. Draw Header Banners for Active Panels
+headers <- list(
+  list(r = 1, c = 2, txt = "B * A"), list(r = 1, c = 3, txt = "C * A"),
+  list(r = 2, c = 1, txt = "A * B"), list(r = 2, c = 3, txt = "C * B"),
+  list(r = 3, c = 1, txt = "A * C"), list(r = 3, c = 2, txt = "B * C")
+)
+
+for (h in headers) {
+  y_top <- 4 - h$r
+  rect(h$c - 1, y_top - 0.12, h$c, y_top, border = "gray50", col = "white", lwd = 0.8)
+  text(x = h$c - 0.5, y = y_top - 0.06, labels = h$txt, cex = 2)
+}
+
+# 5. Plot Interaction Data Panels
+
+# --- Panel (1,2): B * A ---
+x_pts <- c(1.25, 1.75)
+lines(x_pts, map_y(c(85.0, 90.0), 3), col = blue_col, lwd = 1.5, lty = 1)
+points(x_pts, map_y(c(85.0, 90.0), 3), pch = 16, col = blue_col, cex = 2)
+lines(x_pts, map_y(c(87.2, 93.1), 3), col = red_col, lwd = 1.5, lty = 2)
+points(x_pts, map_y(c(87.2, 93.1), 3), pch = 15, col = red_col, cex = 2)
+
+# --- Panel (1,3): C * A ---
+x_pts <- c(2.25, 2.75)
+lines(x_pts, map_y(c(92.0, 83.2), 3), col = blue_col, lwd = 1.5, lty = 1)
+points(x_pts, map_y(c(92.0, 83.2), 3), pch = 16, col = blue_col, cex = 2)
+lines(x_pts, map_y(c(92.0, 88.4), 3), col = red_col, lwd = 1.5, lty = 2)
+points(x_pts, map_y(c(92.0, 88.4), 3), pch = 15, col = red_col, cex = 2)
+
+# --- Panel (2,1): A * B ---
+x_pts <- c(0.25, 0.75)
+lines(x_pts, map_y(c(85.0, 87.2), 2), col = blue_col, lwd = 1.5, lty = 1)
+points(x_pts, map_y(c(85.0, 87.2), 2), pch = 16, col = blue_col, cex = 2)
+lines(x_pts, map_y(c(90.0, 93.1), 2), col = red_col, lwd = 1.5, lty = 2)
+points(x_pts, map_y(c(90.0, 93.1), 2), pch = 15, col = red_col, cex = 2)
+
+# --- Panel (2,3): C * B ---
+x_pts <- c(2.25, 2.75)
+lines(x_pts, map_y(c(90.0, 83.2), 2), col = blue_col, lwd = 1.5, lty = 1)
+points(x_pts, map_y(c(90.0, 83.2), 2), pch = 16, col = blue_col, cex = 2)
+lines(x_pts, map_y(c(93.1, 88.4), 2), col = red_col, lwd = 1.5, lty = 2)
+points(x_pts, map_y(c(93.1, 88.4), 2), pch = 15, col = red_col, cex = 2)
+
+# --- Panel (3,1): A * C ---
+x_pts <- c(0.25, 0.75)
+lines(x_pts, map_y(c(93.5, 93.5), 1), col = blue_col, lwd = 1.5, lty = 1)
+points(x_pts, map_y(c(93.5, 93.5), 1), pch = 16, col = blue_col, cex = 2)
+lines(x_pts, map_y(c(83.2, 89.2), 1), col = red_col, lwd = 1.5, lty = 2)
+points(x_pts, map_y(c(83.2, 89.2), 1), pch = 15, col = red_col, cex = 2)
+
+# --- Panel (3,2): B * C ---
+x_pts <- c(1.25, 1.75)
+lines(x_pts, map_y(c(90.8, 95.0), 1), col = blue_col, lwd = 1.5, lty = 1)
+points(x_pts, map_y(c(90.8, 95.0), 1), pch = 16, col = blue_col, cex = 2)
+lines(x_pts, map_y(c(83.5, 89.8), 1), col = red_col, lwd = 1.5, lty = 2)
+points(x_pts, map_y(c(83.5, 89.8), 1), pch = 15, col = red_col, cex = 2)
+
+# 6. Axes and Tick Labels
+# Y-axis ticks on left (Panel 1) and right (Panel 2)
+axis(2, at = map_y(y_ticks, 1), labels = y_ticks, pos = 0, las = 1, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+axis(4, at = map_y(y_ticks, 2), labels = y_ticks, pos = 3, las = 1, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+axis(2, at = map_y(y_ticks, 3), labels = y_ticks, pos = 0, las = 1, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+
+# X-axis ticks (Bottom and Top)
+axis(1, at = c(0.25, 0.75), labels = c("-1", "1"), pos = 0, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+axis(1, at = c(1.25, 1.75), labels = c("-1", "1"), pos = 0, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+axis(1, at = c(2.25, 2.75), labels = c("-1", "1"), pos = 0, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+
+axis(3, at = c(1.25, 1.75), labels = c("-1", "1"), pos = 3, col = NA, col.ticks = "gray50", tck = -0.012, cex.axis = 2)
+
+# Axis Titles
+mtext("A", side = 1, line = 2.2, at = 0.5, cex = 2)
+mtext("B", side = 1, line = 2.2, at = 1.5, cex = 2)
+mtext("C", side = 1, line = 2.2, at = 2.5, cex = 2)
+mtext("Mean", side = 2, line = 3.2, at = 1.5, cex = 2, font = 3)
+
+# Main Titles
+mtext("Interaction Plot", side = 3, line = 2.8, font = 2, cex = 2)
+
+# 7. Stacked Legends on Right Margin
+legend_y_centers <- c(2.5, 1.5, 0.5)
+factors <- c("A", "B", "C")
