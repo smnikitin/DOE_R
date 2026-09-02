@@ -1,0 +1,38 @@
+# Set canvas display dimensions
+options(repr.plot.width = 15, repr.plot.height = 12)
+
+# Configure margins to accommodate larger text
+par(mar = c(6, 8, 2, 8), xpd = TRUE, family = "sans")
+
+# Data ordered from bottom to top so that 'A' appears at the top in horizontal barplot
+terms <- c("ACD", "ABD", "C", "ABC", "BCD", "BC", "ABCD", "CD", "AC", "AD", "BD", "AB", "D", "B", "A")
+effects <- c(2.6, 3.5, 3.8, 5.8, 6.2, 6.2, 6.5, 6.5, 6.9, 6.9, 25.0, 28.0, 32.0, 38.0, 45.0)
+
+# Colors: bottom 10 are light grey, top 5 (A, B, D, AB, BD) are black
+bar_cols <- c(rep("#EFEFEF", 10), rep("black", 5))
+border_cols <- c(rep("gray50", 10), rep("black", 5))
+
+# 1. Initialize horizontal barplot (space = 0.1 puts bars close together)
+bp <- barplot(effects, horiz = TRUE, names.arg = terms, las = 1,
+              xlim = c(0, 50), col = bar_cols, border = border_cols,
+              axes = FALSE, xlab = "", ylab = "", space = 0.1, cex.names = 2)
+
+# 2. Add vertical gridlines
+abline(v = seq(0, 50, by = 5), col = "#E5E5E5", lwd = 1)
+
+# 3. Redraw bars over gridlines for crisp appearance
+barplot(effects, horiz = TRUE, add = TRUE, axes = FALSE,
+        col = bar_cols, border = border_cols, space = 0.1)
+
+# 4. Vertical Reference Line at 10
+abline(v = 15, col = "black", lwd = 1.5)
+
+# 5. X-Axis and Labels
+axis(1, at = seq(0, 50, by = 5), pos = min(bp) - 0.7, col = NA, col.ticks = "gray50", cex.axis = 2)
+mtext("Standardized Effect Magnitude", side = 1, line = 4, cex = 2)
+
+# 6. Value Annotations to the Right of Bars
+labels_val <- c("2.6", "3.5", "3.8", "5.8", "6.2", "6.2", "6.5", "6.5", "6.9", "6.9", "25.0", "28.0", "32.0", "38.0", "45.0")
+for (i in 1:length(effects)) {
+  text(effects[i] + 1.8, bp[i], labels = labels_val[i], adj = 0, cex = 2, col = "black")
+}
