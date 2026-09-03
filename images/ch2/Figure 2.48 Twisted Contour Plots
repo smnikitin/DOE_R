@@ -17,7 +17,7 @@ col_palette <- colorRampPalette(c("#505050", "#787878", "#B0B0B0", "#E3D59D", "#
 
 # 4. Initialize Plot Canvas (Base R)
 plot(0, type = "n", xlim = c(-3.2, 3.2), ylim = c(-3.2, 3.2),
-     xlab = "P", ylab = "T", main = "Contour plot with NO interaction term",
+     xlab = "A", ylab = "B", main = "Contour plot with NO interaction term",
      axes = FALSE, frame.plot = TRUE)
 
 # Custom Axes (cex = 2)
@@ -29,9 +29,10 @@ contour(p, t, z, nlevels = n_levels, col = col_palette,
         drawlabels = FALSE, lwd = 2, add = TRUE)
 
 # 6. Plot Design Points
-points(pts_p, pts_t, pch = 19, cex = 2.5, col = "black")
+points(pts_p, pts_t, pch = 19, cex = 2, col = "black")
 
 ---
+
 # Set display options and margins for clear scaling with cex = 2
 options(repr.plot.width = 10, repr.plot.height = 10)
 par(mar = c(5, 5, 4, 2) + 0.1, cex.lab = 2, cex.axis = 2, cex.main = 2)
