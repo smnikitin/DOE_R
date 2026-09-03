@@ -1,0 +1,34 @@
+# Set display options and margins for clear scaling
+options(repr.plot.width = 10, repr.plot.height = 10)
+par(mar = c(5, 5, 4, 2) + 0.1, cex.lab = 2, cex.axis = 2, cex.main = 2)
+
+# 1. Generate grid data for linear model without interaction term
+p <- seq(-3.2, 3.2, length.out = 300)
+t <- seq(-3.2, 3.2, length.out = 300)
+z <- outer(p, t, function(P, T) -0.32 * P + 1.0 * T)
+
+# 2. Design points (2^2 factorial design + center point)
+pts_p <- c(-1, -1, 1, 1, 0)
+pts_t <- c(-1, 1, -1, 1, 0)
+
+# 3. Define color palette for contour levels
+n_levels <- 22
+col_palette <- colorRampPalette(c("#505050", "#787878", "#B0B0B0", "#E3D59D", "#EEB38C", "#C87A65"))(n_levels)
+
+# 4. Initialize Plot Canvas (Base R)
+plot(0, type = "n", xlim = c(-3.2, 3.2), ylim = c(-3.2, 3.2),
+     xlab = "P", ylab = "T", main = "Contour plot with NO interaction term",
+     axes = FALSE, frame.plot = TRUE)
+
+# Custom Axes (cex = 2)
+axis(1, at = -3:3, cex.axis = 2)
+axis(2, at = -3:3, cex.axis = 2)
+
+# 5. Add Contour Lines
+contour(p, t, z, nlevels = n_levels, col = col_palette,
+        drawlabels = FALSE, lwd = 2, add = TRUE)
+
+# 6. Plot Design Points
+points(pts_p, pts_t, pch = 19, cex = 2.5, col = "black")
+
+---
