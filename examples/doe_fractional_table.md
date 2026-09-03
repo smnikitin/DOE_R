@@ -2,7 +2,7 @@
 
 *Note: This matrix maps the number of factors (k) against the number of runs, displaying the standard fractional designs, their resolution, and optimal design generators.*
 
-| | $factors=3$ | $factors=4$ | $factors=5$ | $factors=6$ | $factors=7$ | $factors=8$ |
+| runs | $factors=3$ | $factors=4$ | $factors=5$ | $factors=6$ | $factors=7$ | $factors=8$ |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **4** | $2_{III}^{3-1}$ ❌<br>$\pm C=AB$ | | | | | |
 | **8** | $2^3$ ✅<br>*(full)* | $2_{IV}^{4-1}$ ⚠️<br>$\pm D=ABC$ | $2_{III}^{5-2}$ ❌<br>$\pm D=AB$<br>$\pm E=AC$ | $2_{III}^{6-3}$ ❌<br>$\pm D=AB$<br>$\pm E=AC$<br>$\pm F=BC$ | $2_{III}^{7-4}$ ❌<br>$\pm D=AB$<br>$\pm E=AC$<br>$\pm F=BC$<br>$\pm G=ABC$ | |
