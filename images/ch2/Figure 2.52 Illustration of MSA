@@ -1,0 +1,46 @@
+# Set canvas display dimensions and parameters
+options(repr.plot.width = 10, repr.plot.height = 9)
+par(mar = c(3, 3, 3, 3), family = "sans")
+
+# 1. Initialize Blank Canvas
+plot(0, type = "n", xlim = c(-1.5, 2.3), ylim = c(-1.5, 1.7),
+     axes = FALSE, xlab = "", ylab = "")
+
+# 2. Background Contour Lines (Light purple/blue dashed lines)
+x_grid <- seq(-1.5, 2.3, length.out = 200)
+y_grid <- seq(-1.5, 1.7, length.out = 200)
+z_matrix <- outer(x_grid, y_grid, function(x, y) 385.5 + 134 * x + 55 * y)
+contour(x_grid, y_grid, z_matrix, nlevels = 18, col = "#9FA8DA",
+        lty = 2, lwd = 1.5, add = TRUE, drawlabels = FALSE)
+
+# 3. Draw Factorial Design Square Boundary
+rect(-1, -1, 1, 1, lwd = 3, border = "black")
+
+# 4. Plot Design Points (4 Corners + 1 Center Point)
+points(c(-1, -1, 1, 1, 0), c(-1, 1, -1, 1, 0), pch = 19, cex = 2.5, col = "black")
+
+# 5. Data Response Values (Blue text, cex = 2)
+blue_col <- "#2A36B1"
+text(-0.72, -0.80, "193", col = blue_col, cex = 2, font = 2)
+text(-0.72,  0.80, "310", col = blue_col, cex = 2, font = 2)
+text( 0.72, -0.80, "468", col = blue_col, cex = 2, font = 2)
+text( 0.72,  0.80, "571", col = blue_col, cex = 2, font = 2)
+text( 0.28, -0.20, "407", col = blue_col, cex = 2, font = 2)
+
+# 6. Factor Level Signs ('-' and '+', cex = 2)
+text(-1.25, -1.00, "-", cex = 2, font = 2)
+text(-1.25,  1.00, "+", cex = 2, font = 2)
+text(-1.00, -1.25, "-", cex = 2, font = 2)
+text( 1.00, -1.25, "+", cex = 2, font = 2)
+
+# 7. Direction of Steepest Ascent Arrow
+arrows(0, 0, 2.0, 0.8, lwd = 2.5, length = 0.15, col = "black", xpd = TRUE)
+
+# 8. Step Vector Components (Dotted Right Triangle)
+lines(c(0, 1.5), c(0, 0), lty = 3, col = "gray30", lwd = 2)
+lines(c(1.5, 1.5), c(0, 0.6), lty = 3, col = "gray30", lwd = 2)
+
+# 9. Labels & Annotations (cex = 2)
+text(0.80, -0.1, expression(Delta*italic(x)[A]), cex = 2)
+text(1.68,  0.30, expression(Delta*italic(x)[B]), cex = 2)
+text(1.60,  1.10, "direction of\nsteepest\nascent", cex = 2, adj = 0.5)
