@@ -1,0 +1,49 @@
+# Set canvas dimensions to accommodate cex = 2 text
+options(repr.plot.width = 11, repr.plot.height = 9)
+par(mar = c(3, 3, 2, 2), family = "sans")
+
+# 1. Initialize Canvas
+plot(0, type = "n", xlim = c(-2.0, 2.0), ylim = c(-1.3, 1.6),
+     axes = FALSE, xlab = "", ylab = "")
+
+# 2. Mathematical Models for Curves
+x <- seq(-1.75, 1.75, length.out = 400)
+
+# Green Curve: Quadratic Model (Parabola)
+y_green <- 1.23 - 0.1 * x - 0.85 * x^2
+
+# Red Curve: True Surface (Higher-order curve with shallower tail decay)
+y_red <- 1.23 - 0.1 * x - 0.85 * x^2 + 0.08 * x^3 + 0.12 * x^4
+
+# 3. Horizontal Axis & Tick Marks
+axis_col <- "#5B5EA6"
+lines(c(-1.65, 1.65), c(0, 0), col = axis_col, lwd = 2)
+
+# Major and minor axis ticks
+ticks_major <- c(-1, 0, 1)
+ticks_minor <- c(-1.3, 1.35)
+
+for (tm in ticks_major) {
+  lines(rep(tm, 2), c(-0.045, 0.045), col = axis_col, lwd = 2)
+}
+for (tm in ticks_minor) {
+  lines(rep(tm, 2), c(-0.028, 0.028), col = axis_col, lwd = 2)
+}
+
+# Axis Text Labels (cex = 2)
+text(-1, -0.16, "-1", col = axis_col, cex = 2, font = 2)
+text(0, -0.16, "0", col = axis_col, cex = 2, font = 2)
+text(1, -0.16, "+1", col = axis_col, cex = 2, font = 2)
+
+# 4. Draw Fitted Curves
+lines(x, y_green, col = "#4CAF50", lwd = 3.5, lty = 2) # Green dashed
+lines(x, y_red, col = "#D32F2F", lwd = 3.5, lty = 1)   # Red solid
+
+# 5. Data Points (5 Points: Center, Factorial, and Axial)
+x_pts <- c(-1.3, -1.0, 0.0, 1.0, 1.35)
+y_pts <- 1.23 - 0.1 * x_pts - 0.85 * x_pts^2 + 0.08 * x_pts^3 + 0.12 * x_pts^4
+points(x_pts, y_pts, pch = 19, col = "black", cex = 2.4)
+
+# 6. Curve Text Labels (cex = 2)
+text(-1.40, -0.80, "Quadratic model", col = "#4CAF50", cex = 2, srt = 75, font = 2)
+text(1.10, 0.65, "True surface", col = "#D32F2F", cex = 2, srt = -55, font = 2)
