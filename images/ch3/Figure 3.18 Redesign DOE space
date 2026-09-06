@@ -1,0 +1,59 @@
+# Set canvas display dimensions
+options(repr.plot.width = 8, repr.plot.height = 8)
+
+# Configure margins
+par(mar = c(2, 2, 2, 2), family = "sans")
+
+# 1. Exact Geometry Setup:
+# - Length (13 to 14) = 2.0
+# - Length (14 to 122) = 2.0 (Equal lengths: y_top - y_low12 = 2.0)
+x_left   <- -1.0
+x_right  <-  1.0
+y_top    <-  1.0
+y_low12  <- -1.0  # Equal distance (14 to 122 = 2.0)
+
+# Shorter top 12 position (distance = 1.4)
+y_top12  <- -0.4
+y_9      <- y_top12
+
+# Point 10 exact middle of the square bounded by 122
+x_ctr    <- (x_left + x_right) / 2   # 0.0
+y_ctr    <- (y_top + y_low12) / 2    # 0.0
+
+# 2. Canvas with 1:1 Aspect Ratio (asp = 1 guarantees equal visual lengths)
+plot(0, type = "n", xlim = c(-1.5, 1.5), ylim = c(-1.5, 1.5),
+     asp = 1, axes = FALSE, xlab = "", ylab = "")
+
+# 3. Draw Lines
+# Black solid primary frame
+lines(c(x_left, x_right), c(y_top, y_top), col = "black", lwd = 4)     # 13 to 14
+lines(c(x_left, x_left),   c(y_top, y_9), col = "black", lwd = 4)       # 13 to 9
+lines(c(x_right, x_right), c(y_top, y_top12), col = "black", lwd = 4)   # 14 to top 12
+
+# Grey projected lines
+grey_col <- "#A0A0A0"
+lines(c(x_right, x_right), c(y_top12, y_low12), col = grey_col, lwd = 3) # top 12 to 122
+lines(c(x_left, x_right),   c(y_9, y_top12), col = grey_col, lwd = 3)     # 9 to top 12
+lines(c(x_left, x_right),   c(y_9, y_low12), col = grey_col, lwd = 3)     # 9 to 122
+
+# 4. Plot Factorial Points
+# Main black design points
+points(c(x_left, x_right, x_left, x_ctr), 
+       c(y_top, y_top, y_9, y_ctr), 
+       pch = 19, cex = 2.8, col = "black")
+
+# Grey projected points
+points(c(x_right, x_right), 
+       c(y_top12, y_low12), 
+       pch = 19, cex = 2.8, col = grey_col)
+
+# 5. Add Value Labels (All cex = 2)
+# Black Labels
+text(x_left  - 0.12, y_top,   "13", col = "black", cex = 2, adj = 1)
+text(x_left  - 0.12, y_9,     "9",  col = "black", cex = 2, adj = 1)
+text(x_right + 0.12, y_top,   "14", col = "black", cex = 2, adj = 0)
+text(x_ctr   + 0.15, y_ctr,   "10", col = "black", cex = 2, adj = 0)
+
+# Grey Labels
+text(x_right + 0.12, y_top12, "12", col = grey_col, cex = 2, adj = 0)
+text(x_right + 0.12, y_low12, "12", col = grey_col, cex = 2, adj = 0)
