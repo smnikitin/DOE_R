@@ -1,0 +1,84 @@
+# Set canvas dimensions to fit cex = 2 text cleanly across 2x2 grid
+options(repr.plot.width = 12, repr.plot.height = 12)
+
+# Set seed for reproducible data
+set.seed(5)
+
+# ==============================================================================
+# PART 1: THE "GOOD" DATA (Ideal Model)
+# ==============================================================================
+n <- 100
+fits_good <- runif(n, 10, 60)                # Random fitted values
+res_good <- rnorm(n, mean = 0, sd = 5)       # Perfectly normal, random errors
+
+# Set up 2x2 grid with margins and global cex parameters
+par(mfrow = c(2, 2), bg = "#F0F0F0", mar = c(5, 5, 4, 2) + 0.1, oma = c(0, 0, 4, 0),
+    cex.main = 2, cex.lab = 2, cex.axis = 2)
+
+# 1. Normal Probability Plot (Good: Follows the line)
+qqnorm(res_good, main = "Normal Probability Plot", xlab = "Residual", ylab = "Percent",
+       pch = 19, col = "#0055A4", cex = 1.5, cex.main = 2, cex.lab = 2, cex.axis = 2)
+qqline(res_good, col = "red", lwd = 2)
+
+# 2. Versus Fits (Good: Random scatter, constant width)
+plot(fits_good, res_good, main = "Versus Fits", xlab = "Fitted Value", ylab = "Residual",
+     pch = 19, col = "#0055A4", cex = 1.5, cex.main = 2, cex.lab = 2, cex.axis = 2)
+abline(h = 0, col = "gray30", lty = 2, lwd = 2)
+
+# 3. Histogram (Good: Bell-shaped, centered at 0)
+hist(res_good, main = "Histogram", xlab = "Residual", col = "#7CA8D8", border = "black",
+     breaks = 10, cex.main = 2, cex.lab = 2, cex.axis = 2)
+
+# 4. Versus Order (Good: Random static noise)
+plot(res_good, main = "Versus Order", xlab = "Observation Order", ylab = "Residual",
+     type = "b", pch = 19, col = "#0055A4", cex = 1.5, cex.main = 2, cex.lab = 2, cex.axis = 2)
+abline(h = 0, col = "gray30", lty = 2, lwd = 2)
+
+# Outer Main Title (cex = 2)
+mtext("IDEAL MODEL: Good Residual Data", outer = TRUE, cex = 2, font = 2)
+
+---
+
+# Set canvas dimensions to fit cex = 2 text cleanly across 2x2 grid
+options(repr.plot.width = 12, repr.plot.height = 12)
+
+# Set seed for reproducible data
+set.seed(5)
+n <- 100
+
+# ==============================================================================
+# PART 2: THE "BAD" DATA (Violating Assumptions)
+# ==============================================================================
+fits_bad <- seq(10, 60, length.out = n)
+res_skewed <- rlnorm(n, meanlog = 1, sdlog = 0.8) - 4            # Skewed (Not normal)
+res_funnel <- rnorm(n, mean = 0, sd = fits_bad / 3)              # Funnel (Non-constant variance)
+res_drift <- seq(-15, 15, length.out = n) + rnorm(n, 0, 3)       # Upward drift (Time-dependent)
+
+# Set up 2x2 grid with margins and global cex parameters
+par(mfrow = c(2, 2), bg = "#F0F0F0", mar = c(5, 5, 4, 2) + 0.1, oma = c(0, 0, 4, 0),
+    cex.main = 2, cex.lab = 2, cex.axis = 2)
+
+# 1. Normal Probability Plot (Bad: Distinct curve away from the line)
+qqnorm(res_skewed, main = "Normal Probability Plot", xlab = "Residual", ylab = "Percent",
+       pch = 19, col = "#D32F2F", cex = 1.5, cex.main = 2, cex.lab = 2, cex.axis = 2)
+qqline(res_skewed, col = "black", lwd = 2)
+
+# 2. Versus Fits (Bad: Megaphone/Funnel shape fanning out)
+plot(fits_bad, res_funnel, main = "Versus Fits", xlab = "Fitted Value", ylab = "Residual",
+     pch = 19, col = "#D32F2F", cex = 1.5, cex.main = 2, cex.lab = 2, cex.axis = 2)
+abline(h = 0, col = "gray30", lty = 2, lwd = 2)
+
+# 3. Histogram (Bad: Heavily skewed to the right)
+hist(res_skewed, main = "Histogram", xlab = "Residual", col = "#EF9A9A", border = "black",
+     breaks = 10, cex.main = 2, cex.lab = 2, cex.axis = 2)
+
+# 4. Versus Order (Bad: Clear upward trend over time)
+plot(res_drift, main = "Versus Order", xlab = "Observation Order", ylab = "Residual",
+     type = "b", pch = 19, col = "#D32F2F", cex = 1.5, cex.main = 2, cex.lab = 2, cex.axis = 2)
+abline(h = 0, col = "gray30", lty = 2, lwd = 2)
+
+# Outer Main Title (cex = 2)
+mtext("PROBLEMATIC MODEL: Bad Residual Data", outer = TRUE, cex = 2, font = 2)
+
+# Reset plotting layout to standard
+par(mfrow = c(1, 1), bg = "white")
