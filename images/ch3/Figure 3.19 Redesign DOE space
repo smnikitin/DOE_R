@@ -1,0 +1,43 @@
+# Set canvas display dimensions
+options(repr.plot.width = 8, repr.plot.height = 8)
+
+# Configure margins
+par(mar = c(3, 3, 2, 2), family = "sans")
+
+# 1. Initialize Canvas (Aspect ratio 1:1)
+plot(0, type = "n", xlim = c(-1.6, 1.6), ylim = c(-1.5, 1.6),
+     asp = 1, axes = FALSE, xlab = "", ylab = "")
+
+# 2. Coordinates
+x_grid <- c(-1, 0, 1)
+y_grid <- c(-1, 0, 1)
+
+# Node positions (Point 9 is elevated at y = -0.6)
+x_pts <- c(-1,  1,  1, -1)
+y_pts <- c( 1,  1, -1, -0.6)
+
+# 3. Light Dotted Background Grid Lines
+grid_col <- "gray80"
+for (x in x_grid) lines(c(x, x), c(-1.3, 1.3), col = grid_col, lty = 3, lwd = 1.5)
+for (y in y_grid) lines(c(-1.3, 1.3), c(y, y), col = grid_col, lty = 3, lwd = 1.5)
+
+# 4. Draw Thick Polygon Frame
+polygon(x_pts, y_pts, border = "black", lwd = 4, col = NA)
+
+# 5. Plot Design Points
+points(x_pts, y_pts, pch = 19, cex = 2.8, col = "black")
+
+# 6. Blue Coded Axis Labels (cex = 2)
+blue_col <- "#2A36B1"
+
+# Horizontal Axis (x = -1, 0, +1)
+text(c(-1, 0, 1), -1.25, c("-1", "0", "+1"), col = blue_col, cex = 2, font = 2)
+
+# Vertical Axis (y = -1, 0, +1)
+text(-1.3, c(-1, 0, 1), c("-1", "0", "+1"), col = blue_col, cex = 2, font = 2)
+
+# 7. Node Value Labels (cex = 2, with 13 and 14 shifted a bit upper)
+text(x_pts[1] - 0.12, y_pts[1] + 0.2, "13", col = "black", cex = 2, adj = 1)
+text(x_pts[2] + 0.12, y_pts[2] + 0.2, "14", col = "black", cex = 2, adj = 0)
+text(x_pts[3] + 0.12, y_pts[3],        "12", col = "black", cex = 2, adj = 0)
+text(x_pts[4] - 0.12, y_pts[4],        "9",  col = "black", cex = 2, adj = 1)
