@@ -1,1 +1,155 @@
+# Set canvas display dimensions
+options(repr.plot.width = 12, repr.plot.height = 8.5)
+
+# Configure margins (expanded bottom margin for factor levels and factor names at cex = 2)
+par(mar = c(6, 7, 5, 4), family = "sans", xpd = TRUE)
+
+# 1. RSM CCD Dataset Setup
+doe_data <- data.frame(
+  A = c(-1,  1, -1,  1, -1,  1,  0,  0,  0,  0),
+  B = c(-1, -1,  1,  1,  0,  0, -1,  1,  0,  0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 85.0, 88.2, 88.2, 92.1, 91.1)
+)
+
+# 2. Fit Full Quadratic Response Surface Model
+model <- lm(Y ~ A * B + I(A^2) + I(B^2), data = doe_data)
+
+# 3. Initialize Canvas (Y starts from 84)
+y_min <- 84
+y_max <- 94
+plot(0, type = "n", xlim = c(0.5, 2.5), ylim = c(y_min, y_max),
+     axes = FALSE, xlab = "", ylab = "")
+
+# 4. Y-Axis Setup & Gridlines
+y_ticks <- seq(84, 94, by = 2)
+grid_col <- "#E0E0E0"
+
+for (y in y_ticks) {
+  lines(c(0.5, 2.5), c(y, y), col = grid_col, lwd = 1.2)
+}
+
+# Vertical gridlines for subpanels (-1, 0, 1 for both panels)
+x_grid <- c(0.7, 1.0, 1.3, 1.7, 2.0, 2.3)
+for (x in x_grid) {
+  lines(c(x, x), c(y_min, y_max), col = grid_col, lwd = 1.2)
+}
+
+# Outer Frame & Center Panel Divider Line
+rect(0.5, y_min, 2.5, y_max, border = "gray30", lwd = 1.5)
+lines(c(1.5, 1.5), c(y_min, y_max), col = "gray30", lwd = 1.5)
+
+# Top Subpanel Header Banners (Minitab Style)
+header_height <- 1.6
+rect(0.5, y_max - header_height, 1.5, y_max, col = "#E5E7EB", border = "gray30", lwd = 1.5)
+text(1.0, y_max - header_height / 2, "A", cex = 2, font = 2, col = "#111827")
+
+rect(1.5, y_max - header_height, 2.5, y_max, col = "#E5E7EB", border = "gray30", lwd = 1.5)
+text(2.0, y_max - header_height / 2, "B", cex = 2, font = 2, col = "#111827")
+
+# 5. Y-Axis Ticks & Labeling (cex = 2)
+axis(2, at = y_ticks, labels = y_ticks, las = 1, cex.axis = 2, 
+     col = "transparent", col.ticks = "gray30", lwd.ticks = 1.5)
+mtext("Mean", side = 2, line = 4.2, cex = 2, font = 2)
+
+# 6. X-Axis Factor Levels (-1, 0, 1)
+text(0.7, y_min - 1.2, "-1.0", cex = 1.8)
+text(1.0, y_min - 1.2, "0.0",  cex = 1.8)
+text(1.3, y_min - 1.2, "1.0",  cex = 1.8)
+
+text(1.7, y_min - 1.2, "-1.0", cex = 1.8)
+text(2.0, y_min - 1.2, "0.0",  cex = 1.8)
+text(2.3, y_min - 1.2, "1.0",  cex = 1.8)
+
+# 7. Generate Predicted Curves for Main Effects (holding other factor at 0)
+seq_vals <- seq(-1, 1, length.out = 100)
+pred_a <- predict(model, newdata = data.frame(A = seq_vals, B = 0))
+pred_b <- predict(model, newdata = data.frame(A = 0, B = seq_vals))
+
+x_disp_a <- 1.0 + 0.3 * seq_vals
+x_disp_b <- 2.0 + 0.3 * seq_vals
+
+# Draw Curves
+lines(x_disp_a, pred_a, col = "black", lwd = 2.5)
+lines(x_disp_b, pred_b, col = "black", lwd = 2.5)
+
+# Plot points at evaluated levels (-1, 0, 1)
+eval_seq <- c(-1, 0, 1)
+eval_a <- predict(model, newdata = data.frame(A = eval_seq, B = 0))
+eval_b <- predict(model, newdata = data.frame(A = 0, B = eval_seq))
+
+points(1.0 + 0.3 * eval_seq, eval_a, pch = 19, cex = 1.8, col = "black")
+points(2.0 + 0.3 * eval_seq, eval_b, pch = 19, cex = 1.8, col = "black")
+
+# 8. Titles (cex = 2)
+mtext("Main Effects Plot", side = 3, line = 2.6, cex = 2, font = 2)
+
+---
+
+# Set canvas display dimensions
+options(repr.plot.width = 11, repr.plot.height = 8.5)
+
+# Configure margins (expanded right margin for legend, left for y-axis)
+par(mar = c(5, 7, 5, 10), family = "sans", xpd = TRUE)
+
+# 1. RSM CCD Dataset Setup
+doe_data <- data.frame(
+  A = c(-1,  1, -1,  1, -1,  1,  0,  0,  0,  0),
+  B = c(-1, -1,  1,  1,  0,  0, -1,  1,  0,  0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 85.0, 88.2, 88.2, 92.1, 91.1)
+)
+
+# 2. Fit Full Quadratic Response Surface Model
+model <- lm(Y ~ A * B + I(A^2) + I(B^2), data = doe_data)
+
+# 3. Initialize Canvas
+y_min <- 76
+y_max <- 94
+plot(0, type = "n", xlim = c(-1.1, 1.1), ylim = c(y_min, y_max),
+     axes = FALSE, xlab = "", ylab = "")
+
+# 4. Y-Axis Setup & Gridlines
+y_ticks <- seq(77.5, 92.5, by = 2.5)
+grid_col <- "#E0E0E0"
+
+for (y in y_ticks) {
+  lines(c(-1.1, 1.1), c(y, y), col = grid_col, lwd = 1.2)
+}
+
+x_ticks <- c(-1.0, -0.5, 0.0, 0.5, 1.0)
+for (x in x_ticks) {
+  lines(c(x, x), c(y_min, y_max), col = grid_col, lwd = 1.2)
+}
+
+# Outer Frame
+rect(-1.1, y_min, 1.1, y_max, border = "gray30", lwd = 1.5)
+
+# Top Subpanel Header Banner (Minitab Style)
+header_height <- 1.6
+rect(-1.1, y_max - header_height, 1.1, y_max, col = "#E5E7EB", border = "gray30", lwd = 1.5)
+text(0, y_max - header_height / 2, "A * B", cex = 2, font = 2, col = "#111827")
+
+# 5. Axes Ticks & Labeling (cex = 2)
+axis(2, at = y_ticks, labels = y_ticks, las = 1, cex.axis = 2, 
+     col = "transparent", col.ticks = "gray30", lwd.ticks = 1.5)
+mtext("Mean", side = 2, line = 4.2, cex = 2, font = 2)
+
+axis(1, at = x_ticks, labels = c("-1.0", "-0.5", "0.0", "0.5", "1.0"), cex.axis = 2, 
+     col = "transparent", col.ticks = "gray30", lwd.ticks = 1.5)
+
+# 6. Generate Predicted Curves for B at Levels (-1, 0, 1) across Factor A
+a_seq <- seq(-1, 1, length.out = 100)
+
+pred_b_neg1 <- predict(model, newdata = data.frame(A = a_seq, B = -1))
+pred_b_zero <- predict(model, newdata = data.frame(A = a_seq, B = 0))
+pred_b_pos1 <- predict(model, newdata = data.frame(A = a_seq, B = 1))
+
+# Draw Interaction Curves (Monochrome with distinct line types matching reference)
+lines(a_seq, pred_b_neg1, col = "black", lwd = 2.5, lty = 1) # Solid
+lines(a_seq, pred_b_zero, col = "black", lwd = 2.5, lty = 2) # Dashed
+lines(a_seq, pred_b_pos1, col = "black", lwd = 2.5, lty = 3) # Dotted
+
+# 7. Titles (cex = 2)
+mtext("Interaction Plot", side = 3, line = 2.6, cex = 2, font = 2)
+
+---
 
