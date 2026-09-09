@@ -153,3 +153,49 @@ mtext("Interaction Plot", side = 3, line = 2.6, cex = 2, font = 2)
 
 ---
 
+# Set canvas display dimensions
+options(repr.plot.width = 9.5, repr.plot.height = 9.5)
+
+# Configure margins for standard layout
+par(mar = c(5, 6, 3, 3), family = "sans")
+
+# 1. RSM CCD Dataset Setup
+doe_data <- data.frame(
+  A = c(-1,  1, -1,  1, -1,  1,  0,  0,  0,  0),
+  B = c(-1, -1,  1,  1,  0,  0, -1,  1,  0,  0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 85.0, 88.2, 88.2, 92.1, 91.1)
+)
+
+# 2. Fit Full Quadratic Response Surface Model
+model <- lm(Y ~ A * B + I(A^2) + I(B^2), data = doe_data)
+
+# 3. Create Grid Matrix for Surface Prediction
+grid_a <- seq(-1, 1, length.out = 200)
+grid_b <- seq(-1, 1, length.out = 200)
+grid_df <- expand.grid(A = grid_a, B = grid_b)
+grid_df$Y_hat <- predict(model, newdata = grid_df)
+z_matrix <- matrix(grid_df$Y_hat, nrow = length(grid_a), ncol = length(grid_b))
+
+# 4. Define Contour Levels & Concentric Grayscale Palette
+levels <- seq(78, 93, length.out = 12)
+gray_palette <- colorRampPalette(c("#EAEAEA", "#333333"))(length(levels) - 1)
+
+# 5. Initialize Square Canvas (Aspect Ratio = 1)
+plot(0, type = "n", xlim = c(-1, 1), ylim = c(-1, 1),
+     asp = 1, axes = FALSE, xlab = "", ylab = "")
+
+# 6. Render Filled Grayscale Contours
+.filled.contour(grid_a, grid_b, z_matrix, levels = levels, col = gray_palette)
+
+# 7. Draw Outer Bounding Frame
+rect(-1, -1, 1, 1, border = "gray30", lwd = 1.5)
+
+# 8. Axes Ticks & Labels at 0.5 Intervals (cex = 2)
+ticks <- c(-1.0, -0.5, 0.0, 0.5, 1.0)
+labels <- c("-1.0", "-0.5", "0.0", "0.5", "1.0")
+
+axis(1, at = ticks, labels = labels, cex.axis = 2, col = "gray30", col.ticks = "gray30", lwd.ticks = 1.5)
+axis(2, at = ticks, labels = labels, las = 1, cex.axis = 2, col = "gray30", col.ticks = "gray30", lwd.ticks = 1.5)
+
+mtext("A", side = 1, line = 3.2, cex = 2, font = 2)
+mtext("B", side = 2, line = 3.8, cex = 2, font = 2)
