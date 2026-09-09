@@ -120,3 +120,52 @@ points(0, 92.1, pch = 19, cex = 2.2, col = "black")
 mtext("Interaction Plot", side = 3, line = 2.6, cex = 2, font = 2)
 
 ---
+
+# Set canvas display dimensions
+options(repr.plot.width = 9.5, repr.plot.height = 9.5)
+
+# Configure margins for standard layout
+par(mar = c(5, 6, 3, 3), family = "sans")
+
+# 1. DOE Dataset Setup
+doe_data <- data.frame(
+  A = c(-1,  1, -1,  1,  0,  0,  0),
+  B = c(-1, -1,  1,  1,  0,  0,  0),
+  Y = c(87.1, 78.6, 83.1, 84.6, 92.1, 91.1, 93.1)
+)
+
+# 2. Fit Simple 2-Factor DOE Model (Linear + Interaction)
+model <- lm(Y ~ A * B, data = doe_data)
+
+# 3. Create Grid Matrix for Surface Prediction
+grid_a <- seq(-1, 1, length.out = 200)
+grid_b <- seq(-1, 1, length.out = 200)
+grid_df <- expand.grid(A = grid_a, B = grid_b)
+grid_df$Y_hat <- predict(model, newdata = grid_df)
+z_matrix <- matrix(grid_df$Y_hat, nrow = length(grid_a), ncol = length(grid_b))
+
+# 4. Calibrate Levels to Match Reference Topography
+# Model predictions range from ~82.35 to ~90.85. 
+# Using 10 integer levels creates exactly 9 bounded regions.
+levels <- seq(82, 91, by = 1)
+
+# 5. Define Light-to-Dark Grayscale Palette
+# Maps lowest values (bottom-right) to lightest, highest (bottom-left) to darkest
+gray_palette <- colorRampPalette(c("#F4F4F4", "#404040"))(length(levels) - 1)
+
+# 6. Initialize Square Canvas (Aspect Ratio = 1)
+plot(0, type = "n", xlim = c(-1, 1), ylim = c(-1, 1),
+     asp = 1, axes = FALSE, xlab = "", ylab = "")
+
+# 7. Render Filled Grayscale Contours
+.filled.contour(grid_a, grid_b, z_matrix, levels = levels, col = gray_palette)
+
+# 8. Draw Outer Bounding Frame
+rect(-1, -1, 1, 1, border = "gray30", lwd = 1.5)
+
+# 9. Axes Ticks & Labels at 0.5 Intervals (cex = 2)
+ticks <- c(-1.0, -0.5, 0.0, 0.5, 1.0)
+labels <- c("-1.0", "-0.5", "0.0", "0.5", "1.0")
+
+axis(1, at = ticks, labels = labels, cex.axis = 2, col = "gray30", col.ticks = "gray30", lwd.ticks = 1.5)
+axis(2, at = ticks, labels = labels, las = 1, cex.axis = 2, col = "gray30", col.ticks = "gray30", lwd.ticks = 1.5)
