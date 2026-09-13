@@ -1,0 +1,16 @@
+# Clear environment for clean execution
+rm(list = ls())
+
+# 1. Define Factor Levels (-1 = Low, +1 = High)
+A <- c(-1, +1, -1, +1)      # Factor A: Brightness
+B <- c(-1, -1, +1, +1)      # Factor B: Field of View
+
+# 2. Define Response Vector (4 experimental runs)
+y <- c(1.4, 2.2, 5.1, 9.6)  # Response: User Comfort
+
+# 3. Fit Saturated Linear Model (Main Effects + Interaction)
+DOE <- lm(y ~ A * B)        # 'A * B' expands to A + B + A:B
+
+# 4. Display Coefficients and Model Summary
+cat("\n--- SATURATED MODEL SUMMARY ---\n")
+summary(DOE)
