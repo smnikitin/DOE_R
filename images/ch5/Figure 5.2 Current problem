@@ -1,0 +1,38 @@
+# 1. Configure dark-theme canvas parameters
+par(bg = "#111111", fg = "white", family = "mono", mar = c(1, 1, 1, 1))
+
+# 2. Initialize 0-to-100 coordinate grid for precise lock-in mapping
+plot(0, 0, type = "n", xlim = c(0, 100), ylim = c(0, 100), 
+     axes = FALSE, xlab = "", ylab = "")
+
+# 3. Render left column text (Centered)
+text(20, 92, "[ Packages on Belt ]", col = "white", cex = 1.1)
+text(20, 66, "Camera Reader", col = "white", cex = 1.1)
+text(20, 22, "Manual Check", col = "white", cex = 1.1)
+
+# 4. Draw dashed boundary boxes
+# Camera Reader Box
+rect(4, 57, 36, 75, border = "white", lty = 2, lwd = 1.5)
+# Manual Check Box
+rect(4, 13, 36, 31, border = "white", lty = 2, lwd = 1.5)
+
+# 5. Render right column text (Left-justified to prevent leftward overlap)
+text(72, 66, "[ Automatic Sorting Bins ]", col = "white", cex = 1.1, adj = c(0, 0.5))
+text(72, 22, "[ Shipping Delays & Extra Labor ]", col = "white", cex = 1.1, adj = c(0, 0.5))
+
+# 6. Add connecting arrows and path labels
+# Top solid entrance arrow
+arrows(20, 88, 20, 77, length = 0.1, col = "white", lty = 1, lwd = 1.5)
+
+# Top dashed branch (Scanned Correctly)
+arrows(38, 66, 70, 66, length = 0.1, col = "white", lty = 2, lwd = 1.5)
+# Bottom-justified to stay strictly above the arrow
+text(54, 70, "Scanned Correctly? (~65%)", col = "white", cex = 1.0, adj = c(0.5, 0)) 
+
+# Downward dashed failure branch
+arrows(20, 55, 20, 33, length = 0.1, col = "white", lty = 2, lwd = 1.5)
+# Left-justified to stay strictly right of the vertical arrow
+text(23, 44, "Failed Scan (~35%)", col = "white", cex = 1.0, adj = c(0, 0.5)) 
+
+# Bottom dashed branch (Manual Check to Delay)
+arrows(38, 22, 70, 22, length = 0.1, col = "white", lty = 2, lwd = 1.5)
