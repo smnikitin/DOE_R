@@ -1,0 +1,86 @@
+# 1. Construct the 17-run design matrix for 7 factors (A-G)
+dsd_full <- data.frame(
+  A = c( 
+     0,  0,  1, -1,  1, -1,  1, -1,  1, -1,  1, -1,  1, -1,  1, -1,  0),
+  B = c( 
+     1, -1,  0,  0, -1,  1,  1, -1, -1,  1,  1, -1,  1, -1, -1,  1,  0),
+  C = c( 
+     1, -1,  1, -1,  0,  0,  1, -1, -1,  1, -1,  1, -1,  1,  1, -1,  0),
+  D = c( 
+     1, -1, -1,  1, -1,  1,  0,  0,  1, -1, -1,  1,  1, -1,  1, -1,  0),
+  E = c( 
+     1, -1,  1, -1,  1, -1, -1,  1,  0,  0, -1,  1,  1, -1, -1,  1,  0),
+  F = c( 
+     1, -1, -1,  1,  1, -1,  1, -1,  1, -1,  0,  0, -1,  1, -1,  1,  0),
+  G = c( 
+     1, -1, -1,  1,  1, -1, -1,  1, -1,  1,  1, -1,  0,  0,  1, -1,  0),
+  Y = c(
+    81.5, 63.5, 80.3, 64.7, 45.6, 44.4, 79.9, 50.1, 44.5, 45.5, 79.2, 50.8, 80.0, 50.0, 45.5, 44.5, 90.0)
+)
+
+# 2. Output structured design frame to console
+cat("\n=== 17-RUN FULL DSD MATRIX ===\n\n")
+print(dsd_full)
+
+---
+
+# 1. Configure print-optimized canvas parameters
+par(mar = c(1, 1, 1, 1), bg = "white")
+
+# 2. Initialize 0-to-100 coordinate grid for lock-in layout mapping
+plot(0, 0, type = "n", xlim = c(0, 100), ylim = c(0, 100), 
+     axes = FALSE, xlab = "", ylab = "")
+
+# 3. Draw outer framing box and titles
+rect(1, 1, 99, 99, border = "black", lwd = 1.5)
+text(50, 95, "Pareto Chart of the Standardized Effects", font = 2, cex = 1.1)
+text(50, 91, "(response is C12, \u03b1 = 0.05)", cex = 0.9)
+
+# 4. Define plot panel frame and background grid
+plot_x1 <- 12; plot_x2 <- 80; plot_y1 <- 12; plot_y2 <- 85
+rect(plot_x1, plot_y1, plot_x2, plot_y2, border = "gray60", col = "white")
+
+# X-axis ticks and vertical grid lines
+x_ticks <- c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5)
+x_coords <- plot_x1 + (x_ticks / 2.5) * (plot_x2 - plot_x1)
+
+for (i in seq_along(x_ticks)) {
+  lines(c(x_coords[i], x_coords[i]), c(plot_y1, plot_y2), col = "gray90")
+  text(x_coords[i], 8, sprintf("%.1f", x_ticks[i]), cex = 0.85)
+}
+text(46, 4, "Standardized Effect", font = 2, cex = 0.9)
+text(8, 88, "Term", font = 2, cex = 0.85)
+
+# 5. Render standardized effect bars
+terms <- c("B", "A", "C", "E", "G", "D", "F")
+effects <- c(1.53, 1.53, 0.10, 0.08, 0.05, 0.03, 0.01)
+y_centers <- seq(79, 18, length.out = 7)
+bar_h <- 4.0
+
+for (i in seq_along(terms)) {
+  # Y-axis term label
+  text(9, y_centers[i], terms[i], cex = 0.85)
+  
+  # Calculate bar length and render
+  bar_x2 <- plot_x1 + (effects[i] / 2.5) * (plot_x2 - plot_x1)
+  rect(plot_x1, y_centers[i] - bar_h, bar_x2, y_centers[i] + bar_h, 
+       col = "#7DA7D9", border = "#2B5B84")
+}
+
+# 6. Add critical value reference line (\u03b1 = 0.05 cut-off)
+crit_val <- 2.262
+x_ref <- plot_x1 + (crit_val / 2.5) * (plot_x2 - plot_x1)
+lines(c(x_ref, x_ref), c(plot_y1, plot_y2), col = "red", lty = 2, lwd = 1.5)
+text(x_ref, 87, "2.262", col = "red", cex = 0.85, font = 2)
+
+# 7. Render right-side factor key legend
+text(85, 78, "Factor", font = 2, cex = 0.8, adj = 0)
+text(92, 78, "Name", font = 2, cex = 0.8, adj = 0)
+
+y_legend <- seq(72, 42, length.out = 7)
+factors <- LETTERS[1:7]
+
+for (i in seq_along(factors)) {
+  text(86, y_legend[i], factors[i], cex = 0.8)
+  text(93, y_legend[i], factors[i], cex = 0.8)
+}
