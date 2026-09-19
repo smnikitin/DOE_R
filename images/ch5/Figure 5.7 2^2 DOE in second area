@@ -1,0 +1,74 @@
+# Data frame for the new table values
+doe_data <- data.frame(
+  A = c(-0.5, -0.1, -0.5, -0.1),
+  B = c(-0.6, -0.6, -0.2, -0.2),
+  Response = c(74.075, 78.875, 80.675, 87.075)
+)
+
+# Print a neat ASCII table with vertical dividers
+knitr::kable(doe_data, format = "pipe", align = "c")
+
+---
+
+# Data frame for DOE values
+doe_data <- data.frame(
+  A = c(-0.5, -0.1, -0.5, -0.1),
+  B = c(-0.6, -0.6, -0.2, -0.2),
+  Response = c(74.075, 78.875, 80.675, 87.075)
+)
+
+# 1. Fit linear model with main effects and interaction term (A:B)
+model <- lm(Response ~ A * B, data = doe_data)
+
+# 2. Extract and display only the Coefficients Estimate column
+coef(summary(model))[, "Estimate", drop = FALSE]
+
+---
+
+system("apt install -y r-cran-pid")
+library(pid)
+
+# 1. Define data
+doe_data <- data.frame(
+  A = c(-0.5, -0.1, -0.5, -0.1),
+  B = c(-0.6, -0.6, -0.2, -0.2),
+  Response = c(74.075, 78.875, 80.675, 87.075)
+)
+
+# 2. Fit model
+model <- lm(Response ~ A * B, data = doe_data)
+
+# 3. Generate Pareto plot using correct camelCase function name
+paretoPlot(model)
+
+---
+
+# 1. Define dataset
+doe_data <- data.frame(
+  A = c(-0.5, -0.1, -0.5, -0.1),
+  B = c(-0.6, -0.6, -0.2, -0.2),
+  Response = c(74.075, 78.875, 80.675, 87.075)
+)
+
+# 2. Fit the linear model with interaction
+model_ff <- lm(Response ~ A * B, data = doe_data)
+
+# 3. Force a square canvas layout in Google Colab
+options(repr.plot.width = 6, repr.plot.height = 6)
+
+# 4. Generate grid using the exact min/max bounds of your data
+a_seq <- seq(min(doe_data$A), max(doe_data$A), length.out = 50)
+b_seq <- seq(min(doe_data$B), max(doe_data$B), length.out = 50)
+
+grid_data <- expand.grid(A = a_seq, B = b_seq)
+grid_data$Y_pred <- predict(model_ff, newdata = grid_data)
+z_vals <- matrix(grid_data$Y_pred, nrow = length(a_seq), ncol = length(b_seq))
+
+# 5. Render the Grayscale Contour Plot
+filled.contour(a_seq, b_seq, z_vals,
+               # Black=High (0), White=Low (0.9)
+               color.palette = function(n) gray.colors(n, start = 0.9, end = 0),
+               xlab = "Factor A",
+               ylab = "Factor B",
+               main = "Contour Plot of Y vs A and B", 
+               nlevels = 6)
