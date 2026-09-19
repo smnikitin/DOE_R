@@ -1,0 +1,66 @@
+# 1. Expand Colab canvas width (compact horizontally to save space)
+options(repr.plot.width = 14, repr.plot.height = 14)
+
+# 2. Configure canvas parameters 
+# Left margin reduced to 5 to save space; top/bottom/right adjusted for text size
+par(pty = "s", mar = c(10, 5, 8, 4), bg = "white")
+slate_gray <- "#55606B" 
+
+# Universal size for letters, numbers, and titles
+univ_size <- 2
+
+# 3. Initialize plot area and rigidly lock the axes (-1.0 to 1.0)
+plot(0, 0, type = "n", xlim = c(-1.0, 1.0), ylim = c(-1.0, 1.0),
+     xaxs = "i", yaxs = "i", axes = FALSE, xlab = "", ylab = "", main = "")
+
+# 4. Main title (bold font = 2)
+mtext("Optimisation light intensity and CV threshold for ZIP code system", 
+      side = 3, line = 5.5, adj = 0.77, col = "gray40", cex = 2.2, font = 2, xpd = NA)
+
+# 5. Y-axis title positioned at the top left (bold font = 2)
+mtext("CV-threshold (B)", side = 3, line = 2, adj = -0.1, col = "gray10", cex = univ_size, font = 2, xpd = NA)
+
+# X-axis title at the bottom (bold font.lab = 2)
+title(xlab = "Light intensity (A)", col.lab = "gray10", cex.lab = univ_size, font.lab = 2, line = 6)
+
+# 6. Draw background grid lines at 0.1 intervals (dense grid)
+grid_ticks <- seq(-1.0, 1.0, by = 0.1)
+abline(h = grid_ticks, v = grid_ticks, col = "gray10", lty = 3)
+
+# 7. Render numbers and tick marks at 0.2 intervals
+num_ticks <- seq(-1.0, 1.0, by = 0.2)
+tick_labels <- sprintf("%.1f", num_ticks)
+
+# Y-axis (Standard rendering, bold font.axis = 2)
+axis(2, at = num_ticks, labels = tick_labels, col = "gray40", 
+     col.axis = slate_gray, cex.axis = univ_size, font.axis = 2, las = 1)
+
+# X-axis (Manual text placement to display numbers at 0.2 steps, bold font = 2)
+axis(1, at = num_ticks, labels = FALSE, col = "gray40") 
+text(x = num_ticks, y = -1.08, labels = tick_labels, 
+     col = slate_gray, cex = univ_size, font = 2, xpd = NA, adj = c(0.5, 1))
+
+box(col = "gray40", lwd = 1.2)
+
+# 8. Plot each DOE point and its response label point-by-point
+points(-0.7, -0.8, pch = 19, col = "#D62728", cex = 2)
+text(-0.7, -0.8, "64.6", pos = 2, col = slate_gray, cex = 2, font = 2, offset = 1.0)
+
+points(-0.5, -0.8, pch = 19, col = "black", cex = 2)
+text(-0.5, -0.8, "68.7", pos = 2, col = slate_gray, cex = 2, font = 2, offset = -4.0)
+
+points(-0.7, -0.6, pch = 19, col = "black", cex = 2)
+text(-0.7, -0.63, "69.6", pos = 2, col = slate_gray, cex = 2, font = 2, offset = 1.0)
+
+points(-0.5, -0.6, pch = 19, col = "black", cex = 2)
+text(-0.5, -0.63, "74.1", pos = 2, col = slate_gray, cex = 2, font = 2, offset = -4.0)
+
+# New Block Points
+points(-0.1, -0.6, pch = 19, col = "black", cex = 2)
+text(-0.1, -0.63, "78.9", pos = 2, col = slate_gray, cex = 2, font = 2, offset = -4.0)
+
+points(-0.5, -0.2, pch = 19, col = "black", cex = 2)
+text(-0.5, -0.23, "80.7", pos = 2, col = slate_gray, cex = 2, font = 2, offset = 1.0)
+
+points(-0.1, -0.2, pch = 19, col = "black", cex = 2)
+text(-0.1, -0.23, "87.1", pos = 2, col = slate_gray, cex = 2, font = 2, offset = -4.0)
