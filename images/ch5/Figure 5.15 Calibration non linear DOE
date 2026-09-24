@@ -1,0 +1,74 @@
+# Data frame for the RSM table values
+rsm_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, 0, 0, 0, 0, 0, 0, 0),
+  B = c(-1, -1, 1, 1, 0, 0, -1, 1, 0, 0, 0, 0, 0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 86.0, 87.2, 88.2, 92.1, 92.1, 92.1, 92.1, 92.1)
+)
+
+# Print a neat ASCII table with vertical dividers
+knitr::kable(rsm_data, format = "pipe", row.names=TRUE, align = "r")
+
+---
+
+# Define the dataset
+rsm_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, 0, 0, 0, 0, 0, 0, 0),
+  B = c(-1, -1, 1, 1, 0, 0, -1, 1, 0, 0, 0, 0, 0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 86.0, 87.2, 88.2, 92.1, 92.1, 92.1, 92.1, 92.1)
+)
+
+# Fit Response Surface Model (Full Quadratic Model)
+model <- lm(Y ~ A + B + I(A^2) + I(B^2) + A:B, data = rsm_data)
+
+# Extract and display only the Coefficients Estimate column
+coef(summary(model))[, "Estimate", drop = FALSE]
+
+---
+
+system("apt-get update && apt-get install -y r-cran-pid")
+library(pid)
+
+# 1. Define dataset (13-run response surface design with center points)
+rsm_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, 0, 0, 0, 0, 0, 0, 0),
+  B = c(-1, -1, 1, 1, 0, 0, -1, 1, 0, 0, 0, 0, 0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 86.0, 87.2, 88.2, 92.1, 92.1, 92.1, 92.1, 92.1)
+)
+
+# 2. Fit full quadratic response surface model
+model <- lm(Y ~ A + B + I(A^2) + I(B^2) + A:B, data = rsm_data)
+
+# 3. Generate Pareto plot
+paretoPlot(model)
+
+---
+
+# 1. Define dataset
+rsm_data <- data.frame(
+  A = c(-1, 1, -1, 1, -1, 1, 0, 0, 0, 0, 0, 0, 0),
+  B = c(-1, -1, 1, 1, 0, 0, -1, 1, 0, 0, 0, 0, 0),
+  Y = c(87.1, 78.6, 83.1, 84.5, 89.5, 86.0, 87.2, 88.2, 92.1, 92.1, 92.1, 92.1, 92.1)
+)
+
+# 2. Fit the quadratic response surface model
+model_rs <- lm(Y ~ A * B + I(A^2) + I(B^2), data = rsm_data)
+
+# 3. Force a square canvas layout in Google Colab
+options(repr.plot.width = 6, repr.plot.height = 6)
+
+# 4. Generate grid using the exact min/max bounds of your data
+a_seq <- seq(min(rsm_data$A), max(rsm_data$A), length.out = 50)
+b_seq <- seq(min(rsm_data$B), max(rsm_data$B), length.out = 50)
+
+grid_data <- expand.grid(A = a_seq, B = b_seq)
+grid_data$Y_pred <- predict(model_rs, newdata = grid_data)
+z_vals <- matrix(grid_data$Y_pred, nrow = length(a_seq), ncol = length(b_seq))
+
+# 5. Render the Grayscale Contour Plot
+filled.contour(a_seq, b_seq, z_vals,
+               # Black=High (0), White=Low (0.9)
+               color.palette = function(n) gray.colors(n, start = 0.9, end = 0),
+               xlab = "Factor A",
+               ylab = "Factor B",
+               main = "Contour Plot of Y vs A and B", 
+               nlevels = 10)
