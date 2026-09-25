@@ -8,6 +8,9 @@ $$
 Y = 69.225 + 2.175\times A + 2.625 \times B + 0.075 \times A \times B
 $$
 
+$$
+Y = 104.525 + 28.500\times A + 32.000 \times B + 10.000 \times A \times B
+$$
 
 ---
 
@@ -16,6 +19,10 @@ $$
 
 $$
 Y = 80.2 + 2.8 \times A + 3.7 \times B + 0.4 \times A \times B 
+$$
+
+$$
+Y = 92.975 + 18.000 \times A + 21.500 \times B + 10.000 \times A \times B
 $$
 
 ---
@@ -27,6 +34,10 @@ $$
 Y = 83.325 - 1.775 \times A + 0.475 \times B + 2.475 \times A \times B
 $$
 
+$$
+Y = 85.625 - 6.500 \times A - 3.000 \times B + 10.000 \times A \times B
+$$
+
 ---
 
 
@@ -36,6 +47,10 @@ $$
 Y = 92.103 - 1.767 \times A + 0.483 \times B - 4.362 \times A^2 - 4.412 \times B^2 + 2.475 \times A \times B
 $$
 
+$$
+Y = 90.0 + 7.5 \times A + 7.5 \times B - 17.5 \times A^2 - 17.5 \times B^2 + 10.0 \times A \times B
+$$
+
 ---
 
 
@@ -43,6 +58,10 @@ $$
 
 $$
 Y = 90 + 7.5 \times A + 7.5 \times B - 17.5 \times A^2 - 17.5 \times B^2 + 10 \times A \times B
+$$
+
+$$
+Y = 92.1034483 - 1.7666667 \times A + 0.4833333 \times B - 4.3620690 \times A^2 - 4.4120690 \times B^2 + 2.4750000 \times A \times B
 $$
 
 ---
